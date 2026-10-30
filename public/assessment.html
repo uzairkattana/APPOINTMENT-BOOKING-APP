@@ -1,0 +1,3332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinal Health Assessment - Gonstead Chiropractic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&family=Noto+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Language Toggle Styles */
+        .lang-btn {
+            background: linear-gradient(135deg, #2a9d8f, #0d5c75);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(42, 157, 143, 0.2);
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 157, 143, 0.3);
+        }
+
+        /* Clinical Branding Styles */
+        .clinic-branding {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            object-fit: contain;
+            padding: 5px;
+        }
+
+        .clinic-info h3 {
+            font-size: 1.3rem;
+            margin: 0;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .clinic-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .trust-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .trust-item i {
+            font-size: 1.1rem;
+            color: #ffd700;
+        }
+
+        /* RTL Support for Urdu */
+        .rtl {
+            direction: rtl;
+            text-align: right;
+            font-family: 'Noto Sans Arabic', 'Source Sans Pro', sans-serif !important;
+        }
+
+        .rtl .assessment-header {
+            text-align: center;
+        }
+
+        .rtl .clinic-branding {
+            flex-direction: row-reverse;
+        }
+
+        .rtl .trust-indicators {
+            direction: ltr;
+        }
+
+        .rtl .modal-header h3,
+        .rtl .question-title,
+        .rtl .feature-title {
+            font-family: 'Noto Sans Arabic', 'Poppins', sans-serif !important;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .assessment-header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #0d5c75 0%, #2a9d8f 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .assessment-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .assessment-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .assessment-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome-message h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            color: #0d5c75;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #2a9d8f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 157, 143, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2a9d8f, #0d5c75);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: #0d5c75;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .feature-description {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .start-button {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #2a9d8f 0%, #0d5c75 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(42, 157, 143, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(42, 157, 143, 0.4);
+            text-decoration: none;
+            color: white;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #2a9d8f;
+            text-decoration: none;
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .assessment-header {
+                padding: 30px 15px;
+            }
+            
+            .assessment-header h1 {
+                font-size: 2rem;
+            }
+            
+            .assessment-card {
+                padding: 25px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Coming Soon Message */
+        .coming-soon {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            border: 2px solid #f59e0b;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .coming-soon h3 {
+            color: #d97706;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .coming-soon p {
+            color: #92400e;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .notification-form {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .notification-form input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 15px;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .notification-form input:focus {
+            border-color: #d97706;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .notification-form button {
+            padding: 12px 20px;
+            background: #f59e0b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .notification-form button:hover {
+            background: #d97706;
+        }
+
+        @media (max-width: 480px) {
+            .notification-form {
+                flex-direction: column;
+            }
+            
+            .notification-form input {
+                min-width: unset;
+            }
+        }
+        
+        /* Assessment Modal Styles */
+        .assessment-modal, .results-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content, .results-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.4s ease-out;
+        }
+
+        .assessment-modal {
+            padding: 0;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+
+        .modal-content {
+            width: 100vw;
+            max-width: 100vw;
+            height: 100vh;
+            max-height: 100vh;
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .results-content {
+            width: 100vw;
+            max-width: 100vw;
+            height: 100vh;
+            max-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 0;
+        }
+
+        .results-modal {
+            padding: 0;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .modal-header {
+            padding: 30px 30px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0d5c75;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .progress-container {
+            margin-top: 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2a9d8f 0%, #20b2aa 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 10%;
+        }
+        
+        .progress-text {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .close-modal, .close-results {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .close-modal:hover, .close-results:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 30px;
+            flex: 1;
+            min-height: 0;
+            overflow: auto;
+        }
+        
+        .question-container {
+            margin-bottom: 30px;
+        }
+        
+        .question-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .question-subtitle {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #2a9d8f;
+            box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.1);
+        }
+        
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .radio-option {
+            position: relative;
+        }
+        
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .radio-option label {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .radio-option input[type="radio"]:checked + label {
+            border-color: #2a9d8f;
+            background: rgba(42, 157, 143, 0.05);
+        }
+        
+        .radio-option label::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            margin-right: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .radio-option input[type="radio"]:checked + label::before {
+            border-color: #2a9d8f;
+            background: #2a9d8f;
+            box-shadow: inset 0 0 0 3px white;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .checkbox-option {
+            position: relative;
+        }
+        
+        .checkbox-option input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .checkbox-option label {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .checkbox-option input[type="checkbox"]:checked + label {
+            border-color: #2a9d8f;
+            background: rgba(42, 157, 143, 0.05);
+        }
+        
+        .checkbox-option label::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin-right: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-option input[type="checkbox"]:checked + label::before {
+            border-color: #2a9d8f;
+            background: #2a9d8f;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>');
+            background-size: 12px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .modal-footer {
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            border-top: 1px solid #e5e7eb;
+            background: #ffffff;
+            flex-shrink: 0;
+        }
+        
+        .btn-primary, .btn-secondary, .btn-tertiary {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #2a9d8f 0%, #20b2aa 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(42, 157, 143, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 157, 143, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .btn-tertiary {
+            background: transparent;
+            color: #6b7280;
+            border: 1px solid #d1d5db;
+        }
+        
+        .btn-tertiary:hover {
+            background: #f9fafb;
+        }
+        
+        /* Enhanced Button Styling */
+        .nextBtn, .start-button, #nextBtn {
+            cursor: pointer;
+            background: linear-gradient(135deg, #0d5c75, #2a9d8f);
+            color: white;
+            border-radius: 12px;
+            font-weight: 700;
+            padding: 15px 30px;
+            border: none;
+            box-shadow: 0 6px 20px rgba(42, 157, 143, 0.4);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+        
+        .nextBtn:hover, .start-button:hover, #nextBtn:hover {
+            background: linear-gradient(135deg, #2a9d8f, #0d5c75);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(42, 157, 143, 0.5);
+        }
+        
+        /* Validation Alert Styles */
+        .validation-alert {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            animation: slideInAlert 0.3s ease-out;
+        }
+        
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alert-content i {
+            color: #f59e0b;
+            font-size: 1.2rem;
+        }
+        
+        .alert-content span {
+            flex: 1;
+            color: #92400e;
+            font-weight: 500;
+        }
+        
+        .alert-close {
+            background: none;
+            border: none;
+            color: #92400e;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .alert-close:hover {
+            background: rgba(146, 64, 14, 0.1);
+        }
+        
+        @keyframes slideInAlert {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Results Styles */
+        .results-header {
+            background: linear-gradient(135deg, #0d5c75 0%, #2a9d8f 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 0;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .results-header h3 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .results-body {
+            padding: 0;
+            flex: 1;
+            min-height: 0;
+            overflow: auto;
+            display: flex;
+            background: #eef2f5;
+        }
+        
+        .risk-score-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .risk-score {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .risk-low {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        }
+        
+        .risk-moderate {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+        }
+        
+        .risk-high {
+            background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+        }
+        
+        .results-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid #2a9d8f;
+        }
+        
+        .results-section h4 {
+            color: #0d5c75;
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .condition-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .condition-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .condition-description {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .recommendation-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .recommendation-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .recommendation-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #2a9d8f;
+            font-weight: 700;
+        }
+        
+        .recommendation-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .results-footer {
+            padding: 14px 16px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-shrink: 0;
+            background: #fff;
+        }
+
+        /* Professional Report Layout */
+        .report-hero {
+            background: linear-gradient(135deg, #0b4354 0%, #0f5c73 42%, #1f8a7a 100%);
+            border-radius: 16px;
+            color: #fff;
+            padding: 24px;
+            margin-bottom: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .report-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(130deg, rgba(255, 255, 255, 0.12), transparent 45%);
+            pointer-events: none;
+        }
+
+        .report-hero-top {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .report-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.35rem;
+            margin-bottom: 6px;
+            letter-spacing: 0.01em;
+        }
+
+        .report-subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+            max-width: 620px;
+        }
+
+        .report-meta {
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 0.82rem;
+            min-width: 230px;
+        }
+
+        .report-summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 0 0 22px;
+        }
+
+        .report-card {
+            background: #ffffff;
+            border: 1px solid #dbe6eb;
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+        .report-card h5 {
+            margin: 0 0 10px;
+            color: #0f5c73;
+            font-size: 0.92rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .risk-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.82rem;
+            margin-top: 8px;
+        }
+
+        .risk-badge.low { background: #15803d; }
+        .risk-badge.moderate { background: #b45309; }
+        .risk-badge.high { background: #b91c1c; }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .report-kv {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .report-kv-item {
+            background: #f8fbfd;
+            border: 1px solid #e5eef3;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .report-kv-label {
+            display: block;
+            color: #5b6975;
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            margin-bottom: 2px;
+        }
+
+        .report-kv-value {
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .report-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .report-list li {
+            padding: 9px 0;
+            border-bottom: 1px solid #e8edf2;
+            position: relative;
+            padding-left: 20px;
+            color: #2e3b45;
+            font-size: 0.92rem;
+        }
+
+        .report-list li:last-child {
+            border-bottom: none;
+        }
+
+        .report-list li::before {
+            content: '•';
+            position: absolute;
+            left: 6px;
+            color: #0f5c73;
+            font-weight: 700;
+        }
+
+        .priority-box {
+            border-left: 4px solid #0f5c73;
+            background: linear-gradient(180deg, #f7fbfe, #ffffff);
+        }
+
+        .priority-box.urgent {
+            border-left-color: #b91c1c;
+            background: linear-gradient(180deg, #fff5f5, #ffffff);
+        }
+
+        .report-note {
+            font-size: 0.84rem;
+            color: #5b6975;
+            margin-top: 10px;
+        }
+
+        .report-footer-note {
+            margin-top: 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.82rem;
+            color: #4b5563;
+        }
+        
+        /* Interactive Body Map Styles */
+        .interactive-body-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .body-diagram-container {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .body-diagram {
+            max-width: 100%;
+            height: 400px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .body-region {
+            fill: rgba(42, 157, 143, 0.1);
+            stroke: #2a9d8f;
+            stroke-width: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .body-region:hover {
+            fill: rgba(42, 157, 143, 0.3);
+            stroke-width: 3;
+        }
+        
+        .body-region.selected {
+            fill: rgba(239, 68, 68, 0.4);
+            stroke: #ef4444;
+            stroke-width: 3;
+        }
+        
+        .pain-controls {
+            flex: 1;
+            min-width: 250px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .pain-area-selector {
+            margin-bottom: 25px;
+        }
+        
+        .area-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .area-btn {
+            padding: 12px 15px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .area-btn:hover {
+            border-color: #2a9d8f;
+            background: rgba(42, 157, 143, 0.05);
+        }
+        
+        .area-btn.selected {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            font-weight: 600;
+        }
+        
+        .pain-intensity-slider {
+            margin-top: 20px;
+        }
+        
+        .slider-container {
+            margin: 15px 0;
+        }
+        
+        .pain-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, #10b981, #f59e0b, #ef4444);
+            outline: none;
+            -webkit-appearance: none;
+            margin: 10px 0;
+        }
+        
+        .pain-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #0d5c75;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .pain-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #0d5c75;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .pain-value-display {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #0d5c75;
+        }
+        
+        .pain-description {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .selected-areas-summary {
+            margin-top: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .summary-title {
+            font-weight: 600;
+            color: #0d5c75;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        
+        .area-name {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .intensity-badge {
+            background: #ef4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .intensity-badge.low {
+            background: #10b981;
+        }
+        
+        .intensity-badge.moderate {
+            background: #f59e0b;
+        }
+        
+        .remove-area-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            transition: color 0.3s ease;
+        }
+        
+        .remove-area-btn:hover {
+            color: #ef4444;
+        }
+        
+        /* Educational Tip Styles */
+        .educational-tip {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-left: 4px solid #2a9d8f;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .tip-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #2a9d8f;
+            font-size: 1.2rem;
+        }
+        
+        .tip-title {
+            font-weight: 600;
+            color: #0d5c75;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .tip-content {
+            color: #4a5568;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 0;
+                width: 100vw;
+                max-width: 100vw;
+                height: 100vh;
+                max-height: 100vh;
+            }
+
+            .results-content {
+                margin: 0;
+                width: 100vw;
+                max-width: 100vw;
+                height: 100vh;
+                max-height: 100vh;
+            }
+            
+            .modal-header, .modal-body, .results-body {
+                padding: 20px;
+            }
+
+            .modal-footer {
+                padding: 12px;
+            }
+            
+            .radio-group, .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-footer {
+                flex-direction: column;
+                padding: 16px;
+            }
+
+            .report-summary-grid,
+            .report-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .report-kv {
+                grid-template-columns: 1fr;
+            }
+            
+            .interactive-body-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .body-diagram {
+                height: 300px;
+            }
+            
+            .area-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .area-btn {
+                font-size: 0.8rem;
+                padding: 10px 12px;
+            }
+        }
+
+        .report-preview-frame {
+            width: 100%;
+            height: auto;
+            min-height: 0;
+            flex: 1;
+            border: 0;
+            border-radius: 0;
+            background: #f3f4f6;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back Link -->
+        <a href="/educational-guide.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Educational Guide
+        </a>
+
+        <!-- Language Toggle -->
+        <div class="language-toggle" style="text-align: center; margin-bottom: 20px;">
+            <button onclick="toggleLanguage()" class="lang-btn">
+                <i class="fas fa-globe"></i> <span id="langText">اردو میں دیکھیں</span>
+            </button>
+        </div>
+
+        <!-- Header with Clinical Logo -->
+        <div class="assessment-header animate__animated animate__fadeInDown">
+            <div class="clinic-branding">
+                <img src="/images/gonstead-chiropractic-logo-new.png" alt="Gonstead Chiropractic Logo" class="header-logo">
+                <div class="clinic-info">
+                    <h3>Dr. Bashir Khan</h3>
+                    <p>Certified Gonstead Specialist</p>
+                </div>
+            </div>
+            <h1 id="headerTitle">Advanced Spinal Health Assessment</h1>
+            <p id="headerSubtitle">Complete this structured spinal assessment to help us understand your concerns clearly, assign your case correctly, and provide precise, personalized recommendations for your care.</p>
+            <div class="trust-indicators">
+                <div class="trust-item">
+                    <i class="fas fa-certificate"></i>
+                    <span>Professional Grade</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Confidential</span>
+                </div>
+                <div class="trust-item">
+                    <i class="fas fa-award"></i>
+                    <span>Evidence-Based</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="assessment-card">
+            <div class="welcome-message">
+                <h2>Welcome to Your Personalized Spinal Health Assessment</h2>
+                <p>By answering each question carefully and honestly, you help us build a clear picture of your spinal health so we can offer accurate, clinically guided recommendations tailored to your condition.</p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <div class="feature-title">Professional Analysis</div>
+                    <div class="feature-description">Based on Gonstead chiropractic principles and diagnostic methods</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="feature-title">Quick & Easy</div>
+                    <div class="feature-description">Takes only 5 minutes to complete with instant results</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="feature-title">Personalized Report</div>
+                    <div class="feature-description">Detailed insights and recommendations tailored to your needs</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="feature-title">Expert Guidance</div>
+                    <div class="feature-description">Professional recommendations for your spinal health journey</div>
+                </div>
+            </div>
+
+            <!-- Start Assessment Button -->
+            <button class="start-button" onclick="startAssessment()">
+                <i class="fas fa-play"></i>
+                Begin Spinal Health Assessment
+            </button>
+            
+            <!-- Assessment Modal -->
+            <div id="assessmentModal" class="assessment-modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modalTitle">Spinal Health Assessment</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <span class="progress-text" id="progressText">Question 1 of 12</span>
+                        </div>
+                        <button class="close-modal" onclick="closeAssessment()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="modal-body" id="modalBody">
+                        <!-- Dynamic content will be inserted here -->
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button class="btn-secondary" id="prevBtn" onclick="previousQuestion()" style="display: none;">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="btn-primary" id="nextBtn" onclick="nextQuestion()">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Results Modal -->
+            <div id="resultsModal" class="results-modal" style="display: none;">
+                <div class="results-content">
+                    <div class="results-header">
+                        <h3>Your Spinal Health Assessment Results</h3>
+                        <button class="close-results" onclick="closeResults()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="results-body" id="resultsBody">
+                        <!-- Results will be displayed here -->
+                    </div>
+                    <div class="results-footer">
+                        <button class="btn-primary" onclick="downloadResults()">
+                            <i class="fas fa-download"></i> Download Report
+                        </button>
+                        <button class="btn-secondary" onclick="bookConsultation()">
+                            <i class="fas fa-calendar"></i> Book Consultation
+                        </button>
+                        <button class="btn-tertiary" onclick="retakeAssessment()">
+                            <i class="fas fa-redo"></i> Retake Assessment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentQuestion = 0;
+        let assessmentData = {};
+        let latestAssessmentResults = null;
+        const totalQuestions = 12;
+        let selectedBodyAreas = {};
+        let currentSelectedArea = null;
+
+        const BODY_AREA_LABELS = {
+            neck: 'Neck/Cervical',
+            upper_back: 'Upper Back/Shoulders',
+            mid_back: 'Mid Back/Thoracic',
+            lower_back: 'Lower Back/Lumbar',
+            hips: 'Hips/Pelvis',
+            legs: 'Legs/Sciatica',
+            headaches: 'Headaches/Migraines',
+            arms: 'Arms/Hands'
+        };
+
+        const RED_FLAG_LABELS = {
+            unexplained_weight_loss: 'Unexplained weight loss in the last 3-6 months',
+            night_pain: 'Severe night pain that does not improve with position change',
+            fever_chills: 'Ongoing fever, chills, or recent serious infection',
+            loss_bladder_bowel: 'Loss of control of bladder or bowel',
+            cancer_history: 'History of cancer'
+        };
+        
+        // Assessment Questions Database
+        const questions = [
+            {
+                id: 'personal_info',
+                title: 'Personal Information',
+                subtitle: 'Start by sharing your basic details so we can correctly identify your case and interpret your results.',
+                type: 'form',
+                fields: [
+                    { name: 'name', type: 'text', label: 'Full Name', required: true },
+                    { name: 'age', type: 'number', label: 'Age', required: true, min: 18, max: 100 },
+                    { name: 'gender', type: 'radio', label: 'Gender', required: true, 
+                      options: [{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }, { value: 'other', label: 'Other' }] }
+                ]
+            },
+            {
+                id: 'current_pain',
+                title: 'Current Pain Level',
+                subtitle: 'Tell us how strong your pain feels right now so we can understand the severity of your problem.',
+                type: 'radio',
+                options: [
+                    { value: '0', label: '0 - No pain at all' },
+                    { value: '1-2', label: '1-2 - Very mild pain' },
+                    { value: '3-4', label: '3-4 - Mild pain' },
+                    { value: '5-6', label: '5-6 - Moderate pain' },
+                    { value: '7-8', label: '7-8 - Severe pain' },
+                    { value: '9-10', label: '9-10 - Excruciating pain' }
+                ]
+            },
+            {
+                id: 'pain_location',
+                title: 'Pain Location & Intensity',
+                subtitle: 'Select every area where you feel pain and set how strong it is there. This helps us map your spine and nerves accurately.',
+                type: 'interactive_body_map',
+                options: [
+                    { value: 'neck', label: 'Neck/Cervical spine' },
+                    { value: 'upper_back', label: 'Upper back/Shoulders' },
+                    { value: 'mid_back', label: 'Mid back/Thoracic spine' },
+                    { value: 'lower_back', label: 'Lower back/Lumbar spine' },
+                    { value: 'hips', label: 'Hips/Pelvis' },
+                    { value: 'legs', label: 'Legs/Sciatica' },
+                    { value: 'headaches', label: 'Headaches/Migraines' },
+                    { value: 'arms', label: 'Arms/Hands' }
+                ]
+            },
+            {
+                id: 'pain_duration',
+                title: 'Pain Duration',
+                subtitle: 'Tell us how long you have been feeling these symptoms so we can see if your problem is new or long‑standing.',
+                type: 'radio',
+                options: [
+                    { value: 'recent', label: 'Less than 1 week' },
+                    { value: 'short', label: '1 week to 1 month' },
+                    { value: 'medium', label: '1 to 6 months' },
+                    { value: 'chronic', label: 'More than 6 months' },
+                    { value: 'years', label: 'Several years' }
+                ]
+            },
+            {
+                id: 'daily_activities',
+                title: 'Daily Activities',
+                subtitle: 'Show how much your pain is disturbing your normal work, home and personal activities.',
+                type: 'radio',
+                options: [
+                    { value: 'none', label: 'No impact on daily activities' },
+                    { value: 'mild', label: 'Slight impact, can do most activities' },
+                    { value: 'moderate', label: 'Moderate impact, some activities difficult' },
+                    { value: 'severe', label: 'Severe impact, many activities impossible' },
+                    { value: 'disabled', label: 'Unable to perform most daily activities' }
+                ]
+            },
+            {
+                id: 'work_lifestyle',
+                title: 'Work & Lifestyle',
+                subtitle: 'Choose the options that best match your work and daily routine so we can link your posture and movements to your symptoms.',
+                type: 'checkbox',
+                options: [
+                    { value: 'desk_job', label: 'Desk/Computer work' },
+                    { value: 'physical_job', label: 'Physical/Manual labor' },
+                    { value: 'standing', label: 'Prolonged standing' },
+                    { value: 'driving', label: 'Long periods of driving' },
+                    { value: 'lifting', label: 'Regular heavy lifting' },
+                    { value: 'sports', label: 'Regular sports/exercise' },
+                    { value: 'sedentary', label: 'Sedentary lifestyle' }
+                ]
+            },
+            {
+                id: 'sleep_quality',
+                title: 'Sleep Quality',
+                subtitle: 'Tell us how well you sleep at night, as poor sleep often reflects how much your spine and nerves are being affected.',
+                type: 'radio',
+                options: [
+                    { value: 'excellent', label: 'Excellent - Sleep soundly, wake refreshed' },
+                    { value: 'good', label: 'Good - Generally sleep well' },
+                    { value: 'fair', label: 'Fair - Some nights better than others' },
+                    { value: 'poor', label: 'Poor - Frequent sleep disruptions' },
+                    { value: 'terrible', label: 'Terrible - Chronic sleep problems' }
+                ]
+            },
+            {
+                id: 'previous_treatment',
+                title: 'Previous Treatment',
+                subtitle: 'Select all treatments you have already tried so we do not repeat what has failed and can plan better next steps.',
+                type: 'checkbox',
+                options: [
+                    { value: 'chiropractic', label: 'Chiropractic care' },
+                    { value: 'physical_therapy', label: 'Physical therapy' },
+                    { value: 'massage', label: 'Massage therapy' },
+                    { value: 'medication', label: 'Pain medication' },
+                    { value: 'injections', label: 'Injections/Shots' },
+                    { value: 'surgery', label: 'Surgery' },
+                    { value: 'none', label: 'No previous treatment' }
+                ]
+            },
+            {
+                id: 'stress_level',
+                title: 'Stress Level',
+                subtitle: 'Share how high your current stress is, because stress can increase pain and slow your recovery.',
+                type: 'radio',
+                options: [
+                    { value: 'low', label: 'Low stress - Life is manageable' },
+                    { value: 'moderate', label: 'Moderate stress - Some challenging periods' },
+                    { value: 'high', label: 'High stress - Frequently overwhelmed' },
+                    { value: 'extreme', label: 'Extreme stress - Constant pressure' }
+                ]
+            },
+            {
+                id: 'health_goals',
+                title: 'Health Goals',
+                subtitle: 'Tell us what you really want from care so we can match the treatment plan to your expectations and lifestyle.',
+                type: 'checkbox',
+                options: [
+                    { value: 'pain_relief', label: 'Pain relief and symptom management' },
+                    { value: 'mobility', label: 'Improved mobility and flexibility' },
+                    { value: 'prevention', label: 'Prevention and wellness maintenance' },
+                    { value: 'performance', label: 'Enhanced athletic/work performance' },
+                    { value: 'quality_life', label: 'Overall better quality of life' },
+                    { value: 'posture', label: 'Better posture and spinal alignment' }
+                ]
+            },
+            {
+                id: 'red_flags',
+                title: 'Important Warning Signs',
+                subtitle: 'Tell us if you have any of these serious warning signs so we can prioritise your safety and referral if needed.',
+                type: 'checkbox',
+                options: [
+                    { value: 'unexplained_weight_loss', label: 'Unexplained weight loss in the last 3–6 months' },
+                    { value: 'night_pain', label: 'Severe night pain that does not improve with position change' },
+                    { value: 'fever_chills', label: 'Ongoing fever, chills, or recent serious infection' },
+                    { value: 'loss_bladder_bowel', label: 'Loss of control of bladder or bowel' },
+                    { value: 'cancer_history', label: 'History of cancer' },
+                    { value: 'none', label: 'None of the above apply to me' }
+                ]
+            },
+            {
+                id: 'function_test',
+                title: 'Simple Functional Test',
+                subtitle: 'Choose the statement that best describes how you can move right now when bending, sitting, and walking.',
+                type: 'radio',
+                options: [
+                    { value: 'normal', label: 'I can sit, stand, walk, and bend normally without significant difficulty.' },
+                    { value: 'mild_limit', label: 'I can do these activities but with mild stiffness or discomfort.' },
+                    { value: 'moderate_limit', label: 'I can do them but with clear limitation and I must move slowly or carefully.' },
+                    { value: 'severe_limit', label: 'I struggle to sit, stand, walk, or bend and avoid some movements completely.' }
+                ]
+            }
+        ];
+        
+        // Start Assessment Function
+        function startAssessment() {
+            currentQuestion = 0;
+            assessmentData = {};
+            latestAssessmentResults = null;
+            selectedBodyAreas = {};
+            currentSelectedArea = null;
+            
+            const modal = document.getElementById('assessmentModal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            showQuestion(0);
+        }
+        
+        function getQuestionTip(questionId) {
+            switch (questionId) {
+                case 'current_pain':
+                    return 'Tip: Think about your pain right now, not your best or worst day. If you would stop normal activity because of the pain, it is usually 5/10 or higher.';
+                case 'pain_location':
+                    return 'Tip: Select every area that hurts, even if the pain is mild there. This helps us see full patterns along your spine and nerves.';
+                case 'pain_duration':
+                    return 'Tip: If your symptoms come and go, choose the option that best matches how long this problem has been bothering you overall.';
+                case 'daily_activities':
+                    return 'Tip: Consider work, housework, family care, and hobbies when judging how much your pain disturbs your day.';
+                case 'work_lifestyle':
+                    return 'Tip: Choose all options that match your usual week, not just today. This connects your posture and workload to your symptoms.';
+                case 'sleep_quality':
+                    return 'Tip: Poor or broken sleep often means your nervous system is under higher stress from pain or tension.';
+                case 'previous_treatment':
+                    return 'Tip: Include all treatments you have tried, even if they helped only for a short time. This prevents repeating what has already failed.';
+                case 'red_flags':
+                    return 'Important: If you select any warning sign here, we may advise urgent in-person medical review before or alongside chiropractic care.';
+                case 'function_test':
+                    return 'Tip: Imagine a typical day. If you move more slowly, avoid some movements, or need support, choose a limited option instead of "normal".';
+                default:
+                    return '';
+            }
+        }
+
+        // Show Question Function
+        function showQuestion(questionIndex) {
+            const question = questions[questionIndex];
+            const modalBody = document.getElementById('modalBody');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Update progress
+            const progress = ((questionIndex + 1) / totalQuestions) * 100;
+            progressFill.style.width = progress + '%';
+            const t = translations[currentLanguage] || translations.english;
+            if (currentLanguage === 'urdu') {
+                progressText.textContent = `${t.progressText} ${questionIndex + 1} ${totalQuestions} ${t.of}`;
+            } else {
+                progressText.textContent = `${t.progressText} ${questionIndex + 1} ${t.of} ${totalQuestions}`;
+            }
+            
+            // Show/hide navigation buttons
+            prevBtn.style.display = questionIndex > 0 ? 'inline-flex' : 'none';
+            
+            // Generate question HTML
+            let html = `
+                <div class="question-container">
+                    <h4 class="question-title">${question.title}</h4>
+                    <p class="question-subtitle">${question.subtitle}</p>
+            `;
+
+            const tip = getQuestionTip(question.id);
+            if (tip) {
+                html += `
+                    <div class="educational-tip">
+                        <span class="tip-icon"><i class="fas fa-info-circle"></i></span>
+                        <div class="tip-title">Helpful guidance</div>
+                        <div class="tip-content">${tip}</div>
+                    </div>
+                `;
+            }
+            
+            if (question.type === 'form') {
+                question.fields.forEach(field => {
+                    html += `<div class="input-group">`;
+                    html += `<label for="${field.name}">${field.label}${field.required ? ' *' : ''}</label>`;
+                    
+                    if (field.type === 'text' || field.type === 'number') {
+                        html += `<input type="${field.type}" id="${field.name}" name="${field.name}" 
+                               ${field.required ? 'required' : ''} 
+                               ${field.min ? `min="${field.min}"` : ''}
+                               ${field.max ? `max="${field.max}"` : ''}
+                               value="${assessmentData[field.name] || ''}">`;
+                    } else if (field.type === 'radio') {
+                        html += '<div class="radio-group">';
+                        field.options.forEach(option => {
+                            const checked = assessmentData[field.name] === option.value ? 'checked' : '';
+                            html += `
+                                <div class="radio-option">
+                                    <input type="radio" id="${field.name}_${option.value}" 
+                                           name="${field.name}" value="${option.value}" ${checked}>
+                                    <label for="${field.name}_${option.value}">${option.label}</label>
+                                </div>`;
+                        });
+                        html += '</div>';
+                    }
+                    html += '</div>';
+                });
+            } else if (question.type === 'radio') {
+                html += '<div class="radio-group">';
+                question.options.forEach(option => {
+                    const checked = assessmentData[question.id] === option.value ? 'checked' : '';
+                    html += `
+                        <div class="radio-option">
+                            <input type="radio" id="${question.id}_${option.value}" 
+                                   name="${question.id}" value="${option.value}" ${checked}>
+                            <label for="${question.id}_${option.value}">${option.label}</label>
+                        </div>`;
+                });
+                html += '</div>';
+            } else if (question.type === 'checkbox') {
+                html += '<div class="checkbox-group">';
+                question.options.forEach(option => {
+                    const checked = assessmentData[question.id] && assessmentData[question.id].includes(option.value) ? 'checked' : '';
+                    html += `
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="${question.id}_${option.value}" 
+                                   name="${question.id}" value="${option.value}" ${checked}>
+                            <label for="${question.id}_${option.value}">${option.label}</label>
+                        </div>`;
+                });
+                html += '</div>';
+            } else if (question.type === 'interactive_body_map') {
+                html += renderInteractiveBodyMap(question);
+            }
+            
+            html += '</div>';
+            modalBody.innerHTML = html;
+
+            if (question.type === 'interactive_body_map') {
+                selectedBodyAreas = assessmentData.pain_location ? { ...assessmentData.pain_location } : {};
+                updateSelectedAreasSummary();
+            }
+            
+            // Update next button text
+            if (questionIndex === totalQuestions - 1) {
+                nextBtn.innerHTML = 'Get Results <i class="fas fa-chart-line"></i>';
+            } else {
+                nextBtn.innerHTML = 'Next <i class="fas fa-arrow-right"></i>';
+            }
+
+            updateButtonTexts();
+        }
+        
+        // Collect Current Question Data
+        function collectCurrentQuestionData() {
+            const question = questions[currentQuestion];
+            
+            if (question.type === 'form') {
+                question.fields.forEach(field => {
+                    if (field.type === 'radio') {
+                        const checkedRadio = document.querySelector(`input[name="${field.name}"]:checked`);
+                        if (checkedRadio) {
+                            assessmentData[field.name] = checkedRadio.value;
+                        }
+                    } else {
+                        const input = document.getElementById(field.name);
+                        if (input) {
+                            assessmentData[field.name] = input.value;
+                        }
+                    }
+                });
+            } else if (question.type === 'radio') {
+                const checkedRadio = document.querySelector(`input[name="${question.id}"]:checked`);
+                if (checkedRadio) {
+                    assessmentData[question.id] = checkedRadio.value;
+                }
+            } else if (question.type === 'checkbox') {
+                const checkedBoxes = document.querySelectorAll(`input[name="${question.id}"]:checked`);
+                const values = Array.from(checkedBoxes).map(cb => cb.value);
+                if (values.length > 0) {
+                    assessmentData[question.id] = values;
+                }
+            } else if (question.type === 'interactive_body_map') {
+                // For body map, data is already collected in selectedBodyAreas
+                // Just ensure it's properly stored in assessmentData
+                if (selectedBodyAreas && Object.keys(selectedBodyAreas).length > 0) {
+                    assessmentData.pain_location = selectedBodyAreas;
+                }
+            }
+        }
+        
+        // Validate Current Question
+        function validateCurrentQuestion() {
+            const question = questions[currentQuestion];
+            const t = translations[currentLanguage] || translations.english;
+            
+            if (question.type === 'form') {
+                for (let field of question.fields) {
+                    if (field.required) {
+                        if (field.type === 'radio') {
+                            const checkedRadio = document.querySelector(`input[name="${field.name}"]:checked`);
+                            if (!checkedRadio) {
+                                showValidationAlert(`${t.pleaseSelect} ${field.label.toLowerCase()}`);
+                                return false;
+                            }
+                        } else {
+                            const input = document.getElementById(field.name);
+                            if (!input || !input.value.trim()) {
+                                showValidationAlert(`${t.pleaseEnter} ${field.label.toLowerCase()}`);
+                                return false;
+                            }
+                        }
+                    }
+                }
+            } else if (question.type === 'radio') {
+                const checkedRadio = document.querySelector(`input[name="${question.id}"]:checked`);
+                if (!checkedRadio) {
+                    showValidationAlert(t.selectOption);
+                    return false;
+                }
+            } else if (question.type === 'checkbox') {
+                const checkedBoxes = document.querySelectorAll(`input[name="${question.id}"]:checked`);
+                if (checkedBoxes.length === 0) {
+                    showValidationAlert(t.selectAtLeastOne);
+                    return false;
+                }
+            } else if (question.type === 'interactive_body_map') {
+                // Validate body map - at least one area should be selected
+                const selectedAreas = assessmentData.pain_location;
+                if (!selectedAreas || Object.keys(selectedAreas).length === 0) {
+                    showValidationAlert('Please select at least one area where you experience pain');
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        // Enhanced Validation Alert
+        function showValidationAlert(message) {
+            // Create a custom alert with better styling
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'validation-alert';
+            alertDiv.innerHTML = `
+                <div class="alert-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="alert-close">×</button>
+                </div>
+            `;
+            
+            // Add to modal body
+            const modalBody = document.getElementById('modalBody');
+            if (modalBody) {
+                modalBody.insertBefore(alertDiv, modalBody.firstChild);
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    if (alertDiv.parentNode) {
+                        alertDiv.remove();
+                    }
+                }, 5000);
+            }
+        }
+        
+        // Next Question Function
+        function nextQuestion() {
+            if (!validateCurrentQuestion()) {
+                return;
+            }
+            
+            collectCurrentQuestionData();
+            
+            if (currentQuestion < totalQuestions - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                // Show results
+                analyzeAndShowResults();
+            }
+        }
+        
+        // Previous Question Function
+        function previousQuestion() {
+            collectCurrentQuestionData();
+            
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+        
+        // Analyze and Show Results
+        function analyzeAndShowResults() {
+            let riskScore = 0;
+            let painScore = 0;
+            let functionScore = 0;
+            let lifestyleScore = 0;
+            const conditions = [];
+            const recommendations = [];
+            const riskFactors = [];
+            let carePriority = {
+                level: 'Routine',
+                timeline: 'Within 1-2 weeks',
+                action: 'Schedule a standard chiropractic consultation to review findings and plan care.'
+            };
+            
+            // Pain level scoring
+            const painLevel = assessmentData.current_pain;
+            if (painLevel === '9-10') { riskScore += 30; painScore += 30; riskFactors.push('Very high current pain level (9–10/10)'); }
+            else if (painLevel === '7-8') { riskScore += 25; painScore += 25; riskFactors.push('Severe current pain level (7–8/10)'); }
+            else if (painLevel === '5-6') { riskScore += 15; painScore += 15; riskFactors.push('Moderate current pain level (5–6/10)'); }
+            else if (painLevel === '3-4') { riskScore += 8; painScore += 8; riskFactors.push('Mild current pain level (3–4/10)'); }
+            else if (painLevel === '1-2') { riskScore += 3; painScore += 3; riskFactors.push('Very mild current pain level (1–2/10)'); }
+            
+            // Duration scoring
+            const duration = assessmentData.pain_duration;
+            if (duration === 'years') { riskScore += 20; riskFactors.push('Symptoms present for several years'); }
+            else if (duration === 'chronic') { riskScore += 15; riskFactors.push('Chronic symptoms for more than 6 months'); }
+            else if (duration === 'medium') { riskScore += 10; riskFactors.push('Symptoms present for 1–6 months'); }
+            else if (duration === 'short') { riskScore += 5; riskFactors.push('Recent symptoms from 1 week to 1 month'); }
+            
+            // Activity impact scoring
+            const activityImpact = assessmentData.daily_activities;
+            if (activityImpact === 'disabled') { riskScore += 25; functionScore += 25; riskFactors.push('Pain is disabling most daily activities'); }
+            else if (activityImpact === 'severe') { riskScore += 20; functionScore += 20; riskFactors.push('Pain severely limits daily activities'); }
+            else if (activityImpact === 'moderate') { riskScore += 10; functionScore += 10; riskFactors.push('Pain moderately affects daily activities'); }
+            else if (activityImpact === 'mild') { riskScore += 5; functionScore += 5; riskFactors.push('Pain mildly affects daily activities'); }
+            
+            // Sleep quality scoring
+            const sleepQuality = assessmentData.sleep_quality;
+            if (sleepQuality === 'terrible') { riskScore += 15; lifestyleScore += 15; riskFactors.push('Severely disturbed sleep quality'); }
+            else if (sleepQuality === 'poor') { riskScore += 10; lifestyleScore += 10; riskFactors.push('Poor sleep quality'); }
+            else if (sleepQuality === 'fair') { riskScore += 5; lifestyleScore += 5; riskFactors.push('Fair/variable sleep quality'); }
+            
+            // Stress level scoring
+            const stressLevel = assessmentData.stress_level;
+            if (stressLevel === 'extreme') { riskScore += 10; lifestyleScore += 10; riskFactors.push('Extremely high stress level'); }
+            else if (stressLevel === 'high') { riskScore += 7; lifestyleScore += 7; riskFactors.push('High stress level'); }
+            else if (stressLevel === 'moderate') { riskScore += 3; lifestyleScore += 3; riskFactors.push('Moderate stress level'); }
+
+            const workLifestyle = assessmentData.work_lifestyle || [];
+            if (workLifestyle.includes('lifting') || workLifestyle.includes('physical_job')) {
+                riskScore += 6;
+                lifestyleScore += 6;
+                riskFactors.push('Regular heavy physical load at work may aggravate spinal strain');
+            }
+            if (workLifestyle.includes('desk_job') || workLifestyle.includes('driving') || workLifestyle.includes('sedentary')) {
+                riskScore += 4;
+                lifestyleScore += 4;
+                riskFactors.push('Prolonged static posture/sedentary routine can increase spinal stress');
+            }
+            
+            // Functional test scoring
+            const functionTest = assessmentData.function_test;
+            if (functionTest === 'severe_limit') { riskScore += 20; functionScore += 20; riskFactors.push('Severe functional limitation in basic movements'); }
+            else if (functionTest === 'moderate_limit') { riskScore += 12; functionScore += 12; riskFactors.push('Moderate functional limitation in basic movements'); }
+            else if (functionTest === 'mild_limit') { riskScore += 5; functionScore += 5; riskFactors.push('Mild functional limitation in basic movements'); }
+            
+            // Red flag triage
+            const redFlags = assessmentData.red_flags || [];
+            const hasRedFlags = Array.isArray(redFlags) && redFlags.length > 0 && !redFlags.includes('none');
+            const emergencyFlag = redFlags.includes('loss_bladder_bowel');
+            if (hasRedFlags) {
+                const redFlagCount = redFlags.filter(flag => flag !== 'none').length;
+                riskScore += Math.min(35, 20 + redFlagCount * 5);
+                riskFactors.push('One or more medical warning signs reported - urgent clinical review is recommended.');
+                if (emergencyFlag) {
+                    carePriority = {
+                        level: 'Emergency',
+                        timeline: 'Now - same day',
+                        action: 'Go to emergency care immediately for urgent neurological/medical assessment before chiropractic treatment.'
+                    };
+                } else {
+                    carePriority = {
+                        level: 'Urgent Medical Review',
+                        timeline: 'Within 24 hours',
+                        action: 'Arrange urgent in-person medical review and share this screening report with your clinician.'
+                    };
+                }
+            }
+            
+            // Pain map scoring based on number of regions and intensity
+            const painLocations = assessmentData.pain_location || {};
+            const areaEntries = Object.entries(painLocations);
+            if (areaEntries.length > 0) {
+                const intensities = areaEntries.map(([, intensity]) => Number(intensity) || 0);
+                const averageIntensity = intensities.reduce((sum, value) => sum + value, 0) / intensities.length;
+                const maxIntensity = Math.max(...intensities);
+                const distributionScore = Math.min(18, Math.round(areaEntries.length * 2 + averageIntensity * 1.2 + maxIntensity * 0.8));
+
+                painScore += distributionScore;
+                riskScore += distributionScore;
+                riskFactors.push(`Pain map shows ${areaEntries.length} affected area(s), average intensity ${averageIntensity.toFixed(1)}/10.`);
+
+                const hasRadiatingPattern = (painLocations.lower_back && painLocations.legs) || (painLocations.neck && painLocations.arms);
+                if (hasRadiatingPattern) {
+                    riskScore += 8;
+                    painScore += 6;
+                    riskFactors.push('Radiating pain pattern reported (possible nerve root involvement).');
+                }
+            }
+            
+            if ('lower_back' in painLocations) {
+                const intensity = painLocations['lower_back'];
+                conditions.push({
+                    name: 'Lower Back Dysfunction',
+                    description: `Symptoms suggest potential lumbar spine subluxations (intensity ${intensity}/10) that may benefit from Gonstead chiropractic care.`
+                });
+            }
+            if ('neck' in painLocations) {
+                const intensity = painLocations['neck'];
+                conditions.push({
+                    name: 'Cervical Spine Issues',
+                    description: `Neck pain patterns (intensity ${intensity}/10) indicate possible cervical subluxations affecting nerve function.`
+                });
+            }
+            if ('headaches' in painLocations) {
+                const intensity = painLocations['headaches'];
+                conditions.push({
+                    name: 'Cervicogenic Headaches',
+                    description: `Headache patterns (intensity ${intensity}/10) may be related to upper cervical spine dysfunction.`
+                });
+            }
+            if ('mid_back' in painLocations) {
+                const intensity = painLocations['mid_back'];
+                conditions.push({
+                    name: 'Thoracic Dysfunction',
+                    description: `Mid-back pain patterns (intensity ${intensity}/10) suggest possible thoracic spine restrictions affecting mobility.`
+                });
+            }
+            if ('hips' in painLocations) {
+                const intensity = painLocations['hips'];
+                conditions.push({
+                    name: 'Pelvic Misalignment',
+                    description: `Hip/pelvic pain (intensity ${intensity}/10) may indicate SI joint dysfunction or pelvic imbalance.`
+                });
+            }
+            if ('legs' in painLocations) {
+                const intensity = painLocations['legs'];
+                conditions.push({
+                    name: 'Lumbar Nerve Irritation Pattern',
+                    description: `Leg symptoms (intensity ${intensity}/10) may indicate neural tension or sciatica-related irritation that needs focused assessment.`
+                });
+            }
+            if ('arms' in painLocations) {
+                const intensity = painLocations['arms'];
+                conditions.push({
+                    name: 'Cervicobrachial Symptom Pattern',
+                    description: `Arm/hand symptoms (intensity ${intensity}/10) can be associated with cervical nerve irritation and should be examined clinically.`
+                });
+            }
+            
+            // Treatment context modifiers
+            const previousTreatment = assessmentData.previous_treatment || [];
+            if (previousTreatment.includes('surgery')) {
+                riskScore += 10;
+                functionScore += 6;
+                riskFactors.push('History of spinal/related surgery requires careful staged management.');
+            }
+            if (previousTreatment.includes('injections') || previousTreatment.includes('medication')) {
+                riskScore += 4;
+                riskFactors.push('Prior interventional/medical pain treatment suggests persistent symptom burden.');
+            }
+
+            // Clamp profile subscores for display
+            painScore = Math.min(40, painScore);
+            functionScore = Math.min(40, functionScore);
+            lifestyleScore = Math.min(30, lifestyleScore);
+            riskScore = Math.min(100, riskScore);
+
+            // Build recommendations
+            recommendations.push('Schedule a comprehensive Gonstead chiropractic evaluation with full history and physical examination.');
+            recommendations.push('Follow a tailored activity-modification plan to reduce aggravating loads while staying gently active.');
+            recommendations.push('Start posture and workstation corrections with movement breaks every 30-45 minutes.');
+            recommendations.push('Use a sleep-support strategy (positioning/pillow/bedtime routine) to reduce night-time symptom amplification.');
+            
+            if (riskScore >= 60) {
+                recommendations.unshift('Prioritize an early in-person clinical review in the next 48-72 hours.');
+                recommendations.push('Consider imaging or further diagnostics if neurological signs or severe functional decline are present.');
+            }
+
+            if (hasRedFlags) {
+                recommendations.unshift('Do not rely on online screening alone when red flags are present; complete urgent in-person medical assessment first.');
+            }
+            
+            // Determine risk level
+            let riskLevel, riskColor, riskMessage;
+            if (emergencyFlag) {
+                riskLevel = 'Critical';
+                riskColor = 'risk-high';
+                riskMessage = 'Emergency warning signs were reported. Immediate same-day medical evaluation is required.';
+            } else if (riskScore <= 30) {
+                riskLevel = 'Low';
+                riskColor = 'risk-low';
+                riskMessage = 'Your current profile suggests lower short-term risk. Preventive and corrective care is still recommended.';
+            } else if (riskScore <= 60) {
+                riskLevel = 'Moderate';
+                riskColor = 'risk-moderate';
+                riskMessage = 'Several risk factors are present. A professional chiropractic assessment is advised soon.';
+            } else {
+                riskLevel = 'High';
+                riskColor = 'risk-high';
+                riskMessage = 'Multiple clinical risk drivers were identified. Prompt in-person review is strongly recommended.';
+            }
+
+            if (!hasRedFlags && riskScore >= 70) {
+                carePriority = {
+                    level: 'Priority',
+                    timeline: 'Within 48-72 hours',
+                    action: 'Book an early focused spinal and neurological assessment to guide targeted treatment.'
+                };
+            }
+            
+            showResults({
+                riskScore,
+                riskLevel,
+                riskColor,
+                riskMessage,
+                conditions,
+                recommendations,
+                riskFactors,
+                painScore,
+                functionScore,
+                lifestyleScore,
+                hasRedFlags,
+                redFlags: redFlags.filter(flag => flag !== 'none'),
+                carePriority
+            });
+        }
+        
+        // Show Results Function
+        function showResults(results) {
+            document.getElementById('assessmentModal').style.display = 'none';
+            const resultsModal = document.getElementById('resultsModal');
+            const resultsBody = document.getElementById('resultsBody');
+            latestAssessmentResults = results;
+                        const now = new Date();
+                        results.reportId = `RPT-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-GC-${Math.floor(10000 + Math.random() * 90000)}`;
+
+                        const iframe = document.createElement('iframe');
+                        iframe.className = 'report-preview-frame';
+                        iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts');
+                        iframe.srcdoc = buildV2AssessmentReportDocument(results, assessmentData, now);
+
+                        resultsBody.innerHTML = '';
+                        resultsBody.appendChild(iframe);
+            resultsModal.style.display = 'flex';
+        }
+
+                function escapeHtml(value) {
+                        return String(value ?? '')
+                                .replace(/&/g, '&amp;')
+                                .replace(/</g, '&lt;')
+                                .replace(/>/g, '&gt;')
+                                .replace(/\"/g, '&quot;')
+                                .replace(/'/g, '&#39;');
+                }
+
+                function toTitleCase(value) {
+                        if (!value) return 'N/A';
+                        return String(value)
+                                .replace(/_/g, ' ')
+                                .replace(/\b\w/g, (c) => c.toUpperCase());
+                }
+
+                function severityClassFromText(text) {
+                        const normalized = String(text || '').toLowerCase();
+                        if (normalized.includes('severe') || normalized.includes('high') || normalized.includes('significant')) return 'sev-h';
+                        if (normalized.includes('moderate') || normalized.includes('medium')) return 'sev-m';
+                        return 'sev-l';
+                }
+
+                function buildV2AssessmentReportDocument(results, data, now) {
+                        const radius = 44;
+                        const circumference = 2 * Math.PI * radius;
+                        const score = Math.max(0, Math.min(100, Number(results.riskScore) || 0));
+                        const dashOffset = circumference - (score / 100) * circumference;
+                        const riskLabel = results.riskLevel === 'Low'
+                                ? 'Low Risk'
+                                : results.riskLevel === 'Moderate'
+                                        ? 'Moderate Risk'
+                                        : results.riskLevel === 'Critical'
+                                                ? 'Critical Risk'
+                                                : 'Moderate-High Risk';
+
+                        const findingsHtml = (results.conditions || []).slice(0, 3).map((condition) => {
+                                const sevClass = severityClassFromText(condition.description);
+                                const sevLabel = sevClass === 'sev-h' ? 'Significant' : sevClass === 'sev-m' ? 'Moderate' : 'Mild';
+                                return `
+                                        <div class="finding">
+                                            <div class="find-dot"></div>
+                                            <div>
+                                                <div class="find-region">${escapeHtml(condition.name)} <span class="sev ${sevClass}">${sevLabel}</span></div>
+                                                <div class="find-detail">${escapeHtml(condition.description)}</div>
+                                            </div>
+                                        </div>
+                                `;
+                        }).join('') || `
+                                <div class="finding">
+                                    <div class="find-dot"></div>
+                                    <div>
+                                        <div class="find-region">No major finding captured <span class="sev sev-l">Mild</span></div>
+                                        <div class="find-detail">Current screening did not detect major pattern clusters. In-person examination is still advised.</div>
+                                    </div>
+                                </div>
+                        `;
+
+                        const factors = (results.riskFactors || []).slice(0, 5).map((factor, index) => {
+                                const baseline = [88, 76, 65, 55, 40][index] || 35;
+                                return `
+                                        <div class="factor">
+                                            <div class="factor-hd"><span class="factor-nm">${escapeHtml(factor)}</span><span class="factor-pc">${baseline}%</span></div>
+                                            <div class="factor-track"><div class="factor-fill" style="width:${baseline}%"></div></div>
+                                        </div>
+                                `;
+                        }).join('') || `
+                                <div class="factor">
+                                    <div class="factor-hd"><span class="factor-nm">General spinal strain indicators</span><span class="factor-pc">35%</span></div>
+                                    <div class="factor-track"><div class="factor-fill" style="width:35%"></div></div>
+                                </div>
+                        `;
+
+                        const redFlags = results.redFlags || [];
+                        const redFlagDanger = redFlags.length
+                                ? `
+                                        <div class="flag-danger">
+                                            <div class="flag-hd danger"><span class="flag-dot danger"></span>Neurological / Medical Warning Sign Detected</div>
+                                            <div class="flag-txt">${escapeHtml((RED_FLAG_LABELS[redFlags[0]] || redFlags[0]) + '. Urgent in-person medical review is recommended before or alongside chiropractic intervention.')}</div>
+                                        </div>
+                                `
+                                : '';
+
+                        const redFlagSafe = redFlags.length
+                                ? `
+                                        <div class="flag-safe">
+                                            <div class="flag-hd safe"><span class="flag-dot safe"></span>Additional Systemic Red Flags Not Reported</div>
+                                            <div class="flag-txt">No additional systemic red flags were reported in this digital screening. Continue with clinician-led verification.</div>
+                                        </div>
+                                `
+                                : `
+                                        <div class="flag-safe">
+                                            <div class="flag-hd safe"><span class="flag-dot safe"></span>No Systemic Red Flags Present</div>
+                                            <div class="flag-txt">No bowel/bladder dysfunction, unexplained weight loss, fever/chills, or cancer-risk indicators were selected in this screening.</div>
+                                        </div>
+                                `;
+
+                        const steps = (results.recommendations || []).slice(0, 6).map((item, index) => {
+                                const stepNo = String(index + 1).padStart(2, '0');
+                                const title = item.split(':')[0].slice(0, 58);
+                                return `
+                                        <div class="step">
+                                            <div class="step-n">${stepNo}</div>
+                                            <div><div class="step-title">${escapeHtml(title || 'Clinical Action Step')}</div><div class="step-desc">${escapeHtml(item)}</div></div>
+                                        </div>
+                                `;
+                        });
+
+                        while (steps.length < 6) {
+                                const idx = steps.length + 1;
+                                steps.push(`
+                                        <div class="step">
+                                            <div class="step-n">${String(idx).padStart(2, '0')}</div>
+                                            <div><div class="step-title">Follow-up Clinical Monitoring</div><div class="step-desc">Continue progress monitoring under clinician supervision and update treatment priorities as symptoms evolve.</div></div>
+                                        </div>
+                                `);
+                        }
+
+                        const leftSteps = steps.slice(0, 3).join('');
+                        const rightSteps = steps.slice(3, 6).join('');
+
+                        return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spinal Health Assessment — Gonstead Chiropractic</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --ink:#0e1a24; --teal-900:#042f35; --teal-800:#0a4a52; --teal-700:#0d6674; --teal-300:#5bbecb; --gold:#c9993a; --gold-lt:#e8c16b; --stone:#f4f1ec; --white:#ffffff; --slate:#3d5166; --muted:#6b7f92; --border:#ddd8d0; --red:#7c1f30; --red-pale:#fdf1f3; --green:#14503a; --green-pale:#eef7f2; }
+body { font-family:'Inter',sans-serif; background:#c9c5bc; color:var(--ink); padding:16px; }
+.toolbar { width:100%; max-width:940px; margin:0 auto 10px; display:flex; justify-content:space-between; align-items:center; }
+.toolbar-note { font-size:11px; color:#6b6055; letter-spacing:.04em; }
+.btn-pdf { background:var(--teal-900); color:#fff; border:none; padding:10px 18px; font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; }
+.report { width:100%; max-width:940px; margin:0 auto; background:var(--stone); box-shadow:0 16px 80px rgba(0,0,0,.22),0 2px 14px rgba(0,0,0,.10); }
+.rh { background:var(--teal-900); }
+.rh-inner { display:grid; grid-template-columns:auto 1fr auto; gap:24px; align-items:center; padding:28px 36px 24px; }
+.logo-wrap { width:88px; height:88px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center; padding:6px; }
+.logo-wrap img { width:100%; height:100%; object-fit:contain; }
+.rh-eyebrow { font-size:8px; font-weight:600; letter-spacing:.26em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+.rh-name { font-family:'Playfair Display',serif; font-size:13px; color:rgba(255,255,255,.55); letter-spacing:.12em; text-transform:uppercase; margin-bottom:2px; }
+.rh-report-name { font-family:'Playfair Display',serif; font-size:30px; font-weight:600; color:#fff; line-height:1.1; }
+.rh-sub { font-size:11px; color:rgba(255,255,255,.4); letter-spacing:.06em; margin-top:5px; font-style:italic; }
+.rh-meta { text-align:right; display:flex; flex-direction:column; gap:10px; align-items:flex-end; }
+.meta-lbl { font-size:7.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--teal-300); opacity:.7; }
+.meta-val { font-family:'JetBrains Mono',monospace; font-size:10.5px; color:rgba(255,255,255,.65); letter-spacing:.04em; }
+.confidential { display:inline-flex; align-items:center; gap:5px; background:rgba(201,153,58,.12); border:1px solid rgba(201,153,58,.3); padding:4px 10px; font-size:8px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-lt); }
+.doc-bar { background:var(--teal-800); border-bottom:2px solid var(--gold); padding:10px 36px; display:flex; justify-content:space-between; gap:16px; }
+.doc-pill { background:var(--gold); color:var(--teal-900); font-size:7.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; padding:3px 9px; }
+.doc-name { font-family:'Playfair Display',serif; font-size:16px; color:#fff; margin-left:8px; }
+.doc-creds { font-size:11px; color:rgba(255,255,255,.45); font-style:italic; margin-left:8px; }
+.doc-right { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(255,255,255,.35); border:1px solid rgba(255,255,255,.12); padding:3px 10px; letter-spacing:.06em; }
+.body { padding:30px 36px 0; }
+.slbl { font-size:7.5px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.slbl:after { content:''; flex:1; height:1px; background:var(--border); }
+.top-row { display:grid; grid-template-columns:1fr 196px; gap:20px; margin-bottom:20px; }
+.exec { background:var(--teal-900); padding:22px 24px; }
+.exec-lbl { font-size:7.5px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+.exec-quote { font-family:'Playfair Display',serif; font-size:14.5px; font-style:italic; color:rgba(255,255,255,.85); line-height:1.65; margin-bottom:12px; }
+.exec-rule { width:36px; height:1px; background:var(--gold); opacity:.4; margin-bottom:10px; }
+.exec-body { font-size:10.5px; color:rgba(255,255,255,.5); line-height:1.7; }
+.score-card { background:#fff; border:1px solid var(--border); border-top:3px solid var(--gold); display:flex; flex-direction:column; align-items:center; padding:18px 14px 16px; }
+.score-lbl { font-size:7px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; text-align:center; }
+.ring-wrap { position:relative; width:104px; height:104px; margin-bottom:12px; }
+.ring-wrap svg { transform:rotate(-90deg); display:block; }
+.ring-num { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.ring-num span:first-child { font-family:'Playfair Display',serif; font-size:34px; font-weight:700; color:var(--teal-900); }
+.ring-num span:last-child { font-size:10px; color:var(--muted); }
+.risk-badge { background:#f4b942; color:#4a2a00; font-size:8px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:4px 12px; margin-bottom:12px; }
+.priority-chip { background:var(--red); color:#fff; font-size:8px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:5px 12px; width:100%; text-align:center; margin-bottom:8px; }
+.timeline-note { font-size:9.5px; color:var(--muted); text-align:center; line-height:1.5; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+.card { background:#fff; border:1px solid var(--border); border-top:2px solid var(--teal-700); padding:16px 18px; }
+.card-title { font-size:7.5px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--teal-700); margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+.pat-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 18px; }
+.fld-lbl { font-size:8px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:2px; display:block; }
+.fld-val { font-size:11.5px; font-weight:500; color:var(--ink); }
+.finding { display:flex; gap:10px; padding:8px 0; border-bottom:1px solid #f4f1ec; }
+.finding:last-child { border-bottom:none; }
+.find-dot { width:7px; height:7px; background:var(--teal-700); border-radius:50%; margin-top:4px; }
+.find-region { font-size:10.5px; font-weight:600; color:var(--teal-900); margin-bottom:2px; }
+.find-detail { font-size:10px; color:var(--muted); line-height:1.55; }
+.sev { display:inline-block; font-size:7.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:2px 7px; }
+.sev-h { background:#fde8ec; color:var(--red); }
+.sev-m { background:#fff3e0; color:#7a4500; }
+.sev-l { background:#edf7f2; color:var(--green); }
+.factor { margin-bottom:9px; }
+.factor-hd { display:flex; justify-content:space-between; margin-bottom:4px; gap:10px; }
+.factor-nm { font-size:10.5px; color:var(--ink); }
+.factor-pc { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--teal-700); }
+.factor-track { height:3px; background:var(--stone); position:relative; overflow:hidden; }
+.factor-fill { position:absolute; top:0; left:0; height:100%; background:linear-gradient(90deg, var(--teal-800), var(--gold)); }
+.flag-danger { background:var(--red-pale); border-left:3px solid var(--red); padding:12px 15px; margin-bottom:8px; }
+.flag-safe { background:var(--green-pale); border-left:3px solid var(--green); padding:12px 15px; }
+.flag-hd { font-size:8.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; margin-bottom:5px; display:flex; align-items:center; gap:6px; }
+.flag-hd.danger { color:var(--red); }
+.flag-hd.safe { color:var(--green); }
+.flag-dot { width:6px; height:6px; border-radius:50%; }
+.flag-dot.danger { background:var(--red); }
+.flag-dot.safe { background:var(--green); }
+.flag-txt { font-size:10px; color:var(--slate); line-height:1.6; }
+.steps-wrap { background:#fff; border:1px solid var(--border); border-top:2px solid var(--teal-700); padding:16px 18px; margin-bottom:20px; }
+.steps-inner { display:grid; grid-template-columns:1fr 1fr; gap:0 24px; }
+.step { display:flex; gap:12px; padding:8px 0; border-bottom:1px solid #f4f1ec; }
+.step:last-child { border-bottom:none; }
+.step-n { width:22px; height:22px; background:var(--teal-900); color:#fff; font-family:'JetBrains Mono',monospace; font-size:9.5px; display:flex; align-items:center; justify-content:center; }
+.step-title { font-size:10.5px; font-weight:600; color:var(--ink); margin-bottom:2px; }
+.step-desc { font-size:10px; color:var(--muted); line-height:1.5; }
+.clinic-block { background:var(--teal-900); margin-top:20px; padding:20px 36px; display:grid; grid-template-columns:auto 1fr auto; gap:24px; align-items:center; border-top:2px solid var(--gold); }
+.clinic-logo { width:56px; height:56px; }
+.clinic-logo img { width:100%; height:100%; object-fit:contain; }
+.clinic-stmt { font-family:'Playfair Display',serif; font-size:12.5px; font-style:italic; color:rgba(255,255,255,.65); line-height:1.6; margin-bottom:10px; }
+.clinic-contacts { display:flex; flex-wrap:wrap; gap:12px; }
+.ci { display:flex; align-items:center; gap:5px; font-size:9.5px; color:rgba(255,255,255,.45); }
+.ci-dot { width:3px; height:3px; border-radius:50%; background:var(--gold); }
+.clinic-appt { background:rgba(201,153,58,.15); border:1px solid rgba(201,153,58,.3); padding:10px 18px; text-align:center; }
+.appt-lbl { font-size:7.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-lt); display:block; margin-bottom:3px; }
+.appt-val { font-family:'Playfair Display',serif; font-size:12px; font-weight:600; color:var(--gold-lt); }
+.report-footer { background:#07242a; padding:14px 36px; display:flex; justify-content:space-between; gap:20px; align-items:center; }
+.disclaimer { font-size:8px; color:rgba(255,255,255,.3); line-height:1.65; max-width:660px; }
+.disclaimer strong { color:rgba(255,255,255,.4); letter-spacing:.1em; text-transform:uppercase; font-size:7.5px; }
+.footer-brand { text-align:right; }
+.fb-main { font-family:'Playfair Display',serif; font-size:12px; font-weight:600; color:rgba(255,255,255,.2); letter-spacing:.05em; display:block; }
+.fb-sub { font-size:7px; color:rgba(255,255,255,.12); letter-spacing:.15em; text-transform:uppercase; }
+@media (max-width:620px){ .rh-inner{grid-template-columns:1fr;gap:12px;} .rh-meta{text-align:left;align-items:flex-start;} .body{padding:18px 14px 0;} .top-row,.two-col,.steps-inner{grid-template-columns:1fr;} .clinic-block{grid-template-columns:1fr;} .report-footer{flex-direction:column;gap:8px;padding:12px 14px;} .doc-bar{padding:10px 14px;flex-direction:column;align-items:flex-start;gap:6px;} }
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <span class="toolbar-note">Template: Gonstead_Spinal_Health_Assessment (2).html · Live patient data mapped from assessment</span>
+    <button class="btn-pdf" onclick="parent.downloadResults()">Download PDF</button>
+</div>
+
+<div class="report">
+    <div class="rh">
+        <div class="rh-inner">
+            <div class="logo-wrap"><img src="/images/gonstead-chiropractic-logo-new.png" alt="Gonstead Chiropractic"></div>
+            <div class="rh-title">
+                <div class="rh-eyebrow">Official Clinical Assessment Document</div>
+                <div class="rh-name">Gonstead Chiropractic Clinical Platform</div>
+                <div class="rh-report-name">Spinal Health<br>Assessment Report</div>
+                <div class="rh-sub">Comprehensive Digital Spinal Screening · Patient-Facing Clinical Record</div>
+            </div>
+            <div class="rh-meta">
+                <div><span class="meta-lbl">Assessment Date</span><br><span class="meta-val">${escapeHtml(now.toLocaleDateString())}</span></div>
+                <div><span class="meta-lbl">Report Generated</span><br><span class="meta-val">${escapeHtml(now.toLocaleTimeString())}</span></div>
+                <div><span class="meta-lbl">Report ID</span><br><span class="meta-val">${escapeHtml(results.reportId)}</span></div>
+                <div class="confidential">Confidential Patient Record</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="doc-bar">
+        <div><span class="doc-pill">Supervising Clinician</span><span class="doc-name">Dr. Bashir Khan</span><span class="doc-creds">DC · Gonstead Certified Practitioner</span></div>
+        <div class="doc-right">${escapeHtml(results.reportId)}</div>
+    </div>
+
+    <div class="body">
+        <div class="top-row">
+            <div>
+                <div class="slbl">Executive Summary &amp; Clinical Interpretation</div>
+                <div class="exec">
+                    <div class="exec-lbl">Clinician's Summary</div>
+                    <div class="exec-quote">"${escapeHtml(results.riskMessage)}"</div>
+                    <div class="exec-rule"></div>
+                    <div class="exec-body">Digital spinal screening conducted via the Gonstead Clinical Assessment Protocol. Findings are based on structured patient responses and require in-person physical and radiographic confirmation before diagnosis or treatment planning.</div>
+                </div>
+            </div>
+            <div>
+                <div class="slbl">Risk Profile</div>
+                <div class="score-card">
+                    <div class="score-lbl">Composite Spinal<br>Risk Score</div>
+                    <div class="ring-wrap">
+                        <svg width="104" height="104" viewBox="0 0 104 104">
+                            <circle cx="52" cy="52" r="44" fill="none" stroke="#e8e4de" stroke-width="9"/>
+                            <circle cx="52" cy="52" r="44" fill="none" stroke="#0d6674" stroke-width="9" stroke-dasharray="${circumference.toFixed(1)}" stroke-dashoffset="${dashOffset.toFixed(1)}" stroke-linecap="round"/>
+                            <circle cx="52" cy="52" r="44" fill="none" stroke="rgba(201,153,58,.3)" stroke-width="9" stroke-dasharray="${circumference.toFixed(1)}" stroke-dashoffset="${dashOffset.toFixed(1)}" stroke-linecap="round" transform="rotate(180 52 52)" opacity="0.25"/>
+                        </svg>
+                        <div class="ring-num"><span>${score}</span><span>out of 100</span></div>
+                    </div>
+                    <div class="risk-badge">${escapeHtml(riskLabel)}</div>
+                    <div class="priority-chip">${escapeHtml(results.carePriority.level)}</div>
+                    <div class="timeline-note">Recommended consultation<br><strong>${escapeHtml(results.carePriority.timeline)}</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-col">
+            <div class="card">
+                <div class="card-title">Patient Profile</div>
+                <div class="pat-grid">
+                    <div><span class="fld-lbl">Full Name</span><span class="fld-val">${escapeHtml(data.name || 'Patient')}</span></div>
+                    <div><span class="fld-lbl">Assessment Date</span><span class="fld-val">${escapeHtml(now.toLocaleDateString())}</span></div>
+                    <div><span class="fld-lbl">Age</span><span class="fld-val">${escapeHtml(data.age || 'N/A')}</span></div>
+                    <div><span class="fld-lbl">Biological Sex</span><span class="fld-val">${escapeHtml(toTitleCase(data.gender))}</span></div>
+                    <div><span class="fld-lbl">Occupation Risk Context</span><span class="fld-val">${escapeHtml((data.work_lifestyle || []).length ? `${(data.work_lifestyle || []).length} modifiers selected` : 'Not specified')}</span></div>
+                    <div><span class="fld-lbl">Assessment Mode</span><span class="fld-val">Digital Screening</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">Primary Spinal Findings</div>
+                ${findingsHtml}
+            </div>
+        </div>
+
+        <div class="two-col">
+            <div class="card">
+                <div class="card-title">Contributing Risk Factors</div>
+                ${factors}
+            </div>
+            <div class="card">
+                <div class="card-title">Red-Flag Review</div>
+                ${redFlagDanger}
+                ${redFlagSafe}
+            </div>
+        </div>
+
+        <div class="steps-wrap" style="margin-bottom:20px;">
+            <div class="slbl">Recommended Next Steps — Clinical Action Plan</div>
+            <div class="steps-inner">
+                <div>${leftSteps}</div>
+                <div>${rightSteps}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clinic-block">
+        <div class="clinic-logo"><img src="/images/gonstead-chiropractic-logo-new.png" alt="Gonstead Chiropractic"></div>
+        <div>
+            <div class="clinic-stmt">"At Gonstead Chiropractic, we are committed to evidence-informed, patient-centred spinal care — delivered with precision, compassion, and clinical integrity."</div>
+            <div class="clinic-contacts">
+                <div class="ci"><span class="ci-dot"></span>gonstead-chiropractic.com</div>
+                <div class="ci"><span class="ci-dot"></span>+92 304 699 6267</div>
+                <div class="ci"><span class="ci-dot"></span>Near Peshawar Model School, Tehsil Road, Nowshera</div>
+            </div>
+        </div>
+        <div class="clinic-appt"><span class="appt-lbl">Consultations</span><span class="appt-val">By Appointment<br>Only</span></div>
+    </div>
+
+    <div class="report-footer">
+        <div class="disclaimer"><strong>Screening Disclaimer —</strong> This document is a digital health screening result only and does not constitute a medical diagnosis, clinical opinion, or treatment recommendation. All findings must be reviewed by a licensed practitioner before clinical decisions are made.</div>
+        <div class="footer-brand"><span class="fb-main">Gonstead<br>Chiropractic</span><span class="fb-sub">Clinical Platform</span></div>
+    </div>
+</div>
+</body>
+</html>
+                        `;
+                }
+        
+        // Close Assessment
+        function closeAssessment() {
+            document.getElementById('assessmentModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close Results
+        function closeResults() {
+            document.getElementById('resultsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Download Results as PDF
+        async function downloadResults() {
+            const resultsData = getCurrentResults();
+            try {
+                await generatePDF(resultsData);
+            } catch (error) {
+                console.error('Report download failed:', error);
+                alert('Unable to generate PDF right now. A text report has been downloaded instead.');
+                downloadTextReport(resultsData);
+            }
+        }
+        
+        // Book Consultation - Navigate to appointment booking page
+        function bookConsultation() {
+            window.location.href = '/appointment-booking.html';
+        }
+        
+        // Get current assessment results for PDF generation
+        function getCurrentResults() {
+            const riskScore = latestAssessmentResults ? `${latestAssessmentResults.riskScore}/100` : (document.querySelector('.risk-score')?.textContent || 'N/A');
+            const riskLevelText = latestAssessmentResults ? `${latestAssessmentResults.riskLevel} Risk Level` : (document.querySelector('.risk-score-container h3')?.textContent || 'N/A');
+            const riskMessage = latestAssessmentResults ? latestAssessmentResults.riskMessage : (document.querySelector('.risk-score-container p')?.textContent || 'N/A');
+            const normalizedLevel = latestAssessmentResults
+                ? latestAssessmentResults.riskLevel
+                : (riskLevelText || '').replace(/\s*Risk Level\s*/i, '').trim();
+            const riskLevelClass = normalizedLevel === 'Low' ? 'low' : normalizedLevel === 'Moderate' ? 'moderate' : 'high';
+            
+            // Get conditions
+            const conditions = [];
+            document.querySelectorAll('.condition-item').forEach(item => {
+                const name = item.querySelector('.condition-name')?.textContent || '';
+                const description = item.querySelector('.condition-description')?.textContent || '';
+                if (name) conditions.push({ name, description });
+            });
+            
+            // Get recommendations
+            const recommendations = latestAssessmentResults?.recommendations || [];
+            
+            return {
+                patientName: assessmentData.name || 'Patient',
+                patientAge: assessmentData.age || 'N/A',
+                patientGender: assessmentData.gender || 'N/A',
+                riskScore,
+                riskLevel: normalizedLevel,
+                riskLevelClass,
+                riskMessage,
+                conditions,
+                recommendations,
+                riskFactors: latestAssessmentResults?.riskFactors || [],
+                reportId: latestAssessmentResults?.reportId || `RPT-${Date.now()}`,
+                carePriority: latestAssessmentResults?.carePriority || {
+                    level: 'Routine',
+                    timeline: 'Within 1-2 weeks',
+                    action: 'Schedule a standard chiropractic consultation to review findings and plan care.'
+                },
+                redFlags: latestAssessmentResults?.redFlags || [],
+                assessmentDate: new Date().toLocaleDateString(),
+                assessmentTime: new Date().toLocaleTimeString()
+            };
+        }
+        
+        // Load html2pdf at runtime to export the exact visual report without print dialog.
+        async function loadHtml2PdfLibrary() {
+            if (window.html2pdf) return;
+
+            await new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+                script.async = true;
+                script.onload = () => resolve();
+                script.onerror = () => reject(new Error('Failed to load html2pdf library'));
+                document.head.appendChild(script);
+            });
+        }
+
+        async function loadCanvasAndJsPdfLibraries() {
+            if (!window.html2canvas) {
+                await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                    script.async = true;
+                    script.onload = () => resolve();
+                    script.onerror = () => reject(new Error('Failed to load html2canvas library'));
+                    document.head.appendChild(script);
+                });
+            }
+
+            if (!(window.jspdf && window.jspdf.jsPDF)) {
+                await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                    script.async = true;
+                    script.onload = () => resolve();
+                    script.onerror = () => reject(new Error('Failed to load jsPDF library'));
+                    document.head.appendChild(script);
+                });
+            }
+        }
+
+        function sanitizeFileName(value) {
+            return String(value || 'patient')
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '_')
+                .replace(/^_+|_+$/g, '')
+                .slice(0, 40) || 'patient';
+        }
+
+        function downloadTextReport(resultsData) {
+            const lines = [];
+            lines.push('GONSTEAD CHIROPRACTIC CENTER');
+            lines.push('Spinal Health Assessment - Clinical Report');
+            lines.push('');
+            lines.push(`Patient: ${resultsData.patientName}`);
+            lines.push(`Age: ${resultsData.patientAge}`);
+            lines.push(`Gender: ${resultsData.patientGender}`);
+            lines.push(`Date: ${resultsData.assessmentDate} ${resultsData.assessmentTime}`);
+            lines.push(`Risk: ${resultsData.riskScore} (${resultsData.riskLevel})`);
+            lines.push(`Priority: ${resultsData.carePriority?.level || 'Routine'}`);
+            lines.push('');
+            lines.push('Risk Message:');
+            lines.push(resultsData.riskMessage || 'N/A');
+            lines.push('');
+            lines.push('Recommendations:');
+            (resultsData.recommendations || []).forEach((item, index) => lines.push(`${index + 1}. ${item}`));
+
+            const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `spinal_assessment_report_${Date.now()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+
+        // Generate and download exact v2 report design directly (no print UI).
+        async function generatePDF(resultsData) {
+            await loadCanvasAndJsPdfLibraries();
+
+            const previewFrame = document.querySelector('.report-preview-frame');
+            const frameDoc = previewFrame?.contentDocument;
+            const reportNode = frameDoc?.querySelector('.report');
+
+            if (!previewFrame || !frameDoc || !reportNode) {
+                throw new Error('Live report preview is not available for PDF export');
+            }
+
+            const patientSlug = sanitizeFileName(resultsData.patientName);
+            const fileName = `gonstead_assessment_${patientSlug}_${Date.now()}.pdf`;
+
+            // Build an off-screen export host and inject the template styles so html2pdf captures the exact visual design.
+            const exportHost = document.createElement('div');
+            exportHost.style.position = 'fixed';
+            exportHost.style.left = '-100000px';
+            exportHost.style.top = '0';
+            exportHost.style.width = '940px';
+            exportHost.style.background = '#c9c5bc';
+            exportHost.style.zIndex = '-1';
+
+            // Include external stylesheets (fonts) and inline template styles from iframe.
+            frameDoc.querySelectorAll('link[rel="stylesheet"]').forEach((link) => {
+                const clonedLink = document.createElement('link');
+                clonedLink.rel = 'stylesheet';
+                clonedLink.href = link.href;
+                exportHost.appendChild(clonedLink);
+            });
+
+            const mergedStyles = Array.from(frameDoc.querySelectorAll('style'))
+                .map((styleTag) => styleTag.textContent || '')
+                .join('\n');
+
+            if (mergedStyles.trim()) {
+                const styleEl = document.createElement('style');
+                styleEl.textContent = mergedStyles;
+                exportHost.appendChild(styleEl);
+            }
+
+            const reportClone = reportNode.cloneNode(true);
+            exportHost.appendChild(reportClone);
+            document.body.appendChild(exportHost);
+
+            // Let fonts/styles settle before capture for maximum visual fidelity.
+            if (document.fonts && document.fonts.ready) {
+                try {
+                    await document.fonts.ready;
+                } catch (_error) {
+                    // Ignore font readiness issues and continue export.
+                }
+            }
+
+            if (frameDoc.fonts && frameDoc.fonts.ready) {
+                try {
+                    await frameDoc.fonts.ready;
+                } catch (_error) {
+                    // Ignore font readiness issues and continue export.
+                }
+            }
+
+            const options = {
+                margin: 0,
+                filename: fileName,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#c9c5bc',
+                    logging: false
+                },
+                jsPDF: {
+                    unit: 'pt',
+                    format: 'a4',
+                    orientation: 'portrait'
+                },
+                pagebreak: { mode: ['css', 'legacy'] }
+            };
+
+            try {
+                // Capture the report as one canvas, fit to full A4 width,
+                // and paginate vertically so each PDF page keeps perfect horizontal fit.
+                const canvas = await window.html2canvas(reportClone, options.html2canvas);
+                const imageData = canvas.toDataURL('image/jpeg', 0.98);
+
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'portrait' });
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+
+                // Force single-page A4 output: scale report to fit both page width and height.
+                const widthScale = pageWidth / canvas.width;
+                const heightScale = pageHeight / canvas.height;
+                const fitScale = Math.min(widthScale, heightScale);
+
+                const renderWidth = canvas.width * fitScale;
+                const renderHeight = canvas.height * fitScale;
+                const offsetX = (pageWidth - renderWidth) / 2;
+                const offsetY = (pageHeight - renderHeight) / 2;
+
+                pdf.addImage(imageData, 'JPEG', offsetX, offsetY, renderWidth, renderHeight, undefined, 'FAST');
+
+                // Force direct file download instead of letting browser PDF viewers open first.
+                const pdfBlob = pdf.output('blob');
+                const pdfUrl = URL.createObjectURL(pdfBlob);
+                const link = document.createElement('a');
+                link.href = pdfUrl;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                setTimeout(() => URL.revokeObjectURL(pdfUrl), 1000);
+            } finally {
+                exportHost.remove();
+            }
+        }
+        
+        // Retake Assessment
+        function retakeAssessment() {
+            closeResults();
+            startAssessment();
+        }
+        
+        // Email notification functions (existing)
+        function subscribeNotification() {
+            const email = document.getElementById('emailNotification').value;
+            
+            if (!email) {
+                alert('Please enter your email address.');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            alert('Thank you! We\'ll notify you as soon as new features are available.');
+            document.getElementById('emailNotification').value = '';
+        }
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeAssessment();
+                closeResults();
+            }
+        });
+        
+        // Language support
+        let currentLanguage = 'english';
+        
+        const translations = {
+            english: {
+                langText: 'اردو میں دیکھیں',
+                headerTitle: 'Advanced Spinal Health Assessment',
+                headerSubtitle: 'Take our comprehensive clinical-grade assessment to receive personalized insights about your spinal health and discover how our specialized Gonstead chiropractic care can optimize your healing journey.',
+                welcomeTitle: 'Welcome to Your Personalized Spinal Health Journey',
+                welcomeText: 'Our advanced assessment system will evaluate your current spinal health status and provide you with personalized recommendations based on the Gonstead chiropractic principles.',
+                startButton: 'Begin Spinal Health Assessment',
+                modalTitle: 'Spinal Health Assessment',
+                progressText: 'Question',
+                of: 'of',
+                previous: 'Previous',
+                next: 'Next',
+                getResults: 'Get Results',
+                resultsTitle: 'Your Spinal Health Assessment Results',
+                downloadReport: 'Download Report',
+                bookConsultation: 'Book Consultation',
+                retakeAssessment: 'Retake Assessment',
+                selectOption: 'Please select an option before continuing',
+                selectAtLeastOne: 'Please select at least one option',
+                pleaseEnter: 'Please enter',
+                pleaseSelect: 'Please select',
+                riskLevel: 'Risk Level',
+                potentialConcerns: 'Potential Areas of Concern',
+                recommendations: 'Professional Recommendations',
+                whyGonstead: 'Why Choose Gonstead Chiropractic?',
+                trustItems: ['Professional Grade', 'Confidential', 'Evidence-Based'],
+                featureTitles: ['Professional Analysis', 'Quick & Easy', 'Personalized Report', 'Expert Guidance'],
+                featureDescriptions: [
+                    'Based on Gonstead chiropractic principles and diagnostic methods',
+                    'Takes only 5 minutes to complete with instant results',
+                    'Detailed insights and recommendations tailored to your needs',
+                    'Professional recommendations for your spinal health journey'
+                ]
+            },
+            urdu: {
+                langText: 'View in English',
+                headerTitle: 'ایڈوانسڈ اسپائنل ہیلتھ اسیسمنٹ',
+                headerSubtitle: 'اپنی اسپائنل ہیلتھ کے بارے میں ذاتی بصیرت حاصل کرنے کے لیے ہمارا جامع کلینکل گریڈ اسیسمنٹ لیں اور دیکھیں کہ ہماری خصوصی گونسٹڈ کائروپریکٹک کیئر آپ کے شفا یابی کے سفر کو کیسے بہتر بنا سکتی ہے۔',
+                welcomeTitle: 'آپ کے ذاتی اسپائنل ہیلتھ جرنی میں خوش آمدید',
+                welcomeText: 'ہمارا ایڈوانسڈ اسیسمنٹ سسٹم آپ کی موجودہ اسپائنل ہیلتھ کی صورتحال کا جائزہ لے گا اور گونسٹڈ کائروپریکٹک اصولوں کی بنیاد پر آپ کو ذاتی سفارشات فراہم کرے گا۔',
+                startButton: 'اسپائنل ہیلتھ اسیسمنٹ شروع کریں',
+                modalTitle: 'اسپائنل ہیلتھ اسیسمنٹ',
+                progressText: 'سوال',
+                of: 'میں سے',
+                previous: 'پچھلا',
+                next: 'اگلا',
+                getResults: 'نتائج دیکھیں',
+                resultsTitle: 'آپ کے اسپائنل ہیلتھ اسیسمنٹ کے نتائج',
+                downloadReport: 'رپورٹ ڈاؤن لوڈ کریں',
+                bookConsultation: 'مشاورت بک کریں',
+                retakeAssessment: 'دوبارہ اسیسمنٹ لیں',
+                selectOption: 'برائے کرم آگے بڑھنے سے پہلے ایک آپشن منتخب کریں',
+                selectAtLeastOne: 'برائے کرم کم از کم ایک آپشن منتخب کریں',
+                pleaseEnter: 'برائے کرم داخل کریں',
+                pleaseSelect: 'برائے کرم منتخب کریں',
+                riskLevel: 'رسک لیول',
+                potentialConcerns: 'ممکنہ تشویش کے علاقے',
+                recommendations: 'پیشہ ورانہ سفارشات',
+                whyGonstead: 'گونسٹڈ کائروپریکٹک کیوں منتخب کریں؟',
+                trustItems: ['پیشہ ورانہ درجہ', 'خفیہ', 'ثبوت پر مبنی'],
+                featureTitles: ['پیشہ ورانہ تجزیہ', 'تیز اور آسان', 'ذاتی رپورٹ', 'ماہر رہنمائی'],
+                featureDescriptions: [
+                    'گونسٹڈ کائروپریکٹک اصولوں اور تشخیصی طریقوں پر مبنی',
+                    'مکمل کرنے میں صرف 5 منٹ لگتے ہیں اور فوری نتائج',
+                    'آپ کی ضروریات کے مطابق تفصیلی بصیرت اور سفارشات',
+                    'آپ کے اسپائنل ہیلتھ جرنی کے لیے پیشہ ورانہ سفارشات'
+                ]
+            }
+        };
+        
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'english' ? 'urdu' : 'english';
+            const t = translations[currentLanguage];
+            
+            // Update language button text
+            document.getElementById('langText').textContent = t.langText;
+            
+            // Update main content
+            document.getElementById('headerTitle').textContent = t.headerTitle;
+            document.getElementById('headerSubtitle').textContent = t.headerSubtitle;
+            
+            // Update welcome section if visible
+            const welcomeTitle = document.querySelector('.welcome-message h2');
+            const welcomeText = document.querySelector('.welcome-message p');
+            if (welcomeTitle) welcomeTitle.textContent = t.welcomeTitle;
+            if (welcomeText) welcomeText.textContent = t.welcomeText;
+            
+            // Update start button
+            const startButton = document.querySelector('.start-button');
+            if (startButton) {
+                startButton.innerHTML = `<i class="fas fa-play"></i> ${t.startButton}`;
+            }
+            
+            // Update modal elements if open
+            const modalTitle = document.getElementById('modalTitle');
+            if (modalTitle) modalTitle.textContent = t.modalTitle;
+            
+            // Update feature cards
+            const featureTitles = document.querySelectorAll('.feature-title');
+            const featureDescriptions = document.querySelectorAll('.feature-description');
+            const trustSpans = document.querySelectorAll('.trust-item span');
+            
+            featureTitles.forEach((title, index) => {
+                if (t.featureTitles[index]) {
+                    title.textContent = t.featureTitles[index];
+                }
+            });
+            
+            featureDescriptions.forEach((desc, index) => {
+                if (t.featureDescriptions[index]) {
+                    desc.textContent = t.featureDescriptions[index];
+                }
+            });
+            
+            trustSpans.forEach((span, index) => {
+                if (t.trustItems[index]) {
+                    span.textContent = t.trustItems[index];
+                }
+            });
+            
+            // Apply RTL styling for Urdu
+            if (currentLanguage === 'urdu') {
+                document.body.classList.add('rtl');
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ur');
+            } else {
+                document.body.classList.remove('rtl');
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', 'en');
+            }
+            
+            // Update progress text if assessment is running
+            updateProgressText();
+            
+            // Update button texts
+            updateButtonTexts();
+        }
+        
+        function updateProgressText() {
+            const progressText = document.getElementById('progressText');
+            if (progressText && currentQuestion >= 0) {
+                const t = translations[currentLanguage];
+                if (currentLanguage === 'urdu') {
+                    progressText.textContent = `${t.progressText} ${currentQuestion + 1} ${totalQuestions} ${t.of}`;
+                } else {
+                    progressText.textContent = `${t.progressText} ${currentQuestion + 1} ${t.of} ${totalQuestions}`;
+                }
+            }
+        }
+        
+        function updateButtonTexts() {
+            const t = translations[currentLanguage];
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (prevBtn) {
+                if (currentLanguage === 'urdu') {
+                    prevBtn.innerHTML = `<i class="fas fa-arrow-right"></i> ${t.previous}`;
+                } else {
+                    prevBtn.innerHTML = `<i class="fas fa-arrow-left"></i> ${t.previous}`;
+                }
+            }
+            
+            if (nextBtn) {
+                if (currentQuestion === totalQuestions - 1) {
+                    if (currentLanguage === 'urdu') {
+                        nextBtn.innerHTML = `${t.getResults} <i class="fas fa-chart-line"></i>`;
+                    } else {
+                        nextBtn.innerHTML = `${t.getResults} <i class="fas fa-chart-line"></i>`;
+                    }
+                } else {
+                    if (currentLanguage === 'urdu') {
+                        nextBtn.innerHTML = `${t.next} <i class="fas fa-arrow-left"></i>`;
+                    } else {
+                        nextBtn.innerHTML = `${t.next} <i class="fas fa-arrow-right"></i>`;
+                    }
+                }
+            }
+        }
+        
+        // Interactive Body Map Rendering Function
+        function renderInteractiveBodyMap(question) {
+            const selectedAreas = assessmentData.pain_location || {};
+            
+            return `
+                <div class="interactive-body-container">
+                    <div class="body-diagram-container">
+                        <h5 style="margin-bottom: 15px; color: #0d5c75; font-weight: 600;">Select Pain Areas</h5>
+                        <svg class="body-diagram" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Head -->
+                            <circle cx="150" cy="40" r="25" class="body-region" data-area="headaches" onclick="selectBodyArea('headaches')" />
+                            <text x="150" y="45" text-anchor="middle" font-size="12" fill="#666">Head</text>
+                            
+                            <!-- Neck -->
+                            <rect x="135" y="65" width="30" height="20" class="body-region" data-area="neck" onclick="selectBodyArea('neck')" />
+                            <text x="150" y="77" text-anchor="middle" font-size="10" fill="#666">Neck</text>
+                            
+                            <!-- Upper Back/Shoulders -->
+                            <rect x="120" y="85" width="60" height="25" class="body-region" data-area="upper_back" onclick="selectBodyArea('upper_back')" />
+                            <text x="150" y="100" text-anchor="middle" font-size="10" fill="#666">Upper Back</text>
+                            
+                            <!-- Arms -->
+                            <rect x="90" y="90" width="20" height="60" class="body-region" data-area="arms" onclick="selectBodyArea('arms')" />
+                            <rect x="190" y="90" width="20" height="60" class="body-region" data-area="arms" onclick="selectBodyArea('arms')" />
+                            <text x="100" y="125" text-anchor="middle" font-size="9" fill="#666">Arms</text>
+                            
+                            <!-- Mid Back -->
+                            <rect x="130" y="110" width="40" height="30" class="body-region" data-area="mid_back" onclick="selectBodyArea('mid_back')" />
+                            <text x="150" y="127" text-anchor="middle" font-size="10" fill="#666">Mid Back</text>
+                            
+                            <!-- Lower Back -->
+                            <rect x="135" y="140" width="30" height="35" class="body-region" data-area="lower_back" onclick="selectBodyArea('lower_back')" />
+                            <text x="150" y="160" text-anchor="middle" font-size="10" fill="#666">Lower Back</text>
+                            
+                            <!-- Hips/Pelvis -->
+                            <rect x="125" y="175" width="50" height="25" class="body-region" data-area="hips" onclick="selectBodyArea('hips')" />
+                            <text x="150" y="190" text-anchor="middle" font-size="10" fill="#666">Hips</text>
+                            
+                            <!-- Legs -->
+                            <rect x="130" y="200" width="15" height="80" class="body-region" data-area="legs" onclick="selectBodyArea('legs')" />
+                            <rect x="155" y="200" width="15" height="80" class="body-region" data-area="legs" onclick="selectBodyArea('legs')" />
+                            <text x="150" y="245" text-anchor="middle" font-size="10" fill="#666">Legs</text>
+                        </svg>
+                    </div>
+                    
+                    <div class="pain-controls">
+                        <div class="pain-area-selector">
+                            <h5 style="margin-bottom: 15px; color: #0d5c75; font-weight: 600;">Quick Select Areas</h5>
+                            <div class="area-buttons">
+                                ${question.options.map(option => `
+                                    <button type="button" class="area-btn" data-area="${option.value}" onclick="selectBodyArea('${option.value}')">
+                                        ${option.label.split('/')[0]}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="pain-intensity-slider" id="intensitySliderContainer" style="display: none;">
+                            <h5 style="margin-bottom: 10px; color: #0d5c75; font-weight: 600;">Pain Intensity</h5>
+                            <div class="slider-container">
+                                <input type="range" min="1" max="10" value="5" class="pain-slider" id="painSlider">
+                                <div class="pain-value-display">
+                                    <span id="painValue">5</span>/10
+                                </div>
+                                <div class="pain-description" id="painDescription">Moderate Pain</div>
+                            </div>
+                            <button type="button" class="btn-primary" onclick="addPainArea()" style="width: 100%; margin-top: 15px;">
+                                Add Pain Area
+                            </button>
+                        </div>
+                        
+                        <div class="selected-areas-summary" id="selectedAreasSummary">
+                            <div class="summary-title">Selected Pain Areas</div>
+                            <div id="summaryContent">
+                                <p style="color: #666; font-style: italic;">No areas selected yet</p>
+                            </div>
+                        </div>
+                        
+                        <div class="educational-tip">
+                            <i class="fas fa-info-circle tip-icon"></i>
+                            <div class="tip-title">Assessment Tip</div>
+                            <div class="tip-content">Click on body areas or use the buttons to indicate where you experience pain. Rate each area's intensity from 1-10 to help us provide more accurate recommendations.</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Select body area function
+        function selectBodyArea(area) {
+            currentSelectedArea = area;
+            
+            // Update button states
+            document.querySelectorAll('.area-btn').forEach(btn => {
+                if (btn.dataset.area === area) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            
+            // Update SVG visual states
+            document.querySelectorAll('.body-region').forEach(region => {
+                if (region.dataset.area === area) {
+                    region.classList.add('selected');
+                } else {
+                    region.classList.remove('selected');
+                }
+            });
+            
+            // Show intensity slider
+            const sliderContainer = document.getElementById('intensitySliderContainer');
+            if (sliderContainer) {
+                sliderContainer.style.display = 'block';
+                
+                // Set existing intensity if area was previously selected
+                const slider = document.getElementById('painSlider');
+                if (selectedBodyAreas[area]) {
+                    slider.value = selectedBodyAreas[area];
+                    updatePainDisplay(selectedBodyAreas[area]);
+                } else {
+                    slider.value = 5;
+                    updatePainDisplay(5);
+                }
+            }
+            
+            // Add event listener for slider if not already added
+            const painSlider = document.getElementById('painSlider');
+            if (painSlider && !painSlider.hasAttribute('data-listener')) {
+                painSlider.addEventListener('input', function() {
+                    updatePainDisplay(this.value);
+                });
+                painSlider.setAttribute('data-listener', 'true');
+            }
+        }
+        
+        // Update pain display
+        function updatePainDisplay(value) {
+            const painValue = document.getElementById('painValue');
+            const painDescription = document.getElementById('painDescription');
+            
+            if (painValue) painValue.textContent = value;
+            
+            if (painDescription) {
+                let description = '';
+                if (value <= 3) description = 'Mild Pain';
+                else if (value <= 6) description = 'Moderate Pain';
+                else description = 'Severe Pain';
+                painDescription.textContent = description;
+            }
+        }
+        
+        // Add pain area to selection
+        function addPainArea() {
+            if (!currentSelectedArea) return;
+            
+            const painLevel = document.getElementById('painSlider').value;
+            selectedBodyAreas[currentSelectedArea] = parseInt(painLevel);
+            
+            // Update assessment data
+            assessmentData.pain_location = selectedBodyAreas;
+            
+            // Update summary display
+            updateSelectedAreasSummary();
+            
+            // Reset selection state
+            document.querySelectorAll('.area-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelectorAll('.body-region').forEach(region => region.classList.remove('selected'));
+            document.getElementById('intensitySliderContainer').style.display = 'none';
+            currentSelectedArea = null;
+        }
+        
+        // Update selected areas summary
+        function updateSelectedAreasSummary() {
+            const summaryContent = document.getElementById('summaryContent');
+            if (!summaryContent) return;
+            
+            if (Object.keys(selectedBodyAreas).length === 0) {
+                summaryContent.innerHTML = '<p style="color: #666; font-style: italic;">No areas selected yet</p>';
+                return;
+            }
+            
+            let html = '';
+            Object.keys(selectedBodyAreas).forEach(area => {
+                const intensity = selectedBodyAreas[area];
+                const intensityClass = intensity <= 3 ? 'low' : intensity <= 6 ? 'moderate' : 'high';
+                
+                html += `
+                    <div class="summary-item">
+                        <span class="area-name">${BODY_AREA_LABELS[area] || area}</span>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="intensity-badge ${intensityClass}">${intensity}/10</span>
+                            <button class="remove-area-btn" onclick="removePainArea('${area}')" title="Remove area">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            summaryContent.innerHTML = html;
+        }
+        
+        // Remove pain area
+        function removePainArea(area) {
+            delete selectedBodyAreas[area];
+            assessmentData.pain_location = selectedBodyAreas;
+            updateSelectedAreasSummary();
+        }
+        
+    </script>
+</body>
+</html>

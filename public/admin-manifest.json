@@ -1,0 +1,116 @@
+{
+  "name": "Gonstead Chiropractic Admin",
+  "short_name": "GC Admin",
+  "description": "Gonstead Chiropractic Admin Dashboard - Patient Management System",
+  "start_url": "/admin/dashboard",
+  "display": "standalone",
+  "background_color": "#0d5c75",
+  "theme_color": "#0d5c75",
+  "orientation": "portrait",
+  "scope": "/admin",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["productivity", "medical", "healthcare"],
+  "icons": [
+    {
+      "src": "/images/gonstead-chiropractic-logo-new.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/gonstead-chiropractic-logo-new.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/gonstead-chiropractic-logo-new.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/gonstead-chiropractic-logo-new.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/gonstead-chiropractic-logo-new.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/gonstead-chiropractic-logo-new.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/gonstead-chiropractic-logo-new.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/gonstead-chiropractic-logo-new.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Main admin dashboard",
+      "url": "/admin/dashboard",
+      "icons": [
+        {
+          "src": "/images/gonstead-chiropractic-logo-new.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Patients",
+      "short_name": "Patients",
+      "description": "Patient tracking",
+      "url": "/admin/patient-tracking",
+      "icons": [
+        {
+          "src": "/images/gonstead-chiropractic-logo-new.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Calendar",
+      "short_name": "Calendar",
+      "description": "Appointment calendar",
+      "url": "/admin/calendar",
+      "icons": [
+        {
+          "src": "/images/gonstead-chiropractic-logo-new.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Money",
+      "short_name": "Money",
+      "description": "Money management",
+      "url": "/admin/money-management",
+      "icons": [
+        {
+          "src": "/images/gonstead-chiropractic-logo-new.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
+

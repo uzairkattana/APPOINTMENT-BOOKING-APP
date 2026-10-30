@@ -1,0 +1,348 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 47% 8%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 32% 17%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 212 100% 47%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 212 100% 47%;
+    --sidebar-primary-foreground: 222 47% 8%;
+    --sidebar-accent: 217 32% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 32% 17%;
+    --sidebar-ring: 212 100% 47%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Professional enhancements */
+@layer components {
+  /* Enhanced dark mode visibility - Fix all font colors */
+  .dark {
+    color-scheme: dark;
+  }
+  
+  /* Enhanced dark mode visibility - Complete fix */
+  .dark {
+    color: rgb(229 231 235) !important;
+  }
+  
+  /* Primary text colors for dark mode */
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6 {
+    color: rgb(249 250 251) !important;
+  }
+  
+  .dark p {
+    color: rgb(229 231 235) !important;
+  }
+  
+  .dark span:not(.bg-gradient-to-r):not(.bg-gradient-to-br):not(.bg-gradient-to-l):not(.bg-gradient-to-t):not(.bg-gradient-to-b):not(.text-transparent) {
+    color: rgb(229 231 235) !important;
+  }
+  
+  .dark div:not(.bg-gradient-to-r):not(.bg-gradient-to-br):not(.bg-gradient-to-l):not(.bg-gradient-to-t):not(.bg-gradient-to-b):not(.text-transparent) {
+    color: rgb(229 231 235) !important;
+  }
+  
+  .dark .text-white {
+    color: rgb(255 255 255) !important;
+  }
+  
+  .dark .text-gray-600 {
+    color: rgb(209 213 219) !important;
+  }
+  
+  .dark .text-gray-300 {
+    color: rgb(229 231 235) !important;
+  }
+  
+  .dark .text-gray-500 {
+    color: rgb(156 163 175) !important;
+  }
+  
+  .dark .text-gray-400 {
+    color: rgb(156 163 175) !important;
+  }
+  
+  .dark .text-gray-700 {
+    color: rgb(209 213 219) !important;
+  }
+  
+  /* Muted text with better contrast */
+  .dark .text-muted-foreground {
+    color: rgb(156 163 175) !important;
+  }
+  
+  /* Button text visibility */
+  .dark button {
+    color: rgb(229 231 235) !important;
+  }
+  
+  /* Exception for buttons with specific backgrounds */
+  .dark button[class*="bg-gradient"] {
+    color: rgb(255 255 255) !important;
+  }
+  
+  .dark button[class*="bg-green"] {
+    color: rgb(255 255 255) !important;
+  }
+  
+  .dark button[class*="bg-blue"] {
+    color: rgb(255 255 255) !important;
+  }
+  
+  /* Link visibility */
+  .dark a {
+    color: rgb(147 197 253) !important;
+  }
+  
+  .dark a:hover {
+    color: rgb(96 165 250) !important;
+  }
+  
+  /* Input and form elements */
+  .dark input,
+  .dark textarea,
+  .dark select {
+    color: rgb(229 231 235) !important;
+    background-color: rgb(30 41 59) !important;
+    border-color: rgb(71 85 105) !important;
+  }
+  
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: rgb(156 163 175) !important;
+  }
+  
+  /* Card and content backgrounds */
+  .dark .card,
+  .dark [data-component="card"] {
+    background-color: rgb(30 41 59) !important;
+    border-color: rgb(71 85 105) !important;
+  }
+  
+  /* Label visibility */
+  .dark label {
+    color: rgb(229 231 235) !important;
+  }
+  
+  /* Special handling for badges and status elements */
+  .dark .badge {
+    color: inherit !important;
+  }
+  
+  /* Card titles and headers */
+  .dark .card-header {
+    color: rgb(255 255 255) !important;
+  }
+  
+  /* Navigation elements */
+  .dark nav {
+    color: rgb(229 231 235) !important;
+  }
+  
+  /* Footer elements */
+  .dark footer {
+    color: rgb(229 231 235) !important;
+  }
+  
+  /* Button enhancements */
+  .btn-premium {
+    @apply relative overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl;
+  }
+  
+  .btn-premium:before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full transition-transform duration-700;
+  }
+  
+  .btn-premium:hover:before {
+    @apply translate-x-full;
+  }
+  
+  /* Professional animations */
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+    }
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  /* Card enhancements */
+  .card-premium {
+    @apply relative overflow-hidden backdrop-blur-sm border-2;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.1) 0%, 
+      rgba(255, 255, 255, 0.05) 100%);
+    transition: all 0.3s ease;
+  }
+  
+  .dark .card-premium {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.05) 0%, 
+      rgba(255, 255, 255, 0.02) 100%);
+  }
+  
+  .card-premium:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark .card-premium:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Text enhancements for better readability */
+  .text-premium {
+    @apply font-medium tracking-wide;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark .text-premium {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Professional gradients */
+  .gradient-primary {
+    background: linear-gradient(135deg, #0d5c75 0%, #2a9d8f 100%);
+  }
+  
+  .gradient-secondary {
+    background: linear-gradient(135deg, #2a9d8f 0%, #0d5c75 100%);
+  }
+  
+  /* Enhanced focus states */
+  .focus-premium:focus {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+    transition: all 0.2s ease;
+  }
+  
+  .dark .focus-premium:focus {
+    @apply ring-blue-400 ring-offset-gray-900;
+  }
+  
+  /* Professional shadows */
+  .shadow-premium {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .dark .shadow-premium {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+}

@@ -1,0 +1,238 @@
+/* Gonstead Chiropractic Calendar Styling */
+
+/* Professional animation delays */
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1000ms;
+}
+
+.animation-delay-1500 {
+  animation-delay: 1500ms;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2000ms;
+}
+
+.animation-delay-3000 {
+  animation-delay: 3000ms;
+}
+
+/* Reverse animation for spine effect */
+.animation-reverse {
+  animation-direction: reverse;
+}
+
+/* Gonstead Calendar Specific Animations */
+@keyframes spineAlign {
+  0% { transform: translateY(2px); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(2px); }
+}
+
+.spine-animation {
+  animation: spineAlign 3s ease-in-out infinite;
+}
+
+/* Professional hover effects for appointment blocks */
+@keyframes appointmentPulse {
+  0% { box-shadow: 0 0 0 0 rgba(13, 92, 117, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(13, 92, 117, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(13, 92, 117, 0); }
+}
+
+.appointment-pulse {
+  animation: appointmentPulse 2s infinite;
+}
+
+/* Gradient text for headers */
+.gonstead-gradient-text {
+  background: linear-gradient(135deg, #0d5c75 0%, #2a9d8f 50%, #f3a800 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glass morphism effects */
+.glass-effect {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Subtle medical cross pattern */
+.medical-pattern {
+  background-image: 
+    linear-gradient(45deg, rgba(13, 92, 117, 0.03) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(13, 92, 117, 0.03) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(42, 157, 143, 0.03) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(42, 157, 143, 0.03) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* Professional loading states */
+.skeleton-loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Calendar grid enhancements */
+.calendar-day-today {
+  position: relative;
+}
+
+.calendar-day-today::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(13, 92, 117, 0.1) 0%, rgba(42, 157, 143, 0.1) 100%);
+  border-radius: 8px;
+  z-index: -1;
+}
+
+/* Appointment status indicators */
+.status-confirmed {
+  border-left: 4px solid #10b981;
+}
+
+.status-pending {
+  border-left: 4px solid #f59e0b;
+}
+
+.status-cancelled {
+  border-left: 4px solid #ef4444;
+}
+
+.status-completed {
+  border-left: 4px solid #059669;
+}
+
+/* Urgency indicators */
+.urgency-emergency {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.9) 0%, rgba(185, 28, 28, 0.9) 100%);
+  animation: emergencyPulse 1s infinite alternate;
+}
+
+@keyframes emergencyPulse {
+  0% { box-shadow: 0 0 5px rgba(220, 38, 38, 0.5); }
+  100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.8); }
+}
+
+.urgency-urgent {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(217, 119, 6, 0.9) 100%);
+}
+
+.urgency-normal {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.9) 0%, rgba(5, 150, 105, 0.9) 100%);
+}
+
+/* Smooth transitions for all interactive elements */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Professional scroll bars */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(13, 92, 117, 0.3) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0d5c75, #2a9d8f);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #0a4a5c, #238a7a);
+}
+
+/* Responsive text scaling */
+@media (max-width: 768px) {
+  .gonstead-title {
+    font-size: 1.5rem;
+  }
+  
+  .appointment-block {
+    padding: 8px;
+    font-size: 10px;
+  }
+}
+
+/* Print styles for calendar */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .calendar-grid {
+    break-inside: avoid;
+  }
+  
+  .appointment-block {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .appointment-block {
+    border: 2px solid currentColor;
+  }
+  
+  .status-indicator {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .animate-pulse {
+    animation: none;
+  }
+  
+  .animate-spin {
+    animation: none;
+  }
+}

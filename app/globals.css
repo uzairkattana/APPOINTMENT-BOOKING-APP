@@ -1,0 +1,1025 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer base {
+  :root {
+    --background: 248 245 240; /* #F8F5F0 ivory */
+    --foreground: 10 58 71; /* #0A3A47 dark teal */
+    --card: 254 252 248; /* #FEFCF8 light ivory */
+    --card-foreground: 10 58 71;
+    --popover: 254 252 248;
+    --popover-foreground: 10 58 71;
+    --primary: 13 92 117; /* #0d5c75 teal */
+    --primary-foreground: 248 245 240;
+    --secondary: 66 139 124; /* rgb(66,139,124) teal-green */
+    --secondary-foreground: 10 58 71;
+    --muted: 248 245 240;
+    --muted-foreground: 10 58 71;
+    --accent: 66 139 124;
+    --accent-foreground: 10 58 71;
+    --destructive: 239 68 68;
+    --destructive-foreground: 248 245 240;
+    --border: 13 92 117;
+    --input: 13 92 117;
+    --ring: 66 139 124;
+    --radius: 0.75rem;
+
+    /* Custom spine colors */
+    --spine-primary: #0d5c75;
+    --spine-secondary: rgb(66,139,124);
+    --spine-ivory: #f8f5f0;
+    --spine-text: #0a3a47;
+
+    /* Font variables */
+    --font-poppins: var(--font-poppins);
+    --font-open-sans: var(--font-open-sans);
+  }
+
+  .dark {
+    /* Futuristic Dark Theme - Ultra Modern */
+    --background: 8 8 16; /* Deep space black */
+    --foreground: 220 255 255; /* Bright cyan-white */
+    --card: 12 15 28; /* Dark neural network */
+    --card-foreground: 200 255 255; /* Bright cyan text */
+    --popover: 15 20 35;
+    --popover-foreground: 220 255 255;
+    --primary: 0 255 255; /* Electric cyan */
+    --primary-foreground: 8 8 16;
+    --secondary: 20 25 45; /* Deep neural */
+    --secondary-foreground: 180 220 255;
+    --muted: 25 30 50;
+    --muted-foreground: 140 180 220;
+    --accent: 255 0 128; /* Electric magenta */
+    --accent-foreground: 8 8 16;
+    --destructive: 255 50 100;
+    --destructive-foreground: 255 255 255;
+    --border: 30 40 70; /* Neon borders */
+    --input: 25 35 60;
+    --ring: 0 255 255; /* Cyan focus rings */
+    
+    /* Futuristic custom properties */
+    --neon-cyan: #00ffff;
+    --neon-magenta: #ff0080;
+    --neon-blue: #0080ff;
+    --neural-dark: #0c0f1c;
+    --space-black: #080810;
+    --electric-cyan: #00f5ff;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: light;
+    font-family: var(--font-open-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background-color: #F8F5F0; /* Original ivory background */
+    color: #0a3a47; /* Dark teal text */
+    font-family: var(--font-open-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .dark body {
+    background-color: #1a202c !important; /* Dark theme background */
+    color: #ffffff !important; /* White text for dark theme */
+  }
+
+  .font-poppins {
+    font-family: var(--font-poppins), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+      Arial, sans-serif;
+  }
+
+  .font-open-sans {
+    font-family: var(--font-open-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Performance optimizations for mobile */
+  @media (max-width: 768px) {
+    /* Disable expensive animations on mobile */
+    .backdrop-blur-xl {
+      backdrop-filter: blur(8px);
+    }
+    .backdrop-blur-sm {
+      backdrop-filter: blur(2px);
+    }
+    .animate-pulse {
+      animation: none;
+    }
+    .animate-bounce {
+      animation: none;
+    }
+    .animate-spin {
+      animation: none;
+    }
+    /* Reduce transform operations */
+    .transform-gpu {
+      transform: none;
+    }
+    /* Simplify gradients */
+    .bg-gradient-to-br {
+      background: linear-gradient(135deg, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%);
+    }
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-pulse,
+    .animate-bounce,
+    .animate-spin,
+    .animate-gradient {
+      animation: none;
+    }
+    .transition-transform,
+    .transition-all {
+      transition: none;
+    }
+  }
+
+  /* Admin performance optimization styles */
+  .admin-compact {
+    /* Optimized rendering for admin pages */
+    will-change: auto;
+    contain: layout style;
+    
+    /* Reduce animation complexity */
+    * {
+      animation-duration: 0.15s !important;
+      transition-duration: 0.15s !important;
+    }
+    
+    /* Optimize backdrop blur for performance */
+    .backdrop-blur-xl {
+      backdrop-filter: blur(4px);
+    }
+    
+    .backdrop-blur-lg {
+      backdrop-filter: blur(2px);
+    }
+    
+    /* Simplify gradients for admin pages */
+    .bg-gradient-to-br,
+    .bg-gradient-to-r {
+      background: linear-gradient(var(--tw-gradient-from), var(--tw-gradient-to));
+    }
+    
+    /* Optimize transform operations */
+    .transform {
+      transform: translateZ(0);
+    }
+    
+    /* Reduce shadow complexity */
+    .shadow-2xl {
+      box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.15);
+    }
+    
+    .shadow-xl {
+      box-shadow: 0 8px 20px -3px rgb(0 0 0 / 0.12);
+    }
+  }
+}
+
+/* Doctor Name Gold Gradient Effect */
+.doctor-name-gradient {
+  background: linear-gradient(135deg, rgb(66,139,124), #66d9ef, rgb(66,139,124));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease-in-out infinite;
+  position: relative;
+}
+
+/* Dark mode text visibility fixes */
+.dark .doctor-name-gradient {
+  background: linear-gradient(135deg, #66d9ef, #ffffff, #66d9ef);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.doctor-name-gradient:hover {
+  animation: gradient-shift 1s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;
+}
+
+/* Spine Underline Effect */
+.spine-underline {
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #0d5c75, rgb(227,252,236), #0d5c75);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.spine-underline-active {
+  transform: scaleX(1);
+  animation: spine-pulse-underline 1.5s ease-in-out infinite;
+}
+
+/* Credential Badge Animation */
+.credential-badge {
+  animation: subtle-pulse 3s ease-in-out infinite;
+}
+
+/* Appointment Confirmation Animations */
+.appointment-success-glow {
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.3);
+  animation: success-pulse 2s ease-in-out infinite;
+}
+
+.appointment-card-hover {
+  transition: all 0.3s ease-in-out;
+  transform: translateY(0);
+}
+
+.appointment-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.document-requirement-card {
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.document-requirement-card:hover {
+  border-color: currentColor;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.rtl-document-requirement-card:hover {
+  transform: translateX(-4px);
+}
+
+.confirmation-gradient-bg {
+  background: linear-gradient(135deg, 
+    rgba(42, 157, 143, 0.1) 0%, 
+    rgba(35, 138, 122, 0.1) 50%, 
+    rgba(42, 157, 143, 0.05) 100%);
+}
+
+/* Success Animation Keyframes */
+@keyframes success-pulse {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(34, 197, 94, 0.5);
+  }
+}
+
+/* Spine-Inspired Animations */
+@keyframes spine-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(227, 252, 236, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(227, 252, 236, 0.6);
+  }
+}
+
+@keyframes spine-pulse-underline {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(227, 252, 236, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(227, 252, 236, 0.8);
+  }
+}
+
+@keyframes vertebra-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) rotateX(-90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes spine-wave {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  75% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes pulse-wave {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(227, 252, 236, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(227, 252, 236, 0.8), 0 0 30px rgba(227, 252, 236, 0.6);
+  }
+}
+
+@keyframes subtle-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes grid-line {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Spine Animation Components */
+.spine-animation {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 100%;
+}
+
+.vertebra {
+  position: absolute;
+  width: 16px;
+  height: 12px;
+  background: linear-gradient(45deg, var(--spine-primary), var(--spine-secondary));
+  border-radius: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: vertebra-reveal 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.vertebra::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: var(--spine-secondary);
+  border-radius: 50%;
+}
+
+.spine-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.spine-segment {
+  width: 12px;
+  height: 8px;
+  background: linear-gradient(45deg, var(--spine-primary), var(--spine-secondary));
+  border-radius: 50%;
+  animation: spine-wave 2s ease-in-out infinite;
+}
+
+.vertebra-connection {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to bottom, var(--spine-primary), var(--spine-secondary));
+  animation: grid-line 1s ease-out forwards;
+  opacity: 0;
+}
+
+/* Form Animations */
+.spine-form-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.spine-input {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.spine-input:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(227, 252, 236, 0.2);
+}
+
+/* Button Animations */
+.spine-wave-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.spine-wave-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(227, 252, 236, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.spine-wave-btn:hover::before {
+  left: 100%;
+}
+
+.spine-pulse {
+  animation: spine-pulse 2s ease-in-out infinite;
+}
+
+/* Pulse Wave Animation */
+.pulse-wave-animation {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--spine-secondary);
+  border-radius: 50%;
+  animation: pulse-wave 1.5s ease-in-out infinite;
+}
+
+.pulse-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.pulse-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Map Grid Animation */
+.map-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.grid-line {
+  background: linear-gradient(45deg, var(--spine-primary), var(--spine-secondary));
+  opacity: 0;
+  animation: grid-line 2s ease-out infinite;
+}
+
+/* Vertebra Reveal Animation */
+.vertebra-reveal {
+  animation: vertebra-reveal 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+/* Animated Spine Visual */
+.animated-spine-visual {
+  position: relative;
+  width: 60px;
+  height: 80px;
+}
+
+/* Loading Spinner */
+.spinner {
+  border: 3px solid #f8f5f0;
+  border-top: 3px solid #0d5c75;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Enhanced Custom Animations */
+.animate-fade-in {
+  animation: vertebra-reveal 0.8s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: vertebra-reveal 1s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: spine-pulse 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Enhanced scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--spine-ivory);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--spine-primary), var(--spine-secondary));
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--spine-secondary), var(--spine-primary));
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--spine-ivory);
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--spine-primary) var(--spine-ivory);
+}
+
+/* AdminSidebar scrolling enhancements */
+.admin-sidebar-scroll {
+  /* Enhanced scrolling for webkit browsers */
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  
+  /* Smooth scrolling behavior */
+  scroll-behavior: smooth;
+  
+  /* Dynamic height that adapts to content */
+  height: auto;
+  min-height: 0;
+  flex: 1 1 auto;
+  max-height: calc(100vh - 290px);
+  
+  /* Additional mobile optimizations */
+  touch-action: pan-y;
+  
+  /* Performance optimization */
+  will-change: scroll-position;
+  contain: layout style paint;
+}
+
+/* Scrollbar styling specifically for AdminSidebar */
+.admin-sidebar-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.admin-sidebar-scroll::-webkit-scrollbar-track {
+  background: rgba(243, 244, 246, 0.5);
+  border-radius: 3px;
+}
+
+.admin-sidebar-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0d5c75, #2a9d8f);
+  border-radius: 3px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+.admin-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2a9d8f, #0d5c75);
+}
+
+/* Dark mode scrollbar */
+.dark .admin-sidebar-scroll::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.5);
+}
+
+.dark .admin-sidebar-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #2a9d8f, #0d5c75);
+}
+
+/* Mobile responsive scrolling */
+@media (max-width: 768px) {
+  .admin-sidebar-scroll {
+    max-height: calc(100vh - 270px);
+    /* Improved touch scrolling on mobile */
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+  }
+  
+  /* Thinner scrollbar on mobile */
+  .admin-sidebar-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .admin-sidebar-scroll {
+    max-height: calc(100vh - 250px);
+  }
+}
+
+/* WCAG 2.1 AA Compliance - Enhanced Contrast */
+.text-high-contrast {
+  color: #0a3a47; /* 4.5:1 contrast ratio on ivory background */
+}
+
+.bg-high-contrast {
+  background-color: #f8f5f0; /* Ivory background for better readability */
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .spine-animation {
+    width: 16px;
+  }
+
+  .vertebra {
+    width: 12px;
+    height: 8px;
+  }
+
+  .spine-segment {
+    width: 8px;
+    height: 6px;
+  }
+
+  html {
+    font-size: 14px;
+  }
+
+  .doctor-name-gradient {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .spine-pulse,
+  .vertebra-reveal,
+  .spine-wave,
+  .pulse-wave,
+  .grid-line,
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-pulse-glow,
+  .animate-float,
+  .animate-slide-in-right,
+  .animate-gradient,
+  .doctor-name-gradient,
+  .credential-badge {
+    animation: none;
+  }
+
+  .spine-underline-active {
+    animation: none;
+  }
+}
+
+/* WCAG 2.1 AA Compliance */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .vertebra,
+  .spine-segment {
+    border: 2px solid currentColor;
+  }
+
+  .spine-wave-btn {
+    border: 2px solid currentColor;
+  }
+
+  .doctor-name-gradient {
+    -webkit-text-fill-color: #0a3a47;
+    color: #0a3a47;
+  }
+}
+
+/* Focus Indicators */
+.focus-visible {
+  outline: 2px solid var(--spine-secondary);
+  outline-offset: 2px;
+}
+
+/* Smooth Transitions */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+/* Glass morphism effect */
+@layer components {
+  .glass {
+    background: rgba(248, 245, 240, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(13, 92, 117, 0.2);
+  }
+
+  .dark .glass {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Enhanced focus states */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-[rgb(227,252,236)] focus:ring-offset-2 dark:focus:ring-offset-gray-800;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #0d5c75, rgb(227,252,236));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Enhanced button hover effects */
+  .btn-enhanced {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+
+  .btn-enhanced::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-enhanced:hover::before {
+    left: 100%;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Prescription specific print styles */
+  .prescription-container {
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+    padding: 15mm !important;
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    border: none !important;
+    page-break-after: auto !important;
+    page-break-inside: avoid !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Ensure header doesn't break */
+  .prescription-container > div:first-child {
+    page-break-inside: avoid !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Ensure footer stays at bottom */
+  .prescription-container > div:last-child {
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Print optimization */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Ensure all colors are print-friendly */
+  .prescription-container h1,
+  .prescription-container h2,
+  .prescription-container h3 {
+    color: rgb(66,139,124) !important;
+  }
+
+  /* Maintain borders and backgrounds for readability */
+  .prescription-container [style*="background"] {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}
+
+/* Prevent flash of unstyled content */
+html:not(.dark):not(.light) {
+  visibility: hidden;
+}
+
+html.dark,
+html.light {
+  visibility: visible;
+}
+
+/* Dark mode text readability fixes */
+.dark * {
+  color: #ffffff !important;
+}
+
+.dark .text-white {
+  color: #ffffff !important;
+}
+
+.dark .text-black {
+  color: #000000 !important;
+}
+
+.dark .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+.dark .text-gray-600 {
+  color: #6b7280 !important;
+}
+
+.dark .text-muted-foreground {
+  color: #d1d5db !important;
+}
+
+/* Additional utility classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom scrollbar utilities */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thumb-gray-300::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 0.375rem;
+  }
+
+  .scrollbar-track-gray-100::-webkit-scrollbar-track {
+    background-color: #f3f4f6;
+    border-radius: 0.375rem;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 0.375rem;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: #9ca3af;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background-color: #f3f4f6;
+    border-radius: 0.375rem;
+  }
+}

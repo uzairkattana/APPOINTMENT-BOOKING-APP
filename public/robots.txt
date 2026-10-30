@@ -1,0 +1,76 @@
+# Gonstead Chiropractic - Anti-Scraping Protection
+# Website scraping, downloading, or automated access is strictly prohibited
+
+User-agent: *
+Disallow: /
+Crawl-delay: 86400
+
+# Block common scraping tools
+User-agent: HTTrack
+Disallow: /
+
+User-agent: WebZIP
+Disallow: /
+
+User-agent: Web2ZIP
+Disallow: /
+
+User-agent: Teleport
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: WebSucker
+Disallow: /
+
+User-agent: SiteSucker
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: Website Ripper
+Disallow: /
+
+User-agent: WebRipper
+Disallow: /
+
+User-agent: WebWhacker
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: curl
+Disallow: /
+
+User-agent: python-requests
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
+User-agent: Selenium
+Disallow: /
+
+User-agent: PhantomJS
+Disallow: /
+
+# Only allow major search engines (with restrictions)
+User-agent: Googlebot
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /dashboard/
+Crawl-delay: 10
+
+User-agent: Bingbot
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /dashboard/
+Crawl-delay: 10
+
+# Sitemap (empty to discourage automated discovery)
+Sitemap:

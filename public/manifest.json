@@ -1,0 +1,24 @@
+{
+  "name": "Gonstead Chiropractic Patient Portal",
+  "short_name": "Patient App",
+  "description": "Personalized Gonstead Chiropractic Patient Portal for Spine Health, Appointments, and Recovery Tracking.",
+  "start_url": "/patient-portal",
+  "display": "standalone",
+  "background_color": "#0a2332",
+  "theme_color": "#2a9d8f",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
