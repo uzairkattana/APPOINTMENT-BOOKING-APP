@@ -91,11 +91,11 @@ export function ComprehensiveDoctorProfile() {
             <div className="flex-shrink-0 relative">
               <div className="relative">
                 <Image
-            src="/images/gonstead-chiropractic-logo-new.png"
-                  alt="Dr. Bahir"
+                  src="/images/patient-profile.jpg"
+                  alt="Gonstead Patient Wellness"
                   width={170}
                   height={170}
-                  className="rounded-full border border-[#2a9d8f]/40 shadow-2xl bg-white p-1"
+                  className="rounded-full border border-[#2a9d8f]/40 shadow-2xl bg-white p-1 object-cover w-40 h-40"
                 />
                 <div className="absolute -bottom-2 -right-2 bg-green-500 text-white rounded-full p-2">
                   <Heart className="h-4 w-4" />

@@ -81,11 +81,11 @@ export function EnhancedDoctorProfile() {
                 }}
               >
                 <Image
-            src="/images/gonstead-chiropractic-logo-new.png"
-                  alt="Dr. Bashir"
+                  src="/images/patient-care.jpg"
+                  alt="Gonstead Patient Care"
                   width={200}
                   height={200}
-                  className="rounded-full shadow-2xl bg-white p-1"
+                  className="rounded-full shadow-2xl bg-white p-1 object-cover w-48 h-48"
                 />
                 <div className="absolute -bottom-2 -right-2 bg-[#0d5c75] text-white rounded-full p-2">
                   <Heart className="h-4 w-4" />

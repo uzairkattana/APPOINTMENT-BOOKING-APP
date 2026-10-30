@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -884,30 +885,52 @@ export default function PatientPortalPage() {
                   <Edit3 className="h-3.5 w-3.5 mr-1" /> Edit Profile
                 </Button>
               </CardHeader>
-              <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                  <span className="text-slate-500">Full Name</span>
-                  <p className="text-sm font-bold text-white mt-0.5">{patientName}</p>
+              <CardContent className="space-y-4 text-xs">
+                {/* Patient Profile Picture and Identity Card */}
+                <div className="flex flex-col sm:flex-row items-center gap-4 p-4 bg-slate-950 rounded-2xl border border-slate-800">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-[#2a9d8f] shadow-lg shrink-0">
+                    <Image
+                      src="/images/patient-profile.jpg"
+                      alt={patientName || "Patient Profile"}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="text-center sm:text-left space-y-1">
+                    <div className="flex items-center justify-center sm:justify-start gap-2">
+                      <h3 className="text-base font-bold text-white">{patientName}</h3>
+                      <Badge className="bg-[#2a9d8f]/20 text-[#2a9d8f] border-[#2a9d8f]/30 text-[10px]">Verified Patient</Badge>
+                    </div>
+                    <p className="text-slate-400 text-xs">{patientEmail || "Gonstead Chiropractic Patient"}</p>
+                    <p className="text-[11px] text-teal-300 font-medium">Spine Care & Wellness Member</p>
+                  </div>
                 </div>
-                <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                  <span className="text-slate-500">Registered Email</span>
-                  <p className="text-sm font-bold text-white mt-0.5">{patientEmail || "Not Provided"}</p>
-                </div>
-                <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                  <span className="text-slate-500">Phone Number</span>
-                  <p className="text-sm font-bold text-white mt-0.5">{patientPhone || "Not Provided"}</p>
-                </div>
-                <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                  <span className="text-slate-500">Date of Birth / Gender</span>
-                  <p className="text-sm font-bold text-white mt-0.5">{editDob || "N/A"} ({editGender})</p>
-                </div>
-                <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                  <span className="text-slate-500">Emergency Contact</span>
-                  <p className="text-sm font-bold text-white mt-0.5">{editEmergency || "Not Provided"}</p>
-                </div>
-                <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                  <span className="text-slate-500">Clinic Address / City</span>
-                  <p className="text-sm font-bold text-white mt-0.5">{editAddress || "Nowshera, KPK"}</p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                    <span className="text-slate-500">Full Name</span>
+                    <p className="text-sm font-bold text-white mt-0.5">{patientName}</p>
+                  </div>
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                    <span className="text-slate-500">Registered Email</span>
+                    <p className="text-sm font-bold text-white mt-0.5">{patientEmail || "Not Provided"}</p>
+                  </div>
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                    <span className="text-slate-500">Phone Number</span>
+                    <p className="text-sm font-bold text-white mt-0.5">{patientPhone || "Not Provided"}</p>
+                  </div>
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                    <span className="text-slate-500">Date of Birth / Gender</span>
+                    <p className="text-sm font-bold text-white mt-0.5">{editDob || "N/A"} ({editGender})</p>
+                  </div>
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                    <span className="text-slate-500">Emergency Contact</span>
+                    <p className="text-sm font-bold text-white mt-0.5">{editEmergency || "Not Provided"}</p>
+                  </div>
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                    <span className="text-slate-500">Clinic Address / City</span>
+                    <p className="text-sm font-bold text-white mt-0.5">{editAddress || "Nowshera, KPK"}</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>

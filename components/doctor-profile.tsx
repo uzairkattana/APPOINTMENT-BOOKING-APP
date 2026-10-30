@@ -13,14 +13,14 @@ export function DoctorProfile() {
     <Card className="bg-gradient-to-br from-[#f4f1de] to-white border-[#2a9d8f] border-2 shadow-xl">
       <CardContent className="p-6">
         <div className="flex flex-col md:flex-row items-center gap-6">
-          {/* Logo/Avatar */}
+          {/* Profile Image */}
           <div className="flex-shrink-0">
             <Image
-              src="/images/gonstead-logo.png"
-              alt="Dr. Bahir"
+              src="/images/patient-care.jpg"
+              alt="Gonstead Patient Care"
               width={120}
               height={120}
-              className="rounded-full border-4 border-[#2a9d8f] shadow-lg"
+              className="rounded-full border-4 border-[#2a9d8f] shadow-lg object-cover w-28 h-28"
             />
           </div>
 
