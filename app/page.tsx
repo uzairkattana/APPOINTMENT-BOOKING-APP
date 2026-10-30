@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, Suspense, memo } from "react"
 import dynamic from "next/dynamic"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -30,6 +31,7 @@ import {
   Zap,
   Heart,
   Video,
+  HelpCircle,
 } from "lucide-react"
 import Image from "next/image"
 import { LanguageProvider, useLanguage } from "@/components/language-provider"
@@ -210,6 +212,12 @@ const HomePageContent = memo(() => {
                   {item.label}
                 </button>
               ))}
+              <Link
+                href="/faq"
+                className="text-sm font-medium transition-all duration-200 px-3 py-1.5 rounded-md hover:bg-white/15 text-white/90 hover:text-white"
+              >
+                FAQ
+              </Link>
             </div>
             <div className="hidden md:flex items-center gap-2">
               <div className="flex items-center bg-white/10 hover:bg-white/15 rounded-md px-2 py-1 transition-all duration-200">
@@ -253,6 +261,14 @@ const HomePageContent = memo(() => {
                     {item.label}
                   </button>
                 ))}
+                <Link
+                  href="/faq"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-left text-white hover:text-white/80 font-semibold px-4 py-2 rounded transition-colors flex items-center justify-between"
+                >
+                  <span>FAQ (Questions & Answers)</span>
+                  <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full font-normal">Explore</span>
+                </Link>
                 <div className="flex items-center gap-3 pt-2 px-4">
                   <div className="bg-white/10 rounded-lg p-2">
                     <ThemeToggle />
@@ -1287,9 +1303,16 @@ const HomePageContent = memo(() => {
                     <a href="mailto:gonsteadchiropractic.org@gmail.com" className="hover:text-white transition-colors">{t("clinic.email")}</a>
                   </div>
 
-                  <div className="flex items-center justify-center md:justify-start gap-2" aria-label="Location">
+                  <div className="flex items-center justify-center md:justify-start gap-2 mb-2" aria-label="Location">
                     <MapPin className="h-4 w-4 text-white/80 mt-0.5" />
                     <span className="text-xs text-white/80">{t("clinic.location")}</span>
+                  </div>
+
+                  <div className="flex items-center justify-center md:justify-start gap-2" aria-label="FAQ">
+                    <HelpCircle className="h-4 w-4 text-white/80 mt-0.5" />
+                    <Link href="/faq" className="text-xs text-white/90 hover:text-white underline font-medium transition-colors">
+                      Frequently Asked Questions (FAQ)
+                    </Link>
                   </div>
                 </div>
 

@@ -1,6 +1,8 @@
+export const dynamic = 'force-dynamic'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
-import geoip from 'geoip-lite'
+// geoip-lite loaded lazily to prevent ArrayBuffer allocation during build
 
 // In-memory storage for demo (in production, use a database)
 interface AnalyticsEvent {
@@ -168,6 +170,8 @@ export async function POST(request: NextRequest) {
     // Get geolocation data
     let location = undefined
     try {
+      const geoipModule = await import('geoip-lite');
+      const geoip = (geoipModule as any).default || geoipModule;
       const geo = geoip.lookup(clientIP === '127.0.0.1' ? '8.8.8.8' : clientIP) // Use Google DNS for demo
       if (geo) {
         location = {

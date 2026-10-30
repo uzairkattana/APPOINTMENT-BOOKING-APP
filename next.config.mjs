@@ -8,6 +8,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react'],
     esmExternals: true,
+    cpus: 1,
   },
   eslint: {
     ignoreDuringBuilds: true,
