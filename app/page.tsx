@@ -868,7 +868,7 @@ const HomePageContent = memo(() => {
                 <div className="inline-flex items-center justify-center px-4 py-2 mb-6 bg-gradient-to-r from-[#0d5c75]/10 to-[#2a9d8f]/10 rounded-full border border-[#0d5c75]/20 backdrop-blur-sm">
                   <div className="w-2 h-2 bg-[#0d5c75] rounded-full mr-3"></div>
                   <span className="text-[#0d5c75] dark:text-blue-400 font-semibold text-sm tracking-wide uppercase">
-                    Meet Your Doctor
+                    Gonstead Specialist & Patient Wellness
                   </span>
                 </div>
                 <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#0d5c75] via-[#2a9d8f] to-[#0d5c75] bg-clip-text text-transparent mb-6 font-poppins leading-tight">
