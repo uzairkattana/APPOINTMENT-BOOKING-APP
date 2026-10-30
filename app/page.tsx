@@ -143,7 +143,7 @@ const HomePageContent = memo(() => {
       {/* Lightweight optimized main container */}
       <div className="min-h-screen bg-gradient-to-br from-[#F1F5F9] via-[#E0F2F1] to-[#F8F5F0] dark:from-slate-900 dark:via-blue-900 dark:to-indigo-900">
           {/* Enhanced Professional Navigation - COMPREHENSIVE MODERN DESIGN */}
-      <nav className="fixed top-0 left-0 right-0 z-[9999] bg-[rgb(70,146,138)]/95 dark:bg-[rgb(70,146,138)]/95 backdrop-blur-xl border-b border-white/20 shadow-[0_4px_32px_rgba(70,146,138,0.25)]">
+      <nav className="fixed top-0 left-0 right-0 z-[9999] bg-[rgb(70,146,138)] dark:bg-[rgb(50,116,108)] border-b border-white/20 shadow-md">
         <div className="container mx-auto px-2 sm:px-4">
           <div className="flex items-center justify-between h-20 sm:h-24">
             <div className="flex items-center gap-2 sm:gap-3 -ml-2 sm:-ml-4">
@@ -218,19 +218,6 @@ const HomePageContent = memo(() => {
               <div className="flex items-center bg-white/10 hover:bg-white/15 rounded-md px-2 py-1 transition-all duration-200">
                 <LanguageToggle />
               </div>
-              <Button
-                onClick={() => {
-                  if (typeof window !== "undefined") {
-                    const isAuth = localStorage.getItem("patient_authenticated")
-                    window.location.href = isAuth === "true" ? "/patient-portal" : "/patient/auth"
-                  }
-                }}
-                variant="outline"
-                className="border-white/30 text-white hover:bg-white/20 px-3 py-2 rounded-md font-medium text-xs sm:text-sm backdrop-blur-sm"
-              >
-                <User className="h-4 w-4 mr-1.5" />
-                Patient Portal
-              </Button>
               <AppointmentBookingModal
                 buttonText="Book Now"
                 className="bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] hover:from-[#0a4a5c] hover:to-[#1e7a6b] text-white px-4 py-2 rounded-md font-medium shadow-md hover:shadow-lg transition-all duration-200 text-sm"
@@ -275,18 +262,6 @@ const HomePageContent = memo(() => {
                   </div>
                 </div>
                 <div className="px-4 space-y-2">
-                  <Button
-                    onClick={() => {
-                      if (typeof window !== "undefined") {
-                        const isAuth = localStorage.getItem("patient_authenticated")
-                        window.location.href = isAuth === "true" ? "/patient-portal" : "/patient/auth"
-                      }
-                    }}
-                    className="w-full bg-white/20 text-white hover:bg-white/30 border border-white/30"
-                  >
-                    <User className="h-4 w-4 mr-2" />
-                    Patient Portal / Sign In
-                  </Button>
                   <AppointmentBookingModal
                     buttonText="Book Appointment"
                     fullWidth={true}
@@ -414,9 +389,7 @@ const HomePageContent = memo(() => {
                   {/* Main Professional Container */}
                   <div className="relative">
                     {/* Background Effects */}
-                    <div className="absolute -inset-12 bg-gradient-to-r from-blue-500/25 via-cyan-500/25 to-teal-500/25 rounded-3xl blur-3xl"></div>
-                    <div className="absolute -inset-8 bg-gradient-to-r from-blue-400/20 via-cyan-400/20 to-teal-400/20 rounded-3xl blur-2xl"></div>
-                    <div className="absolute -inset-4 bg-gradient-to-br from-blue-600/35 to-cyan-600/35 rounded-2xl shadow-2xl"></div>
+                    <div className="absolute -inset-4 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 rounded-2xl shadow-xl"></div>
                     
                     {/* Professional Image Frame */}
                     <div className="relative w-64 h-80 md:w-80 md:h-96 overflow-hidden rounded-2xl border-2 border-blue-400/40 shadow-2xl shadow-blue-500/30 bg-gradient-to-br from-gray-800 to-gray-900 transition-all duration-700">

@@ -2,13 +2,11 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { Calendar, ArrowRight, UserPlus } from "lucide-react"
+import { Calendar, ArrowRight } from "lucide-react"
 import { EnhancedAppointmentBooking } from "./enhanced-appointment-booking"
 import { cn } from "@/lib/utils"
-import { useToast } from "@/hooks/use-toast"
 
 interface AppointmentBookingModalProps {
   trigger?: React.ReactNode
@@ -29,17 +27,7 @@ export function AppointmentBookingModal({
   fullWidth = false,
   showIcon = true,
 }: AppointmentBookingModalProps) {
-  const router = useRouter()
-  const { toast } = useToast()
   const [isOpen, setIsOpen] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const isAuth = localStorage.getItem("patient_authenticated") === "true"
-      setIsAuthenticated(isAuth)
-    }
-  }, [isOpen])
 
   // Hide/show header when modal opens/closes
   useEffect(() => {
@@ -54,20 +42,7 @@ export function AppointmentBookingModal({
   }, [isOpen])
 
   const handleBookingClick = (e: React.MouseEvent) => {
-    if (typeof window !== "undefined") {
-      const isAuth = localStorage.getItem("patient_authenticated") === "true"
-      if (!isAuth) {
-        e.preventDefault()
-        e.stopPropagation()
-        toast({
-          title: "Patient Account Required",
-          description: "Please create a free patient account or sign in to book your appointment.",
-        })
-        router.push("/patient/auth")
-        return
-      }
-      setIsOpen(true)
-    }
+    setIsOpen(true)
   }
 
   const defaultTrigger = (
@@ -82,28 +57,15 @@ export function AppointmentBookingModal({
       )}
     >
       <div className="flex items-center gap-2">
-        {showIcon && (isAuthenticated ? <Calendar className="h-4 w-4" /> : <UserPlus className="h-4 w-4" />)}
-        <span>{isAuthenticated ? buttonText : "Create Account to Book"}</span>
+        {showIcon && <Calendar className="h-4 w-4" />}
+        <span>{buttonText}</span>
         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
       </div>
     </Button>
   )
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => {
-      if (open && typeof window !== "undefined") {
-        const isAuth = localStorage.getItem("patient_authenticated") === "true"
-        if (!isAuth) {
-          toast({
-            title: "Patient Account Required",
-            description: "Please create a free patient account or sign in to book your appointment.",
-          })
-          router.push("/patient/auth")
-          return
-        }
-      }
-      setIsOpen(open)
-    }}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild onClick={handleBookingClick}>
         {trigger || defaultTrigger}
       </DialogTrigger>

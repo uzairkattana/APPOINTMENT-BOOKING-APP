@@ -251,8 +251,8 @@ className={`h-14 w-14 md:h-16 md:w-16 lg:h-18 lg:w-18 rounded-full bg-gradient-t
       >
         {/* Sports injuries icon on top */}
         <Activity className="h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 text-white filter drop-shadow-sm relative z-10" />
-        {/* Pulse animation for active state */}
-        <div className="absolute inset-0 rounded-full bg-[#2a9d8f]/30 animate-ping"></div>
+        {/* Subtle highlight ring for active state */}
+        <div className="absolute inset-0 rounded-full bg-[#2a9d8f]/20"></div>
       </Button>
 
       {/* Enhanced Tooltip */}
