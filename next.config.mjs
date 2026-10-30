@@ -6,7 +6,7 @@ const nextConfig = {
   distDir: process.env.BUILD_ELECTRON ? 'out' : '.next',
   reactStrictMode: true,
   experimental: {
-    optimizePackageImports: ['lucide-react', 'recharts'],
+    optimizePackageImports: ['lucide-react'],
     esmExternals: true,
   },
   eslint: {
