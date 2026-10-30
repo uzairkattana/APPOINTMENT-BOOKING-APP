@@ -49,7 +49,7 @@ const TechnologyShowcase = createLightweightDynamic(
   {
     fallback: LightweightFallback.Technology,
     preserveFeatures: true, // Ensures all features work
-    delay: 1000, // Small delay for performance, but still loads automatically
+    delay: 2000, // Load after initial render
     ssr: false
   }
 )
@@ -59,7 +59,7 @@ const AdvancedChatbot = createLightweightDynamic(
   {
     fallback: LightweightFallback.Chatbot,
     preserveFeatures: true, // Maintains chatbot functionality
-    delay: 500, // Quick delay for performance
+    delay: 3500, // Defer heavy chatbot initialization until after initial page interaction
     ssr: false
   }
 )
@@ -69,7 +69,7 @@ const SportsInjuriesFloat = createLightweightDynamic(
   {
     fallback: LightweightFallback.SportsFloat,
     preserveFeatures: true, // Preserves all sports injury features
-    delay: 800, // Slightly longer delay as it's less critical
+    delay: 4000, // Defer floating widget to keep initial scroll 60fps
     ssr: false
   }
 )
@@ -79,7 +79,7 @@ const FooterWeatherWidget = createLightweightDynamic(
   {
     fallback: LightweightFallback.WeatherWidget,
     preserveFeatures: true, // Maintains weather functionality
-    delay: 1200, // Load after core content
+    delay: 2500, // Load after core content
     ssr: false
   }
 )
@@ -102,38 +102,30 @@ const HomePageContent = memo(() => {
   const [activeSection, setActiveSection] = useState(null as string | null)
   const { t } = useLanguage()
 
-  // Throttled scroll handler for better performance
-  const handleScroll = useCallback(
-    throttle(() => {
-      // Client-side only checks
-      if (typeof window === 'undefined') return
-      
-      const sections = ["home", "about", "services", "doctor", "technology", "contact"]
-      const scrollPosition = window.scrollY + 100
+  // Smooth, high-performance intersection observer (zero layout thrashing on scroll)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
 
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const offsetTop = element.offsetTop
-          const offsetHeight = element.offsetHeight
-
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
+    const sections = ["home", "about", "services", "doctor", "technology", "contact"]
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id)
             break
           }
         }
-      }
-    }, 100),
-    []
-  )
+      },
+      { rootMargin: "-15% 0px -65% 0px", threshold: 0 }
+    )
 
-  useEffect(() => {
-    // Initialize active section on mount
-    handleScroll()
-    
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [handleScroll])
+    sections.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
+  }, [])
 
   const scrollToSection = (sectionId: string) => {
     // Client-side only
@@ -318,8 +310,8 @@ const HomePageContent = memo(() => {
                 backgroundPosition: 'center center'
               }}
             >
-              {/* Primary overlay for text readability */}
-              <div className="absolute inset-0 backdrop-blur-[3px] bg-gradient-to-br from-[rgb(76,157,144)]/55 via-[rgb(56,127,134)]/50 to-[rgb(36,97,124)]/55 dark:from-[rgb(76,157,144)]/65 dark:via-[rgb(56,127,134)]/60 dark:to-[rgb(36,97,124)]/65"></div>
+              {/* Primary overlay for text readability - GPU optimized */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[rgb(76,157,144)]/80 via-[rgb(56,127,134)]/75 to-[rgb(36,97,124)]/80 dark:from-[rgb(76,157,144)]/85 dark:via-[rgb(56,127,134)]/80 dark:to-[rgb(36,97,124)]/85 pointer-events-none"></div>
             </div>
 
             <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-12 relative z-10">
@@ -566,12 +558,8 @@ const HomePageContent = memo(() => {
 
           {/* About Section */}
           <section id="about" className="relative py-20 bg-white dark:bg-[rgb(30,63,99)] overflow-hidden">
-            {/* Background Image */}
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                 style={{backgroundImage: 'url(/images/medical-background-professional.PNG)'}}>
-              {/* Glass Blur Overlay */}
-              <div className="absolute inset-0 bg-[rgba(174,193,191,0.8)] backdrop-blur-sm"></div>
-            </div>
+            {/* Optimized Background Pattern */}
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-50/40 via-white to-blue-50/40 dark:from-slate-900/60 dark:to-blue-900/40 pointer-events-none"></div>
             <div className="container mx-auto px-4 relative z-10">
               <div className="text-center mb-16">
                 <Badge className="bg-[#0d5c75]/10 text-[#0d5c75] dark:bg-blue-900/20 dark:text-blue-400 border-[#0d5c75]/20 mb-4">
@@ -644,10 +632,8 @@ const HomePageContent = memo(() => {
 
           {/* Services Section */}
           <section id="services" className="relative py-20 overflow-hidden">
-            {/* Background Image */}
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                 style={{backgroundImage: 'url(/images/human skeleton.png)'}}>
-            </div>
+            {/* Optimized Background Pattern */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-teal-50/30 to-white dark:from-slate-900/50 dark:to-teal-950/30 pointer-events-none"></div>
             <div className="container mx-auto px-4 relative z-10">
               <div className="text-center mb-16">
                 <Badge className="bg-[#2a9d8f]/10 text-[#2a9d8f] dark:bg-green-900/20 dark:text-green-400 border-[#2a9d8f]/20 mb-4">
@@ -874,18 +860,8 @@ const HomePageContent = memo(() => {
 
           {/* Doctor Profile Section - PREMIUM REDESIGN */}
           <section id="doctor" className="relative py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 overflow-hidden">
-            {/* Background Image */}
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                 style={{backgroundImage: 'url(/images/clarence-gonstead.png)'}}>
-              {/* Glass Blur Overlay */}
-              <div className="absolute inset-0 bg-[rgba(174,193,191,0.8)] backdrop-blur-sm"></div>
-            </div>
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-5 dark:opacity-10">
-              <div className="absolute top-10 left-10 w-32 h-32 bg-[#0d5c75] rounded-full blur-3xl"></div>
-              <div className="absolute bottom-10 right-10 w-40 h-40 bg-[#2a9d8f] rounded-full blur-3xl"></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-[#0d5c75]/20 to-[#2a9d8f]/20 rounded-full blur-3xl"></div>
-            </div>
+            {/* Optimized Background Pattern */}
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-50/80 via-white to-blue-50/80 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 pointer-events-none"></div>
             
             <div className="container mx-auto px-4 relative z-20">
               <div className="text-center mb-16">
@@ -1046,12 +1022,8 @@ const HomePageContent = memo(() => {
 
           {/* Contact & Booking Section */}
           <section id="contact" className="relative py-20 bg-white dark:bg-[rgb(30,63,99)] overflow-hidden">
-            {/* Background Image */}
-            <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                 style={{backgroundImage: 'url(/images/spinal-nerves-subluxation-poster.jpeg)'}}>
-              {/* Glass Blur Overlay */}
-              <div className="absolute inset-0 bg-[rgba(174,193,191,0.8)] backdrop-blur-sm"></div>
-            </div>
+            {/* Optimized Background Pattern */}
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-50/30 via-white to-blue-50/30 dark:from-slate-900/40 dark:to-blue-900/30 pointer-events-none"></div>
             <div className="container mx-auto px-4 relative z-10">
               <div className="text-center mb-16 relative">
                 {/* Animated Background Pattern */}

@@ -108,6 +108,34 @@
       "Helvetica Neue", Arial, sans-serif;
   }
 
+  /* High-Performance Smooth Scroll & Rendering */
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* GPU-accelerated fixed navigation */
+  nav.fixed {
+    transform: translateZ(0);
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* Defer off-screen sections until scrolled near to boost initial load and 60fps scrolling */
+  section {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 700px;
+  }
+
+  /* Hardware accelerate blur layers so GPU does not lag on scroll */
+  .backdrop-blur-xl,
+  .backdrop-blur-lg,
+  .backdrop-blur-md,
+  .backdrop-blur-sm {
+    transform: translateZ(0);
+  }
+
   /* Performance optimizations for mobile */
   @media (max-width: 768px) {
     /* Disable expensive animations on mobile */
