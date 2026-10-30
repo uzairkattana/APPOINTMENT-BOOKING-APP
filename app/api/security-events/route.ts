@@ -3,10 +3,16 @@ import { createClient } from '@supabase/supabase-js';
 import { randomUUID } from 'crypto';
 import { SecurityEvent, DeviceInfo } from '@/lib/device-security';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  try {
+    return createClient(url, key);
+  } catch {
+    return null;
+  }
+}
 
 // Generate mock security events for demonstration
 function generateMockSecurityEvents(staffId: string): SecurityEvent[] {
@@ -142,6 +148,12 @@ export async function GET(request: NextRequest) {
     }
 
     // Try to get real data from database
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      const mockEvents = generateMockSecurityEvents(staff_id);
+      return NextResponse.json(mockEvents, { headers });
+    }
+
     const { data, error } = await supabase
       .from('security_events')
       .select('*')
@@ -155,7 +167,7 @@ export async function GET(request: NextRequest) {
       // If table doesn't exist, generate mock data
       if (error.code === 'PGRST116') {
         console.log('Generating mock security events for staff:', staff_id);
-        const mockEvents = generateMockSecurityEvents(staffId);
+        const mockEvents = generateMockSecurityEvents(staff_id);
         return NextResponse.json(mockEvents, { headers });
       }
       return NextResponse.json({ error: 'Failed to fetch security events' }, { status: 500, headers });
@@ -164,7 +176,7 @@ export async function GET(request: NextRequest) {
     // If no real data exists, generate mock data
     if (!data || data.length === 0) {
       console.log('No real security events found, generating mock data for staff:', staff_id);
-      const mockEvents = generateMockSecurityEvents(staffId);
+      const mockEvents = generateMockSecurityEvents(staff_id);
       return NextResponse.json(mockEvents, { headers });
     }
 
@@ -186,6 +198,15 @@ export async function POST(request: NextRequest) {
   try {
     const securityEvent: SecurityEvent = await request.json();
     
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      return NextResponse.json({
+        ...securityEvent,
+        id: randomUUID(),
+        created_at: new Date().toISOString()
+      }, { status: 201, headers });
+    }
+
     const { data, error } = await supabase
       .from('security_events')
       .insert(securityEvent)

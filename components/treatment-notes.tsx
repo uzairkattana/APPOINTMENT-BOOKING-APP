@@ -63,8 +63,8 @@ export function TreatmentNotes({ patient, onNotesUpdated, isDarkMode = false }: 
   
   // Initialize Supabase client
   const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder'
   )
 
   // Load notes from localStorage on mount

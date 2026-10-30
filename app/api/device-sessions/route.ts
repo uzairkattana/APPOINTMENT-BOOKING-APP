@@ -3,10 +3,16 @@ import { createClient } from '@supabase/supabase-js';
 import { randomUUID } from 'crypto';
 import { DeviceInfo, MobileData, LocationData, NetworkData, BrowserDetails, SystemDetails } from '@/lib/device-security';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  try {
+    return createClient(url, key);
+  } catch {
+    return null;
+  }
+}
 
 // Generate mock device sessions for demonstration
 function generateMockDeviceSessions(staffId: string) {
@@ -90,6 +96,12 @@ export async function GET(request: NextRequest) {
     }
 
     // Try to get real data from database
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      const mockSessions = generateMockDeviceSessions(staff_id);
+      return NextResponse.json(mockSessions, { headers });
+    }
+
     const { data, error } = await supabase
       .from('device_sessions')
       .select('*')
@@ -133,6 +145,22 @@ export async function POST(request: NextRequest) {
   try {
     const { staff_id, session_id, device_fingerprint, device_info, location_data } = await request.json();
     
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      return NextResponse.json({
+        id: randomUUID(),
+        staff_id,
+        session_id,
+        device_fingerprint,
+        device_info,
+        location_data,
+        is_active: true,
+        last_activity: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+      }, { status: 201, headers });
+    }
+
     // First, deactivate any existing sessions for this device
     await supabase
       .from('device_sessions')
@@ -199,6 +227,11 @@ export async function DELETE(request: NextRequest) {
 
     if (!session_id) {
       return NextResponse.json({ error: 'session_id is required' }, { status: 400, headers });
+    }
+
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      return NextResponse.json({ session_id, is_active: false }, { headers });
     }
 
     const { data, error } = await supabase
