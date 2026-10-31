@@ -3363,8 +3363,8 @@ export default function AdminDashboard() {
                   <Table>
                     <TableHeader>
                       <TableRow className={`${isDarkMode ? "bg-gray-700" : "bg-[#F8F5F0]"}`}>
-                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold whitespace-nowrap`}>
-                          <button onClick={() => toggleSort('name')} className="flex items-center gap-1 hover:opacity-80">
+                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold whitespace-nowrap text-left`}>
+                          <button onClick={() => toggleSort('name')} className="flex items-center gap-1 hover:opacity-80 text-left justify-start">
                             Patient Info <SortIndicator k="name" />
                           </button>
                         </TableHead>
@@ -3409,69 +3409,75 @@ export default function AdminDashboard() {
                           key={patient.id}
                           className={`${isDarkMode ? "hover:bg-gray-700 border-gray-600" : "hover:bg-[#F8F5F0]/50"}`}
                         >
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <div>
-                                <div className={`font-semibold ${isDarkMode ? "text-white" : "text-[#0d5c75]"} flex items-center gap-2`}>
-                                  {patient.name}
-                                  {!viewedPatients.has(patient.id) && (
-                                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" title="New appointment - not yet viewed" />
-                                  )}
-                                </div>
-                                <div className="relative group">
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation()
-                                      const btn = e.currentTarget
-                                      const dropdown = btn.nextElementSibling as HTMLElement
-                                      if (dropdown) {
-                                        dropdown.classList.toggle('hidden')
-                                      }
-                                    }}
-                                    className={`text-sm ${isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-[#0d5c75]"} flex items-center gap-1 cursor-pointer transition-colors duration-200`}
-                                  >
-                                    <span className="font-mono">Code: {getOrAssignPatientCode(patient)}</span>
-                                    <ChevronDown className="h-3 w-3" />
-                                  </button>
-                                  <div
-                                    className={`hidden absolute top-full left-0 mt-1 z-50 ${isDarkMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-200"} border rounded-lg shadow-xl p-3 min-w-[280px]`}
-                                    onClick={(e) => e.stopPropagation()}
-                                  >
-                                    <div className="flex items-center justify-between mb-2">
-                                      <span className={`text-xs font-semibold ${isDarkMode ? "text-gray-400" : "text-gray-500"} uppercase tracking-wide`}>Patient Code</span>
-                                      <button
-                                        onClick={(e) => {
-                                          const code = getOrAssignPatientCode(patient)
-                                          navigator.clipboard.writeText(code)
-                                          toast({
-                                            title: "✅ Copied!",
-                                            description: "Patient code copied to clipboard",
-                                          })
-                                        }}
-                                        className={`text-xs ${isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-[#0d5c75] hover:text-[#0a4a5c]"} font-medium transition-colors`}
-                                      >
-                                        Copy
-                                      </button>
-                                    </div>
-                                    <div className={`${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-gradient-to-r from-[#0d5c75]/5 to-[#2a9d8f]/5 border-[#0d5c75]/20"} border-2 rounded-md p-2 mb-2`}>
-                                      <code className={`text-sm font-mono ${isDarkMode ? "text-white" : "text-[#0d5c75]"} break-all select-all`}>{getOrAssignPatientCode(patient)}</code>
-                                    </div>
-                                    <div className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"} flex items-center gap-1`}>
-                                      <UserIcon className="h-3 w-3" />
-                                      <span>Click "Copy" to copy patient code</span>
-                                    </div>
-                                  </div>
-                                </div>
-                                {patient.profession && (
-                                  <div className={`text-xs ${isDarkMode ? "text-blue-300" : "text-blue-600"} bg-blue-50 px-2 py-1 rounded-full`}>
-                                    {patient.profession.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                                  </div>
+                          <TableCell className="text-left align-top min-w-[210px]">
+                            <div className="flex flex-col items-start justify-start text-left gap-1 w-full">
+                              {/* Patient Name */}
+                              <div className={`font-semibold ${isDarkMode ? "text-white" : "text-[#0d5c75]"} flex items-center gap-2 text-left justify-start w-full`}>
+                                <span className="text-left font-medium truncate">{patient.name}</span>
+                                {!viewedPatients.has(patient.id) && (
+                                  <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shrink-0" title="New appointment - not yet viewed" />
                                 )}
                               </div>
+
+                              {/* Patient Code Dropdown */}
+                              <div className="relative group text-left w-full">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    const btn = e.currentTarget
+                                    const dropdown = btn.nextElementSibling as HTMLElement
+                                    if (dropdown) {
+                                      dropdown.classList.toggle('hidden')
+                                    }
+                                  }}
+                                  className={`text-xs sm:text-sm ${isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-[#0d5c75]"} inline-flex items-center gap-1 cursor-pointer transition-colors duration-200 text-left justify-start font-mono`}
+                                  style={{ textAlign: 'left' }}
+                                >
+                                  <span className="font-mono text-left whitespace-nowrap">Code: {getOrAssignPatientCode(patient)}</span>
+                                  <ChevronDown className="h-3 w-3 shrink-0" />
+                                </button>
+                                <div
+                                  className={`hidden absolute top-full left-0 mt-1 z-50 ${isDarkMode ? "bg-gray-800 border-gray-600" : "bg-white border-gray-200"} border rounded-lg shadow-xl p-3 min-w-[280px] text-left`}
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  <div className="flex items-center justify-between mb-2">
+                                    <span className={`text-xs font-semibold ${isDarkMode ? "text-gray-400" : "text-gray-500"} uppercase tracking-wide text-left`}>Patient Code</span>
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        const code = getOrAssignPatientCode(patient)
+                                        navigator.clipboard.writeText(code)
+                                        toast({
+                                          title: "✅ Copied!",
+                                          description: "Patient code copied to clipboard",
+                                        })
+                                      }}
+                                      className={`text-xs ${isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-[#0d5c75] hover:text-[#0a4a5c]"} font-medium transition-colors`}
+                                    >
+                                      Copy
+                                    </button>
+                                  </div>
+                                  <div className={`${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-gradient-to-r from-[#0d5c75]/5 to-[#2a9d8f]/5 border-[#0d5c75]/20"} border-2 rounded-md p-2 mb-2 text-left`}>
+                                    <code className={`text-sm font-mono ${isDarkMode ? "text-white" : "text-[#0d5c75]"} break-all select-all text-left block`}>{getOrAssignPatientCode(patient)}</code>
+                                  </div>
+                                  <div className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"} flex items-center gap-1 text-left`}>
+                                    <UserIcon className="h-3 w-3 shrink-0" />
+                                    <span>Click &quot;Copy&quot; to copy patient code</span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Profession Badge */}
+                              {patient.profession && (
+                                <div className={`text-xs ${isDarkMode ? "text-blue-300 bg-blue-950/40" : "text-blue-600 bg-blue-50"} px-2 py-0.5 rounded-full text-left self-start inline-block mt-0.5`}>
+                                  {patient.profession.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                </div>
+                              )}
                             </div>
                           </TableCell>
-                          <TableCell>
-                            <div className="space-y-1">
+                          <TableCell className="text-left align-top">
+                            <div className="space-y-1 text-left">
                               <a
                                 href={`tel:${patient.phone}`}
                                 className={`flex items-center gap-1 ${isDarkMode ? "text-blue-400" : "text-[#0d5c75]"} hover:underline text-sm`}
@@ -3490,8 +3496,8 @@ export default function AdminDashboard() {
                               )}
                             </div>
                           </TableCell>
-                          <TableCell>
-                            <div className="space-y-1">
+                          <TableCell className="text-left align-top">
+                            <div className="space-y-1 text-left">
                               <div className={`font-medium text-sm ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                                 {patient.profession ? patient.profession.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Not specified"}
                               </div>
@@ -3502,8 +3508,8 @@ export default function AdminDashboard() {
                               )}
                             </div>
                           </TableCell>
-                          <TableCell>
-                            <div>
+                          <TableCell className="text-left align-top">
+                            <div className="text-left">
                               <div className={`font-medium text-sm ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                                 {new Date(patient.appointment_date).toLocaleDateString()}
                               </div>
@@ -3515,7 +3521,7 @@ export default function AdminDashboard() {
                               </div>
                             </div>
                           </TableCell>
-                          <TableCell>
+                          <TableCell className="text-left align-top">
                             <div className="space-y-2">
                               {/* Current Status Badge - Always visible */}
                               <div className="flex items-center gap-2">
