@@ -1,540 +1,565 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import React, { useState, useEffect, useMemo } from "react"
+import { useRouter, usePathname } from "next/navigation"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { 
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import {
   LayoutDashboard,
   Users,
-  Calendar,
   FileText,
   BarChart3,
   Settings,
-  Database,
   UserCheck,
   PillIcon as Prescription,
   Activity,
   X,
-  ChevronDown,
-  ChevronRight,
   LogOut,
-  User,
   HelpCircle,
   Clock,
   TrendingUp,
-  Eye,
   DollarSign,
-  Star,
   MapPin,
   Search,
-  Menu
+  ShieldCheck,
+  Globe,
+  ExternalLink,
+  ChevronRight,
+  Sparkles
 } from "lucide-react"
-import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
 
-interface AdminSidebarProps {
+export interface AdminSidebarProps {
   isOpen: boolean
   onClose: () => void
   currentPath?: string
 }
 
-interface MenuItem {
+export interface MenuItem {
   id: string
   title: string
-  href?: string
-  icon: any
+  href: string
+  icon: React.ComponentType<{ className?: string }>
   description?: string
   badge?: string
+  badgeType?: "live" | "secure" | "default"
   children?: MenuItem[]
-  category?: string
 }
 
-const sidebarItems: MenuItem[] = [
+export interface NavSection {
+  id: string
+  label: string
+  items: MenuItem[]
+}
+
+// Structured Rules & Hierarchical Sections for the Admin Navigation
+const navSections: NavSection[] = [
   {
-    id: "overview",
-    title: "Overview",
-    href: "/admin/dashboard",
-    icon: LayoutDashboard,
-    description: "Main dashboard",
-    category: "main"
+    id: "main",
+    label: "Main Navigation",
+    items: [
+      {
+        id: "overview",
+        title: "Overview",
+        href: "/admin/dashboard/",
+        icon: LayoutDashboard,
+        description: "Dashboard metrics & patient queue",
+      },
+    ],
   },
   {
-    id: "patients",
-    title: "Patient Management",
-    icon: Users,
-    description: "Manage patients",
-    category: "core",
-    children: [
-      { id: "patient-tracking", title: "Patient Tracking", href: "/admin/patient-tracking", icon: Activity },
-    ]
+    id: "clinical",
+    label: "Clinical Operations",
+    items: [
+      {
+        id: "patient-tracking",
+        title: "Patient Tracking",
+        href: "/admin/patient-tracking/",
+        icon: Activity,
+        description: "Live queue & status tracker",
+      },
+      {
+        id: "medical-history",
+        title: "Medical History",
+        href: "/medical-history/",
+        icon: FileText,
+        description: "Patient clinical health records",
+      },
+      {
+        id: "prescriptions",
+        title: "Prescriptions",
+        href: "/admin/prescription/",
+        icon: Prescription,
+        description: "Digital prescriptions & Rx",
+      },
+    ],
   },
   {
-    id: "medical",
-    title: "Medical History",
-    href: "/medical-history",
-    icon: FileText,
-    description: "Patient health records",
-    category: "core"
+    id: "financial",
+    label: "Financial & Revenue",
+    items: [
+      {
+        id: "money-management",
+        title: "Money Management",
+        href: "/admin/money-management/",
+        icon: DollarSign,
+        description: "Revenue, payments & billing",
+        badge: "Secure",
+        badgeType: "secure",
+      },
+    ],
   },
   {
-    id: "prescriptions",
-    title: "Prescriptions",
-    href: "/admin/prescription",
-    icon: Prescription,
-    description: "Digital prescriptions",
-    category: "core"
-  },
-  {
-    id: "money-management",
-    title: "Money Management",
-    href: "/admin/money-management",
-    icon: DollarSign,
-    description: "Financial records & payments",
-    category: "core",
-    badge: "Secure"
-  },
-  {
-    id: "analytics",
-    title: "Analytics",
-    href: "/admin/analytics",
-    icon: BarChart3,
-    description: "Performance data",
-    category: "insights"
-  },
-  {
-    id: "website-analytics",
-    title: "Website Visitor Analytics",
-    href: "/admin/website-analytics",
-    icon: TrendingUp,
-    description: "Real-time website tracking",
-    badge: "Live",
-    category: "insights"
+    id: "intelligence",
+    label: "Intelligence & Insights",
+    items: [
+      {
+        id: "analytics",
+        title: "Clinic Analytics",
+        href: "/admin/analytics/",
+        icon: BarChart3,
+        description: "Appointments & clinical trends",
+      },
+      {
+        id: "website-analytics",
+        title: "Website Visitor Analytics",
+        href: "/admin/website-analytics/",
+        icon: TrendingUp,
+        description: "Real-time traffic & visitors",
+        badge: "Live",
+        badgeType: "live",
+      },
+    ],
   },
   {
     id: "administration",
-    title: "Administration",
-    icon: Settings,
-    description: "System management",
-    category: "admin",
-    children: [
-      { id: "settings", title: "Basic Settings", href: "/admin/settings", icon: Settings },
-      { id: "location-settings", title: "Location & Maps", href: "/admin/location-settings", icon: MapPin },
-      { id: "audit-logs", title: "Audit Logs", href: "/admin/audit-logs", icon: Activity },
-      { id: "staff-access", title: "Staff Access", href: "/admin/staff-access", icon: UserCheck },
-    ]
+    label: "System & Administration",
+    items: [
+      {
+        id: "settings",
+        title: "System Settings",
+        href: "/admin/settings/",
+        icon: Settings,
+        description: "Clinic preferences & setup",
+      },
+      {
+        id: "location-settings",
+        title: "Location & Maps",
+        href: "/admin/location-settings/",
+        icon: MapPin,
+        description: "Clinic address & Google Maps",
+      },
+      {
+        id: "audit-logs",
+        title: "Security Audit Logs",
+        href: "/admin/audit-logs/",
+        icon: ShieldCheck,
+        description: "Activity logs & audit trails",
+      },
+      {
+        id: "staff-access",
+        title: "Staff Access & Roles",
+        href: "/admin/staff-access/",
+        icon: UserCheck,
+        description: "User permissions & security",
+      },
+      {
+        id: "staff-dashboard",
+        title: "Staff Management",
+        href: "/staff-dashboard/",
+        icon: Users,
+        description: "Staff portal & shift roster",
+      },
+    ],
   },
-  {
-    id: "staff",
-    title: "Staff Management",
-    href: "/staff-dashboard",
-    icon: UserCheck,
-    description: "Manage staff",
-    category: "admin"
-  }
 ]
 
 export default function AdminSidebar({ isOpen, onClose, currentPath }: AdminSidebarProps) {
   const router = useRouter()
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set())
-  const [currentTime, setCurrentTime] = useState(new Date())
+  const pathname = usePathname()
+  const activePath = currentPath || pathname || ""
+
+  const [currentTime, setCurrentTime] = useState<Date | null>(null)
   const [mounted, setMounted] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
-  const [isMobile, setIsMobile] = useState(false)
 
-  // Detect mobile viewport
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  // Ensure component is mounted on client side
+  // Mount effect & clock interval
   useEffect(() => {
     setMounted(true)
     setCurrentTime(new Date())
-  }, [])
 
-  // Update time every minute
-  useEffect(() => {
-    if (!mounted) return
-    
     const timer = setInterval(() => {
       setCurrentTime(new Date())
     }, 60000)
     return () => clearInterval(timer)
-  }, [mounted])
+  }, [])
 
-  const toggleExpanded = (itemId: string) => {
-    const newExpanded = new Set(expandedItems)
-    if (newExpanded.has(itemId)) {
-      newExpanded.delete(itemId)
+  // Lock body scroll on small screens when drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
     } else {
-      newExpanded.add(itemId)
+      document.body.style.overflow = ""
     }
-    setExpandedItems(newExpanded)
-  }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isOpen])
+
+  // Close sidebar on ESC key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose()
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [isOpen, onClose])
 
   const handleNavigation = (href: string) => {
     if (href) {
-      console.log('AdminSidebar: Navigating to:', href)
-      router.push(href)
-      // Auto-close sidebar after navigation for better UX
       onClose()
+      router.push(href)
     }
   }
 
   const handleLogout = () => {
-    // Add logout logic here
-    router.push('/staff-login')
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("admin_authenticated")
+      localStorage.removeItem("admin_email")
+      sessionStorage.clear()
+    }
     onClose()
+    router.replace("/admin/auth/")
+    if (typeof window !== "undefined") {
+      window.location.replace("/admin/auth/")
+    }
   }
 
-  const isActiveItem = (item: MenuItem): boolean => {
-    if (item.href === currentPath) return true
-    if (item.children) {
-      return item.children.some(child => child.href === currentPath)
-    }
-    return false
+  // Path normalization to handle trailing slashes robustly
+  const normalizePath = (p?: string): string => {
+    if (!p) return ""
+    return p.replace(/\/+$/, "").toLowerCase()
   }
 
-  // Filter menu items by search query
-  const filteredItems = sidebarItems.filter(item => {
-    if (!searchQuery) return true
-    const query = searchQuery.toLowerCase()
-    const matchesParent = item.title.toLowerCase().includes(query) || 
-                         item.description?.toLowerCase().includes(query)
-    const matchesChild = item.children?.some(child => 
-      child.title.toLowerCase().includes(query)
-    )
-    return matchesParent || matchesChild
-  })
+  const isItemActive = (href: string): boolean => {
+    const normActive = normalizePath(activePath)
+    const normHref = normalizePath(href)
+    if (!normActive && !normHref) return false
+    return normActive === normHref
+  }
 
-  // Auto-expand items with matching children when searching
-  useEffect(() => {
-    if (searchQuery) {
-      const newExpanded = new Set<string>()
-      filteredItems.forEach(item => {
-        if (item.children?.some(child => 
-          child.title.toLowerCase().includes(searchQuery.toLowerCase())
-        )) {
-          newExpanded.add(item.id)
-        }
-      })
-      setExpandedItems(newExpanded)
-    }
+  // Filter sections and items based on search input
+  const filteredSections = useMemo(() => {
+    if (!searchQuery.trim()) return navSections
+
+    const query = searchQuery.toLowerCase().trim()
+    return navSections
+      .map((section) => ({
+        ...section,
+        items: section.items.filter((item) => {
+          const matchesTitle = item.title.toLowerCase().includes(query)
+          const matchesDesc = item.description?.toLowerCase().includes(query)
+          const matchesBadge = item.badge?.toLowerCase().includes(query)
+          return matchesTitle || matchesDesc || matchesBadge
+        }),
+      }))
+      .filter((section) => section.items.length > 0)
   }, [searchQuery])
 
   if (!isOpen) return null
 
   return (
     <>
-      {/* Backdrop with smooth fade - applies to entire dashboard on all screen sizes */}
-      <div 
+      {/* Backdrop overlay with blur */}
+      <div
         className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 ${
-          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={onClose}
         aria-hidden="true"
       />
-      
-      {/* Sidebar with smooth slide animation - Responsive width */}
-      <aside 
-        className={`fixed top-0 left-0 h-screen w-full sm:w-80 md:w-72 lg:w-80 bg-white dark:bg-gray-900 shadow-2xl z-50 border-r border-gray-200 dark:border-gray-700 transform transition-transform duration-300 ease-out flex flex-col ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`} 
-        style={{ maxHeight: '100vh', overflowY: 'hidden' }}
+
+      {/* Responsive Sidebar Drawer (Mobile, Tablet & Desktop) */}
+      <aside
+        className={`fixed top-0 left-0 h-full w-[88vw] max-w-[340px] sm:w-80 md:w-80 lg:w-84 bg-white dark:bg-gray-900 shadow-2xl z-50 border-r border-gray-200 dark:border-gray-800 transform transition-transform duration-300 ease-out flex flex-col ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+        style={{ maxHeight: "100vh" }}
         role="navigation"
         aria-label="Admin Navigation"
       >
-        {/* Professional Header - Fixed height with better mobile sizing */}
-        <div className="flex-shrink-0 bg-gradient-to-br from-[#0d5c75] via-[#1a6b7d] to-[#2a9d8f] text-white relative overflow-hidden">
-          {/* Subtle background pattern - Hidden on mobile for performance */}
-          <div className="absolute inset-0 opacity-10 hidden sm:block">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full -translate-y-8 translate-x-8"></div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-4 -translate-x-4"></div>
-          </div>
-          
-          <div className="relative z-10 p-4 sm:p-6">
-            <div className="flex items-center justify-between mb-3 sm:mb-4">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
-                  <Image
-                    src="/images/gonstead-chiropractic-logo-new.png"
-                    alt="Gonstead Logo"
-                    width={isMobile ? 28 : 36}
-                    height={isMobile ? 28 : 36}
-                    className="object-contain"
-                    priority
-                    onError={(e) => {
-                      console.log('Image failed to load, showing fallback');
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const fallback = target.nextElementSibling as HTMLElement;
-                      if (fallback) fallback.style.display = 'block';
-                    }}
-                  />
-                  <div className="text-white font-bold text-xs sm:text-sm" style={{ display: 'none' }}>
-                    GC
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-lg sm:text-xl font-bold font-poppins tracking-wide">Admin Portal</h2>
-                  <p className="text-xs sm:text-sm text-white/90 font-medium">Management System</p>
-                </div>
+        {/* Sleek Admin Header (No Doctor Profile Card) */}
+        <div className="flex-shrink-0 bg-gradient-to-br from-[#0a4657] via-[#0d5c75] to-[#1a6b7d] text-white p-4 sm:p-5 relative shadow-md">
+          {/* Header Top: Logo & Title + Close Button */}
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-md p-1.5 flex items-center justify-center border border-white/30 shadow-md shrink-0">
+                <Image
+                  src="/images/gonstead-chiropractic-logo-new.png"
+                  alt="Gonstead Logo"
+                  width={34}
+                  height={34}
+                  className="object-contain w-full h-full"
+                  priority
+                />
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onClose}
-                className="text-white hover:bg-white/20 rounded-full p-1.5 sm:p-2 transition-all duration-200 shrink-0"
-                aria-label="Close sidebar"
-              >
-                <X className="h-4 w-4 sm:h-5 sm:w-5" />
-              </Button>
-            </div>
-            
-            {/* Doctor Info Card - Compact on mobile with right-shifted profile */}
-            <div className="bg-white/15 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/20 shadow-inner">
-              <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 pl-2 sm:pl-3">
-                <div className="w-9 h-9 sm:w-11 sm:h-11 bg-white/30 rounded-full flex items-center justify-center shrink-0 overflow-hidden border-2 border-white/40">
-                  <Image
-                    src="/images/patient-profile.jpg"
-                    alt="Dr. Bashir Khan"
-                    width={44}
-                    height={44}
-                    className="object-cover w-full h-full"
-                    style={{ objectPosition: '65% center' }}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const fallback = target.parentElement?.querySelector('.fallback-icon') as HTMLElement;
-                      if (fallback) fallback.style.display = 'flex';
-                    }}
-                  />
-                  <div className="fallback-icon w-full h-full items-center justify-center" style={{ display: 'none' }}>
-                    <User className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
-                  </div>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-[11px] sm:text-xs font-bold text-white truncate leading-tight">Dr. Bashir Khan</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/80 leading-tight">Gonstead Specialist</p>
-                </div>
-              </div>
-              <div className="flex items-center justify-between text-[10px] sm:text-xs text-white/70">
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  <span className="hidden xs:inline">{currentTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
-                  <span className="xs:hidden">{currentTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</span>
-                </span>
-                <span className="bg-green-500/30 px-2 py-0.5 sm:py-1 rounded-full text-green-100 font-medium">
-                  Online
-                </span>
+              <div className="min-w-0 flex-1">
+                <h2 className="text-base sm:text-lg font-bold font-poppins tracking-wide text-white truncate leading-tight">
+                  Admin Portal
+                </h2>
+                <p className="text-[11px] sm:text-xs text-white/80 font-medium truncate">
+                  Gonstead Chiropractic
+                </p>
               </div>
             </div>
 
-            {/* Search Bar for quick navigation */}
-            <div className="mt-3 sm:mt-4 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
-              <Input
-                type="text"
-                placeholder="Search menu..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white/10 border-white/20 text-white placeholder:text-white/50 pl-9 pr-3 py-2 text-sm rounded-lg focus:bg-white/15 focus:border-white/40 transition-all"
-                aria-label="Search navigation menu"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-white/20 rounded"
-                  aria-label="Clear search"
-                >
-                  <X className="h-3 w-3 text-white/60" />
-                </button>
-              )}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onClose}
+              className="h-9 w-9 rounded-full text-white/90 hover:text-white hover:bg-white/20 active:scale-95 transition-all shrink-0"
+              aria-label="Close navigation"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* System Status & Real-time Clock Bar */}
+          <div className="flex items-center justify-between pt-2 pb-1 border-t border-white/15 text-[11px] font-medium text-white/85">
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+              </span>
+              <span>System Online</span>
             </div>
+
+            <div className="flex items-center gap-1 text-white/80">
+              <Clock className="h-3.5 w-3.5 text-white/70" />
+              <span>
+                {mounted && currentTime
+                  ? currentTime.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+                  : "--:--"}
+              </span>
+            </div>
+          </div>
+
+          {/* Quick Search Input */}
+          <div className="mt-3 relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/60 pointer-events-none" />
+            <Input
+              type="text"
+              placeholder="Search administration..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full h-9 bg-white/10 border-white/20 text-white placeholder:text-white/50 pl-8 pr-8 text-xs rounded-lg focus:bg-white/15 focus:border-white/40 focus:ring-0 transition-all"
+              aria-label="Filter administration tools"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-white/20 rounded text-white/70 hover:text-white"
+                aria-label="Clear search"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            )}
           </div>
         </div>
 
-      {/* Scrollable Navigation Menu - Takes remaining space */}
-        <nav className="admin-sidebar-scroll" aria-label="Main menu">
-          <div className="p-2 sm:p-3 space-y-1">
-            {filteredItems.length === 0 && searchQuery && (
-              <div className="text-center py-8 text-gray-500 text-sm">
-                <Search className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                <p>No menu items found</p>
-                <p className="text-xs mt-1">Try a different search term</p>
-              </div>
-            )}
-            {filteredItems.map((item) => {
-              const Icon = item.icon
-              const isActive = isActiveItem(item)
-              const isExpanded = expandedItems.has(item.id)
-              const hasChildren = item.children && item.children.length > 0
-              
-              return (
-                <div key={item.id} className="space-y-1">
-                  {/* Main Menu Item */}
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault()
-                      if (hasChildren) {
-                        console.log('AdminSidebar: Toggling expansion for:', item.id)
-                        toggleExpanded(item.id)
-                      } else if (item.href) {
-                        console.log('AdminSidebar: Direct navigation to:', item.href)
-                        handleNavigation(item.href)
-                        // Sidebar will auto-close via handleNavigation
-                      }
-                    }}
-                    className={`
-                      w-full text-left p-2 sm:p-3 rounded-lg sm:rounded-xl transition-all duration-200 group relative touch-manipulation
-                      ${
-                        isActive 
-                          ? 'bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white shadow-lg border-l-4 border-white/30' 
-                          : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200 hover:shadow-sm active:scale-[0.98]'
-                      }
-                    `}
-                    aria-expanded={hasChildren ? isExpanded : undefined}
-                    aria-current={isActive ? 'page' : undefined}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                        <div className={`
-                          w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center transition-all duration-200 shrink-0
-                          ${
-                            isActive 
-                              ? 'bg-white/25 shadow-sm' 
-                              : 'bg-gray-100 dark:bg-gray-800 group-hover:bg-[#0d5c75]/10'
-                          }
-                        `}>
-                          <Icon className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isActive ? 'text-white' : 'text-[#0d5c75] dark:text-[#2a9d8f]'}`} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-1.5 sm:gap-2">
-                            <h3 className={`font-semibold text-xs sm:text-sm truncate ${
-                              isActive ? 'text-white' : 'text-gray-800 dark:text-gray-100'
-                            }`}>
-                              {item.title}
-                            </h3>
-                            {item.badge && (
-                              <Badge variant={isActive ? 'secondary' : 'default'} className="text-[10px] sm:text-xs px-1 sm:px-1.5 py-0 sm:py-0.5 shrink-0">
-                                {item.badge}
-                              </Badge>
+        {/* Scrollable Navigation Sections (Takes full available height) */}
+        <nav
+          className="admin-sidebar-scroll flex-1 min-h-0 overflow-y-auto px-2 py-3 space-y-4 overscroll-contain"
+          aria-label="Admin Sections"
+        >
+          {filteredSections.length === 0 ? (
+            <div className="text-center py-10 px-4 text-gray-500 dark:text-gray-400">
+              <Search className="h-8 w-8 mx-auto mb-2 opacity-40 text-gray-400" />
+              <p className="text-xs font-semibold">No matching sections found</p>
+              <p className="text-[11px] text-gray-400 mt-1">Try another term or clear the filter</p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSearchQuery("")}
+                className="mt-3 text-xs h-7 px-3 border-gray-300 dark:border-gray-700"
+              >
+                Clear Search
+              </Button>
+            </div>
+          ) : (
+            filteredSections.map((section, sectionIdx) => (
+              <div key={section.id} className="space-y-1">
+                {/* Category Rule Divider & Label */}
+                <div className={`px-2 pb-1 ${sectionIdx > 0 ? "pt-2" : "pt-0"}`}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase select-none">
+                      {section.label}
+                    </span>
+                    <div className="h-[1px] flex-1 bg-gray-200/80 dark:bg-gray-800" />
+                  </div>
+                </div>
+
+                {/* Section Items */}
+                <div className="space-y-1">
+                  {section.items.map((item) => {
+                    const Icon = item.icon
+                    const isActive = isItemActive(item.href)
+
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => handleNavigation(item.href)}
+                        className={`w-full text-left p-2.5 sm:p-2.5 rounded-xl transition-all duration-150 group flex items-center justify-between min-h-[44px] touch-manipulation ${
+                          isActive
+                            ? "bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white shadow-md shadow-[#0d5c75]/25 font-medium border-l-4 border-emerald-300"
+                            : "text-gray-700 dark:text-gray-200 hover:bg-gray-100/90 dark:hover:bg-gray-800/80 active:scale-[0.98]"
+                        }`}
+                        aria-current={isActive ? "page" : undefined}
+                      >
+                        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+                          {/* Icon Container */}
+                          <div
+                            className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                              isActive
+                                ? "bg-white/20 text-white"
+                                : "bg-teal-50 dark:bg-teal-950/40 text-[#0d5c75] dark:text-[#2a9d8f] group-hover:bg-[#0d5c75]/10 dark:group-hover:bg-[#2a9d8f]/20"
+                            }`}
+                          >
+                            <Icon className="h-4 w-4" />
+                          </div>
+
+                          {/* Text & Description */}
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <span
+                                className={`text-xs sm:text-sm font-semibold truncate ${
+                                  isActive ? "text-white" : "text-gray-800 dark:text-gray-100"
+                                }`}
+                              >
+                                {item.title}
+                              </span>
+
+                              {/* Badges */}
+                              {item.badge && (
+                                <>
+                                  {item.badgeType === "live" ? (
+                                    <span
+                                      className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold ${
+                                        isActive
+                                          ? "bg-white/20 text-white"
+                                          : "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
+                                      }`}
+                                    >
+                                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                      {item.badge}
+                                    </span>
+                                  ) : item.badgeType === "secure" ? (
+                                    <span
+                                      className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold ${
+                                        isActive
+                                          ? "bg-white/20 text-white"
+                                          : "bg-teal-500/15 text-teal-700 dark:text-teal-300 border border-teal-500/30"
+                                      }`}
+                                    >
+                                      {item.badge}
+                                    </span>
+                                  ) : (
+                                    <Badge
+                                      variant={isActive ? "secondary" : "default"}
+                                      className="text-[9px] px-1 py-0"
+                                    >
+                                      {item.badge}
+                                    </Badge>
+                                  )}
+                                </>
+                              )}
+                            </div>
+
+                            {item.description && (
+                              <p
+                                className={`text-[11px] truncate mt-0.5 ${
+                                  isActive
+                                    ? "text-white/80"
+                                    : "text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300"
+                                }`}
+                              >
+                                {item.description}
+                              </p>
                             )}
                           </div>
-                          {item.description && !isMobile && (
-                            <p className={`text-xs mt-0.5 truncate ${
-                              isActive ? 'text-white/80' : 'text-gray-500 dark:text-gray-400'
-                            }`}>
-                              {item.description}
-                            </p>
-                          )}
                         </div>
-                      </div>
-                      
-                      {hasChildren && (
-                        <ChevronDown className={`h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform duration-200 shrink-0 ${
-                          isExpanded ? 'rotate-180' : 'rotate-0'
-                        } ${isActive ? 'text-white' : 'text-gray-400 dark:text-gray-500'}`} />
-                      )}
-                    </div>
-                  </button>
-                  
-                  {/* Submenu Items */}
-                  {hasChildren && (
-                    <div className={`overflow-hidden transition-all duration-200 ${
-                      isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                    }`}>
-                      <div className="ml-4 sm:ml-6 space-y-0.5 sm:space-y-1 border-l-2 border-gray-100 dark:border-gray-700 pl-3 sm:pl-4">
-                        {item.children?.map((child) => {
-                          const ChildIcon = child.icon
-                          const isChildActive = child.href === currentPath
-                          
-                          return (
-                            <button
-                              key={child.id}
-                              onClick={(e) => {
-                                e.preventDefault()
-                                e.stopPropagation()
-                                console.log('AdminSidebar: Child navigation to:', child.href)
-                                if (child.href) {
-                                  handleNavigation(child.href)
-                                }
-                              }}
-                              className={`
-                                w-full text-left p-2 sm:p-2.5 rounded-lg transition-all duration-200 group touch-manipulation
-                                ${
-                                  isChildActive 
-                                    ? 'bg-[#0d5c75]/10 dark:bg-[#2a9d8f]/20 text-[#0d5c75] dark:text-[#2a9d8f] border-l-2 border-[#0d5c75] dark:border-[#2a9d8f]' 
-                                    : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 active:scale-[0.98]'
-                                }
-                              `}
-                              aria-current={isChildActive ? 'page' : undefined}
-                            >
-                              <div className="flex items-center gap-2 sm:gap-2.5">
-                                <ChildIcon className={`h-3 w-3 sm:h-3.5 sm:w-3.5 shrink-0 ${
-                                  isChildActive ? 'text-[#0d5c75] dark:text-[#2a9d8f]' : 'text-gray-500 dark:text-gray-400'
-                                }`} />
-                                <span className={`text-xs sm:text-sm font-medium truncate ${
-                                  isChildActive ? 'text-[#0d5c75] dark:text-[#2a9d8f]' : 'text-gray-700 dark:text-gray-200'
-                                }`}>
-                                  {child.title}
-                                </span>
-                              </div>
-                            </button>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  )}
+
+                        <ChevronRight
+                          className={`h-4 w-4 shrink-0 transition-transform ${
+                            isActive
+                              ? "text-white/80 translate-x-0.5"
+                              : "text-gray-300 dark:text-gray-600 group-hover:text-gray-500 group-hover:translate-x-0.5"
+                          }`}
+                        />
+                      </button>
+                    )
+                  })}
                 </div>
-              )
-            })}
-          </div>
-          
-          {/* Extra padding at the bottom to ensure last items are accessible */}
-          <div className="h-12 sm:h-16"></div>
+              </div>
+            ))
+          )}
+
+          {/* Bottom spacing for smooth scrolling past mobile address bars */}
+          <div className="h-6" />
         </nav>
 
-        {/* Professional Footer - Fixed at bottom with mobile optimization */}
-        <footer className="flex-shrink-0 bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700">
-          <div className="p-3 sm:p-4">
-            {/* Help and Logout */}
-            <div className="flex gap-2 mb-2 sm:mb-3">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => handleNavigation('/admin/help')}
-                className="flex-1 text-gray-600 dark:text-gray-300 hover:text-[#0d5c75] dark:hover:text-[#2a9d8f] hover:bg-[#0d5c75]/5 dark:hover:bg-[#2a9d8f]/10 transition-all duration-200 touch-manipulation active:scale-95 text-xs sm:text-sm"
-              >
-                <HelpCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
-                <span className="font-medium">Help</span>
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={handleLogout}
-                className="flex-1 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200 touch-manipulation active:scale-95 text-xs sm:text-sm"
-              >
-                <LogOut className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
-                <span className="font-medium">Logout</span>
-              </Button>
-            </div>
-            
-            {/* Clinic Info - Hidden on small mobile */}
-            <div className="hidden xs:block text-center border-t border-gray-200 dark:border-gray-700 pt-2 sm:pt-3">
-              <p className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 font-semibold">
-                Gonstead Chiropractic Management
-              </p>
-              <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-500 mt-0.5 sm:mt-1">
-                Professional Healthcare System v2.0
-              </p>
-            </div>
+        {/* Enhanced Footer (Fixed at Bottom with Quick Actions) */}
+        <footer className="flex-shrink-0 bg-gray-50/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 p-3 sm:p-3.5 space-y-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+          {/* Quick jump to public website */}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => handleNavigation("/")}
+            className="w-full justify-between text-xs h-9 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-700 hover:bg-[#0d5c75]/10 dark:hover:bg-[#2a9d8f]/20 hover:text-[#0d5c75] dark:hover:text-[#2a9d8f] transition-all touch-manipulation"
+          >
+            <span className="flex items-center gap-2 font-medium">
+              <Globe className="h-3.5 w-3.5 text-[#0d5c75] dark:text-[#2a9d8f]" />
+              View Patient Website
+            </span>
+            <ExternalLink className="h-3 w-3 text-gray-400" />
+          </Button>
+
+          {/* Help & Logout Row */}
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => handleNavigation("/admin/help/")}
+              className="flex-1 justify-center text-xs h-9 text-gray-600 dark:text-gray-300 hover:text-[#0d5c75] dark:hover:text-[#2a9d8f] hover:bg-gray-100 dark:hover:bg-gray-800 transition-all touch-manipulation"
+            >
+              <HelpCircle className="h-3.5 w-3.5 mr-1.5 text-gray-500" />
+              <span>Help & Docs</span>
+            </Button>
+
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={handleLogout}
+              className="flex-1 justify-center text-xs h-9 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all touch-manipulation"
+            >
+              <LogOut className="h-3.5 w-3.5 mr-1.5" />
+              <span>Sign Out</span>
+            </Button>
+          </div>
+
+          {/* Clinic Brand & Security Tag */}
+          <div className="text-center pt-1 border-t border-gray-200/60 dark:border-gray-800/80">
+            <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">
+              Gonstead Chiropractic Clinic • Admin Portal v2.4
+            </p>
           </div>
         </footer>
       </aside>

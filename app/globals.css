@@ -685,8 +685,8 @@
   /* Dynamic height that adapts to content */
   height: auto;
   min-height: 0;
-  flex: 1 1 auto;
-  max-height: calc(100vh - 290px);
+  flex: 1 1 0%;
+  max-height: 100%;
   
   /* Additional mobile optimizations */
   touch-action: pan-y;
@@ -729,7 +729,6 @@
 /* Mobile responsive scrolling */
 @media (max-width: 768px) {
   .admin-sidebar-scroll {
-    max-height: calc(100vh - 270px);
     /* Improved touch scrolling on mobile */
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
@@ -744,7 +743,8 @@
 /* Extra small screens */
 @media (max-width: 480px) {
   .admin-sidebar-scroll {
-    max-height: calc(100vh - 250px);
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
   }
 }
 
