@@ -49,8 +49,7 @@ import {
   User as UserIcon,
   Maximize,
   Minimize,
-  X,
-  Settings
+  X
 } from "lucide-react"
 import {
   signOutAdmin,
@@ -2949,19 +2948,6 @@ export default function AdminDashboard() {
                       </form>
                     </DialogContent>
                   </Dialog>
-
-                  {/* Settings Button */}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => router.push("/admin/settings/")}
-                    className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white px-2 sm:px-3 py-1.5 sm:py-2 h-auto text-xs sm:text-sm"
-                    title="Settings"
-                    aria-label="Settings"
-                  >
-                    <Settings className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-                    <span className="hidden sm:inline">Settings</span>
-                  </Button>
 
                   {/* Exit/Logout Button */}
                   <Button

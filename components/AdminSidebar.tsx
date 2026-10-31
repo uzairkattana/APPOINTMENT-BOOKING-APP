@@ -126,10 +126,10 @@ const navSections: NavSection[] = [
     items: [
       {
         id: "settings",
-        title: "System Settings",
+        title: "Settings",
         href: "/admin/settings/",
         icon: Settings,
-        description: "Clinic preferences & setup",
+        description: "Clinic preferences, location & setup",
       },
       {
         id: "location-settings",
@@ -496,6 +496,21 @@ export default function AdminSidebar({ isOpen, onClose, currentPath }: AdminSide
 
         {/* Enhanced Footer (Fixed at Bottom with Quick Actions) */}
         <footer className="flex-shrink-0 bg-gray-50/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 p-3 sm:p-3.5 space-y-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+          {/* Quick jump to Settings */}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => handleNavigation("/admin/settings/")}
+            className="w-full justify-between text-xs h-9 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-700 hover:bg-[#0d5c75]/10 dark:hover:bg-[#2a9d8f]/20 hover:text-[#0d5c75] dark:hover:text-[#2a9d8f] transition-all touch-manipulation"
+          >
+            <span className="flex items-center gap-2 font-medium">
+              <Settings className="h-3.5 w-3.5 text-[#0d5c75] dark:text-[#2a9d8f]" />
+              Settings
+            </span>
+            <ChevronRight className="h-3 w-3 text-gray-400" />
+          </Button>
+
           {/* Help & Logout Row */}
           <div className="flex items-center gap-2">
             <Button
