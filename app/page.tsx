@@ -39,8 +39,12 @@ import { LanguageToggle } from "@/components/language-toggle"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { AppointmentBookingModal } from "@/components/appointment-booking-modal"
-import { EmailContactSection } from "@/components/EmailContactSection"
 import { NoSSR } from "@/components/no-ssr"
+
+const EmailContactSection = dynamic(
+  () => import("@/components/EmailContactSection").then((m) => m.EmailContactSection),
+  { ssr: false }
+)
 
 // Import lightweight wrapper for feature-preserving optimization
 import { createLightweightDynamic, LightweightFallback } from "@/components/LightweightWrapper"
@@ -218,6 +222,12 @@ const HomePageContent = memo(() => {
               >
                 FAQ
               </Link>
+              <a
+                href="/educational-guide.html"
+                className="text-sm font-medium transition-all duration-200 px-3 py-1.5 rounded-md hover:bg-white/15 text-white/90 hover:text-white"
+              >
+                Education
+              </a>
             </div>
             <div className="hidden md:flex items-center gap-2">
               <div className="flex items-center bg-white/10 hover:bg-white/15 rounded-md px-2 py-1 transition-all duration-200">
@@ -269,6 +279,14 @@ const HomePageContent = memo(() => {
                   <span>FAQ (Questions & Answers)</span>
                   <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full font-normal">Explore</span>
                 </Link>
+                <a
+                  href="/educational-guide.html"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-left text-white hover:text-white/80 font-semibold px-4 py-2 rounded transition-colors flex items-center justify-between"
+                >
+                  <span>Patient Education Hub</span>
+                  <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full font-normal">Guide</span>
+                </a>
                 <div className="flex items-center gap-3 pt-2 px-4">
                   <div className="bg-white/10 rounded-lg p-2">
                     <ThemeToggle />
@@ -412,8 +430,8 @@ const HomePageContent = memo(() => {
                       {/* Doctor's Image */}
                       <div className="relative w-full h-full">
                         <Image
-                          src="/images/patient-care.jpg"
-                          alt="Gonstead Chiropractic - Patient Care and Wellness"
+                          src="/images/doctor-patient-treatment.jpg"
+                          alt="Dr. Bashir Khan Gonstead Chiropractic - Expert Spinal Adjustment"
                           fill
                           className="object-cover object-center scale-105 hover:scale-110 transition-transform duration-500"
                           priority
@@ -890,11 +908,11 @@ const HomePageContent = memo(() => {
                     {/* Main Image Container */}
                     <div className="w-80 h-80 relative overflow-hidden rounded-full border-4 border-white dark:border-gray-700 shadow-2xl bg-gradient-to-br from-[#0d5c75]/5 to-[#2a9d8f]/5 group-hover:scale-105 transition-all duration-700">
                       <Image
-                        src="/images/patient-profile.jpg"
-                        alt="Gonstead Chiropractic Patient Wellness"
+                        src="/images/doctor-patient-treatment.jpg"
+                        alt="Dr. Bashir Khan - Gonstead Chiropractic Specialist"
                         fill
                         className="object-cover object-center scale-110 group-hover:scale-115 transition-transform duration-700"
-                        priority
+                        loading="lazy"
                         quality={85}
                         sizes="(max-width: 768px) 280px, (max-width: 1024px) 320px, 400px"
                       />

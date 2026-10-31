@@ -81,8 +81,8 @@ export function EnhancedDoctorProfile() {
                 }}
               >
                 <Image
-                  src="/images/patient-care.jpg"
-                  alt="Gonstead Patient Care"
+                  src="/images/doctor-patient-treatment.jpg"
+                  alt="Dr. Bashir Khan Gonstead Specialist"
                   width={200}
                   height={200}
                   className="rounded-full shadow-2xl bg-white p-1 object-cover w-48 h-48"

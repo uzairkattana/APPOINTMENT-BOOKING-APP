@@ -216,6 +216,13 @@ function FAQPageContent() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            <a
+              href="/educational-guide.html"
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-xs sm:text-sm transition-all duration-200 border border-white/20"
+            >
+              <BookOpen className="h-4 w-4" />
+              <span>{isUr ? "تعلیمی گائیڈ" : "Education Hub"}</span>
+            </a>
             <div className="flex items-center bg-white/10 rounded-md px-1.5 py-1">
               <ThemeToggle />
             </div>
@@ -273,6 +280,29 @@ function FAQPageContent() {
                 </button>
               )}
             </div>
+          </div>
+
+          {/* Quick Popular Topics */}
+          <div className="max-w-2xl mx-auto mt-4 flex items-center justify-center flex-wrap gap-2 text-xs">
+            <span className="text-slate-500 dark:text-slate-400 font-medium">
+              {isUr ? "عام موضوعات:" : "Popular:"}
+            </span>
+            {[
+              { en: "Sciatica", ur: "سائیٹکا" },
+              { en: "First Visit", ur: "پہلی وزٹ" },
+              { en: "X-Rays", ur: "ایکس رے" },
+              { en: "Clinic Hours", ur: "اوقات" },
+              { en: "Fees", ur: "فیس" },
+            ].map((topic) => (
+              <button
+                key={topic.en}
+                type="button"
+                onClick={() => setSearchQuery(isUr ? topic.ur : topic.en)}
+                className="px-2.5 py-1 rounded-full bg-white/70 dark:bg-slate-800/70 hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors shadow-2xs"
+              >
+                {isUr ? topic.ur : topic.en}
+              </button>
+            ))}
           </div>
         </div>
       </section>

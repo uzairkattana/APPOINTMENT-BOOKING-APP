@@ -122,8 +122,8 @@
     backface-visibility: hidden;
   }
 
-  /* Defer off-screen sections until scrolled near to boost initial load and 60fps scrolling */
-  section {
+  /* Defer off-screen sections until scrolled near to boost initial load and 60fps scrolling (exclude hero) */
+  section:not(#home) {
     content-visibility: auto;
     contain-intrinsic-size: 1px 700px;
   }

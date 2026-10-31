@@ -16,8 +16,8 @@ export function DoctorProfile() {
           {/* Profile Image */}
           <div className="flex-shrink-0">
             <Image
-              src="/images/patient-care.jpg"
-              alt="Gonstead Patient Care"
+              src="/images/doctor-patient-treatment.jpg"
+              alt="Dr. Bashir Khan Gonstead Specialist"
               width={120}
               height={120}
               className="rounded-full border-4 border-[#2a9d8f] shadow-lg object-cover w-28 h-28"

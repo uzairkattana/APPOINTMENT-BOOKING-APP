@@ -91,8 +91,8 @@ export function ComprehensiveDoctorProfile() {
             <div className="flex-shrink-0 relative">
               <div className="relative">
                 <Image
-                  src="/images/patient-profile.jpg"
-                  alt="Gonstead Patient Wellness"
+                  src="/images/doctor-patient-treatment.jpg"
+                  alt="Dr. Bashir Khan Gonstead Specialist"
                   width={170}
                   height={170}
                   className="rounded-full border border-[#2a9d8f]/40 shadow-2xl bg-white p-1 object-cover w-40 h-40"
