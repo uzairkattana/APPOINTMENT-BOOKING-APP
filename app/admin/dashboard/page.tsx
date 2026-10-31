@@ -2244,47 +2244,62 @@ export default function AdminDashboard() {
     return new Date(b.appointment_date).getTime() - new Date(a.appointment_date).getTime()
   })
 
+  const safeLower = (val: any): string => {
+    if (val == null) return ""
+    if (typeof val === "string") return val.toLowerCase()
+    if (typeof val.toDate === "function") {
+      try { return val.toDate().toISOString().toLowerCase() } catch (e) {}
+    }
+    if (typeof val.seconds === "number") {
+      try { return new Date(val.seconds * 1000).toISOString().toLowerCase() } catch (e) {}
+    }
+    if (val instanceof Date) {
+      return isNaN(val.getTime()) ? "" : val.toISOString().toLowerCase()
+    }
+    return String(val).toLowerCase()
+  }
+
   const filteredPatients = sortedPatients.filter((patient) => {
     // Enhanced comprehensive search across all patient fields, including code and date/time
     const q = searchTerm.toLowerCase().trim()
 
     // Pre-compute common date/time strings for matching
     const appt = new Date(patient.appointment_date)
-    const apptISO = (patient.appointment_date || '').toLowerCase()
+    const apptISO = safeLower(patient.appointment_date)
     const apptDateOnly = !isNaN(appt.getTime()) ? appt.toISOString().slice(0, 10) : '' // YYYY-MM-DD
-    const apptHumanDate = !isNaN(appt.getTime()) ? appt.toDateString().toLowerCase() : '' // e.g., sat nov 08 2025
-    const apptHumanDateShort = !isNaN(appt.getTime()) ? appt.toLocaleDateString().toLowerCase() : ''
-    const apptHumanTime12 = !isNaN(appt.getTime()) ? appt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).toLowerCase() : ''
+    const apptHumanDate = !isNaN(appt.getTime()) ? safeLower(appt.toDateString()) : '' // e.g., sat nov 08 2025
+    const apptHumanDateShort = !isNaN(appt.getTime()) ? safeLower(appt.toLocaleDateString()) : ''
+    const apptHumanTime12 = !isNaN(appt.getTime()) ? safeLower(appt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })) : ''
     const apptHumanTime24 = !isNaN(appt.getTime()) ? `${String(appt.getHours()).padStart(2, '0')}:${String(appt.getMinutes()).padStart(2, '0')}` : ''
 
     const lastVisit = patient.last_visit ? new Date(patient.last_visit) : null
-    const lastVisitISO = (patient.last_visit || '').toLowerCase()
+    const lastVisitISO = safeLower(patient.last_visit)
     const lastVisitDateOnly = lastVisit && !isNaN(lastVisit.getTime()) ? lastVisit.toISOString().slice(0, 10) : ''
-    const lastVisitHuman = lastVisit && !isNaN(lastVisit.getTime()) ? lastVisit.toDateString().toLowerCase() : ''
+    const lastVisitHuman = lastVisit && !isNaN(lastVisit.getTime()) ? safeLower(lastVisit.toDateString()) : ''
 
-    const createdISO = (patient.created_at || '').toLowerCase()
-    const updatedISO = (patient.updated_at || '').toLowerCase()
+    const createdISO = safeLower(patient.created_at)
+    const updatedISO = safeLower(patient.updated_at)
 
-    const lastRxISO = (patient.last_prescription_date || '').toLowerCase()
+    const lastRxISO = safeLower(patient.last_prescription_date)
 
     // Generated human code used in UI (GCC-...-YYYYMM-####)
-    const code = getOrAssignPatientCode(patient).toLowerCase()
+    const code = safeLower(getOrAssignPatientCode(patient))
 
     const matchesSearch = q ? (
       // Codes and IDs
       code.includes(q) ||
-      (patient.id || '').toLowerCase().includes(q) ||
+      safeLower(patient.id).includes(q) ||
 
       // Basic info
-      (patient.name || '').toLowerCase().includes(q) ||
-      (patient.phone || '').toLowerCase().includes(q) ||
-      (patient.email || '').toLowerCase().includes(q) ||
+      safeLower(patient.name).includes(q) ||
+      safeLower(patient.phone).includes(q) ||
+      safeLower(patient.email).includes(q) ||
 
       // Session and appointment info
-      (patient.session_type || '').toLowerCase().includes(q) ||
-      (patient.status || '').toLowerCase().includes(q) ||
-      (patient.urgency || '').toLowerCase().includes(q) ||
-      (patient.payment_method || '').toLowerCase().includes(q) ||
+      safeLower(patient.session_type).includes(q) ||
+      safeLower(patient.status).includes(q) ||
+      safeLower(patient.urgency).includes(q) ||
+      safeLower(patient.payment_method).includes(q) ||
 
       // Appointment date/time (raw + human + parts)
       apptISO.includes(q) ||
@@ -2295,26 +2310,26 @@ export default function AdminDashboard() {
       apptHumanTime24.includes(q) ||
 
       // Medical and treatment info
-      (patient.notes || '').toLowerCase().includes(q) ||
-      (patient.medical_history || '').toLowerCase().includes(q) ||
-      (patient.profession || '').toLowerCase().includes(q) ||
+      safeLower(patient.notes).includes(q) ||
+      safeLower(patient.medical_history).includes(q) ||
+      safeLower(patient.profession).includes(q) ||
 
       // Demographics (nested fields)
       (patient.demographics?.age != null ? String(patient.demographics.age) : '').includes(q) ||
-      (patient.demographics?.gender || '').toLowerCase().includes(q) ||
-      (patient.demographics?.occupation || patient.demographics?.profession || '').toLowerCase().includes(q) ||
-      (patient.demographics?.emergency_contact || '').toLowerCase().includes(q) ||
+      safeLower(patient.demographics?.gender).includes(q) ||
+      safeLower(patient.demographics?.occupation || patient.demographics?.profession).includes(q) ||
+      safeLower(patient.demographics?.emergency_contact).includes(q) ||
 
       // Treatment plan (nested fields)
-      (patient.treatment_plan?.diagnosis || '').toLowerCase().includes(q) ||
-      (Array.isArray(patient.treatment_plan?.goals) ? patient.treatment_plan!.goals.some(goal => String(goal).toLowerCase().includes(q)) : false) ||
-      (patient.treatment_plan?.progress || '').toLowerCase().includes(q) ||
+      safeLower(patient.treatment_plan?.diagnosis).includes(q) ||
+      (Array.isArray(patient.treatment_plan?.goals) ? patient.treatment_plan!.goals.some(goal => safeLower(goal).includes(q)) : false) ||
+      safeLower(patient.treatment_plan?.progress).includes(q) ||
 
       // Prescription info (nested fields)
-      (Array.isArray(patient.prescription?.medications) ? patient.prescription!.medications.some(med => String(med).toLowerCase().includes(q)) : false) ||
-      (patient.prescription?.instructions || '').toLowerCase().includes(q) ||
-      (patient.prescription?.follow_up_date || '').toLowerCase().includes(q) ||
-      (patient.last_prescription_id || '').toLowerCase().includes(q) ||
+      (Array.isArray(patient.prescription?.medications) ? patient.prescription!.medications.some(med => safeLower(med).includes(q)) : false) ||
+      safeLower(patient.prescription?.instructions).includes(q) ||
+      safeLower(patient.prescription?.follow_up_date).includes(q) ||
+      safeLower(patient.last_prescription_id).includes(q) ||
 
       // Session counts
       String(patient.sessions_completed ?? '').includes(q) ||
@@ -2329,7 +2344,7 @@ export default function AdminDashboard() {
       lastRxISO.includes(q) ||
 
       // Booking source
-      (patient.booking_source || '').toLowerCase().includes(q)
+      safeLower(patient.booking_source).includes(q)
     ) : true
 
     // Handle status filters
@@ -2388,11 +2403,11 @@ export default function AdminDashboard() {
     const getVal = (p: Patient): number | string => {
       switch (sortConfig.key) {
         case 'name':
-          return (p.name || '').toLowerCase()
+          return safeLower(p.name)
         case 'phone':
-          return (p.phone || '').toLowerCase()
+          return safeLower(p.phone)
         case 'profession':
-          return (p.profession || p.demographics?.profession || p.demographics?.occupation || '').toLowerCase()
+          return safeLower(p.profession || p.demographics?.profession || p.demographics?.occupation)
         case 'appointment_date':
           return new Date(p.appointment_date).getTime() || 0
         case 'status':

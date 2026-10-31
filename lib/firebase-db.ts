@@ -147,6 +147,26 @@ export async function createPatientFirestore(
   }
 }
 
+function toDateStringSafe(val: any, fallback?: string): string {
+  if (!val) return fallback || new Date().toISOString()
+  if (typeof val === "string") return val
+  if (val instanceof Date) return isNaN(val.getTime()) ? (fallback || new Date().toISOString()) : val.toISOString()
+  if (typeof val.toDate === "function") {
+    try { return val.toDate().toISOString() } catch (e) {}
+  }
+  if (typeof val.seconds === "number") {
+    try { return new Date(val.seconds * 1000).toISOString() } catch (e) {}
+  }
+  if (typeof val === "number") {
+    return new Date(val).toISOString()
+  }
+  try {
+    const d = new Date(val)
+    if (!isNaN(d.getTime())) return d.toISOString()
+  } catch (e) {}
+  return String(val)
+}
+
 export function normalizeFirestorePatient(docId: string, data: Record<string, any>): Patient {
   const patientName =
     data.patient_name ||
@@ -166,35 +186,36 @@ export function normalizeFirestorePatient(docId: string, data: Record<string, an
     data.Phone ||
     ""
 
-  const created_at =
-    data.created_at ||
-    data.createdAt ||
-    data.timestamp ||
-    data.date ||
-    new Date().toISOString()
+  const rawCreated = data.created_at || data.createdAt || data.timestamp || data.date
+  const created_at = toDateStringSafe(rawCreated)
+  const rawUpdated = data.updated_at || data.updatedAt || rawCreated
+  const updated_at = toDateStringSafe(rawUpdated, created_at)
+
+  const rawAppt = data.appointment_date || data.appointmentDate || data.date
+  const appointment_date = rawAppt ? toDateStringSafe(rawAppt).split("T")[0] : new Date().toISOString().split("T")[0]
 
   return {
-    id: docId,
-    name: patientName,
-    patient_name: patientName,
-    full_name: patientName,
+    id: String(docId),
+    name: String(patientName),
+    patient_name: String(patientName),
+    full_name: String(patientName),
     phone: String(phone),
-    gender: data.gender || data.Gender || "not_specified",
+    gender: String(data.gender || data.Gender || "not_specified"),
     age: Number(data.age || data.Age || 0),
-    dob: data.dob || data.date_of_birth || data.dateOfBirth || "",
-    address: data.address || data.Address || "",
-    city: data.city || data.City || "",
-    chief_complaint: data.chief_complaint || data.chiefComplaint || data.complaint || "",
-    notes: data.notes || data.Notes || "",
-    status: data.status || data.Status || "scheduled",
-    appointment_date: data.appointment_date || data.appointmentDate || data.date || new Date().toISOString().split("T")[0],
-    appointment_time: data.appointment_time || data.appointmentTime || data.time || "10:00 AM",
-    payment_status: data.payment_status || data.paymentStatus || "pending",
-    payment_method: data.payment_method || data.paymentMethod || "cash",
+    dob: String(data.dob || data.date_of_birth || data.dateOfBirth || ""),
+    address: String(data.address || data.Address || ""),
+    city: String(data.city || data.City || ""),
+    chief_complaint: String(data.chief_complaint || data.chiefComplaint || data.complaint || ""),
+    notes: String(data.notes || data.Notes || ""),
+    status: (data.status || data.Status || "scheduled") as any,
+    appointment_date,
+    appointment_time: String(data.appointment_time || data.appointmentTime || data.time || "10:00 AM"),
+    payment_status: String(data.payment_status || data.paymentStatus || "pending"),
+    payment_method: (data.payment_method || data.paymentMethod || "cash") as any,
     fee_amount: Number(data.fee_amount || data.feeAmount || data.fee || 0),
-    cnic: data.cnic || data.CNIC || "",
+    cnic: String(data.cnic || data.CNIC || ""),
     created_at,
-    updated_at: data.updated_at || data.updatedAt || created_at,
+    updated_at,
   } as unknown as Patient
 }
 
