@@ -272,92 +272,94 @@ export default function AdminSidebar({ isOpen, onClose, currentPath }: AdminSide
         role="navigation"
         aria-label="Admin Navigation"
       >
-        {/* Sleek Admin Header (No Doctor Profile Card) */}
-        <div className="flex-shrink-0 bg-gradient-to-br from-[#0a4657] via-[#0d5c75] to-[#1a6b7d] text-white p-4 sm:p-5 relative shadow-md">
-          {/* Header Top: Logo & Title + Close Button */}
-          <div className="flex items-center justify-between gap-3 mb-3">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-md p-1.5 flex items-center justify-center border border-white/30 shadow-md shrink-0">
-                <Image
-                  src="/images/gonstead-chiropractic-logo-new.png"
-                  alt="Gonstead Logo"
-                  width={34}
-                  height={34}
-                  className="object-contain w-full h-full"
-                  priority
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <h2 className="text-base sm:text-lg font-bold font-poppins tracking-wide text-white truncate leading-tight">
-                  Admin Portal
-                </h2>
-                <p className="text-[11px] sm:text-xs text-white/80 font-medium truncate">
-                  Gonstead Chiropractic
-                </p>
-              </div>
-            </div>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onClose}
-              className="h-9 w-9 rounded-full text-white/90 hover:text-white hover:bg-white/20 active:scale-95 transition-all shrink-0"
-              aria-label="Close navigation"
-            >
-              <X className="h-5 w-5" />
-            </Button>
-          </div>
-
-          {/* System Status & Real-time Clock Bar */}
-          <div className="flex items-center justify-between pt-2 pb-1 border-t border-white/15 text-[11px] font-medium text-white/85">
-            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-              </span>
-              <span>System Online</span>
-            </div>
-
-            <div className="flex items-center gap-1 text-white/80">
-              <Clock className="h-3.5 w-3.5 text-white/70" />
-              <span>
-                {mounted && currentTime
-                  ? currentTime.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
-                  : "--:--"}
-              </span>
-            </div>
-          </div>
-
-          {/* Quick Search Input */}
-          <div className="mt-3 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/60 pointer-events-none" />
-            <Input
-              type="text"
-              placeholder="Search administration..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-9 bg-white/10 border-white/20 text-white placeholder:text-white/50 pl-8 pr-8 text-xs rounded-lg focus:bg-white/15 focus:border-white/40 focus:ring-0 transition-all"
-              aria-label="Filter administration tools"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-white/20 rounded text-white/70 hover:text-white"
-                aria-label="Clear search"
-              >
-                <X className="h-3 w-3" />
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Scrollable Content Container (Navigation Sections + Footer at the end of scroll) */}
+        {/* Scrollable Content Container for Entire Sidebar (Header, Navigation Sections & Footer all scroll together) */}
         <div className="admin-sidebar-scroll flex-1 min-h-0 overflow-y-auto overscroll-contain flex flex-col justify-between">
-          <nav
-            className="px-2 py-3 space-y-4"
-            aria-label="Admin Sections"
-          >
+          <div>
+            {/* Sleek Admin Header (Scrolls naturally with content) */}
+            <div className="bg-gradient-to-br from-[#0a4657] via-[#0d5c75] to-[#1a6b7d] text-white p-4 sm:p-5 relative shadow-md">
+              {/* Header Top: Logo & Title + Close Button */}
+              <div className="flex items-center justify-between gap-3 mb-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-md p-1.5 flex items-center justify-center border border-white/30 shadow-md shrink-0">
+                    <Image
+                      src="/images/gonstead-chiropractic-logo-new.png"
+                      alt="Gonstead Logo"
+                      width={34}
+                      height={34}
+                      className="object-contain w-full h-full"
+                      priority
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="text-base sm:text-lg font-bold font-poppins tracking-wide text-white truncate leading-tight">
+                      Admin Portal
+                    </h2>
+                    <p className="text-[11px] sm:text-xs text-white/80 font-medium truncate">
+                      Gonstead Chiropractic
+                    </p>
+                  </div>
+                </div>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={onClose}
+                  className="h-9 w-9 rounded-full text-white/90 hover:text-white hover:bg-white/20 active:scale-95 transition-all shrink-0"
+                  aria-label="Close navigation"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+
+              {/* System Status & Real-time Clock Bar */}
+              <div className="flex items-center justify-between pt-2 pb-1 border-t border-white/15 text-[11px] font-medium text-white/85">
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                  </span>
+                  <span>System Online</span>
+                </div>
+
+                <div className="flex items-center gap-1 text-white/80">
+                  <Clock className="h-3.5 w-3.5 text-white/70" />
+                  <span>
+                    {mounted && currentTime
+                      ? currentTime.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+                      : "--:--"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Quick Search Input */}
+              <div className="mt-3 relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/60 pointer-events-none" />
+                <Input
+                  type="text"
+                  placeholder="Search administration..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full h-9 bg-white/10 border-white/20 text-white placeholder:text-white/50 pl-8 pr-8 text-xs rounded-lg focus:bg-white/15 focus:border-white/40 focus:ring-0 transition-all"
+                  aria-label="Filter administration tools"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-white/20 rounded text-white/70 hover:text-white"
+                    aria-label="Clear search"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+        {/* Navigation Sections */}
+        <nav
+          className="px-2 py-3 space-y-4"
+          aria-label="Admin Sections"
+        >
           {filteredSections.length === 0 ? (
             <div className="text-center py-10 px-4 text-gray-500 dark:text-gray-400">
               <Search className="h-8 w-8 mx-auto mb-2 opacity-40 text-gray-400" />
@@ -492,8 +494,9 @@ export default function AdminSidebar({ isOpen, onClose, currentPath }: AdminSide
           )}
 
           </nav>
+        </div>
 
-          {/* Enhanced Footer (Scrolls with content - visible when fully scrolled down) */}
+        {/* Enhanced Footer (Scrolls with content - visible when fully scrolled down) */}
           <footer className="mt-auto bg-gray-50/95 dark:bg-gray-900/95 border-t border-gray-200 dark:border-gray-800 p-3 sm:p-3.5 space-y-2 pb-[max(1rem,env(safe-area-inset-bottom))]">
             {/* Quick jump to Settings */}
             <Button
