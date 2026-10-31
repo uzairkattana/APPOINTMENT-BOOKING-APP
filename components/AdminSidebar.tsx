@@ -8,13 +8,11 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import {
   LayoutDashboard,
-  Users,
   FileText,
   BarChart3,
   Settings,
   UserCheck,
   PillIcon as Prescription,
-  Activity,
   X,
   LogOut,
   HelpCircle,
@@ -26,8 +24,7 @@ import {
   ShieldCheck,
   Globe,
   ExternalLink,
-  ChevronRight,
-  Sparkles
+  ChevronRight
 } from "lucide-react"
 
 export interface AdminSidebarProps {
@@ -72,13 +69,6 @@ const navSections: NavSection[] = [
     id: "clinical",
     label: "Clinical Operations",
     items: [
-      {
-        id: "patient-tracking",
-        title: "Patient Tracking",
-        href: "/admin/patient-tracking/",
-        icon: Activity,
-        description: "Live queue & status tracker",
-      },
       {
         id: "medical-history",
         title: "Medical History",
@@ -163,13 +153,6 @@ const navSections: NavSection[] = [
         href: "/admin/staff-access/",
         icon: UserCheck,
         description: "User permissions & security",
-      },
-      {
-        id: "staff-dashboard",
-        title: "Staff Management",
-        href: "/staff-dashboard/",
-        icon: Users,
-        description: "Staff portal & shift roster",
       },
     ],
   },

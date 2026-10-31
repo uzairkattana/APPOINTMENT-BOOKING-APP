@@ -51,8 +51,7 @@ import {
   User as UserIcon,
   Maximize,
   Minimize,
-  X,
-  Menu
+  X
 } from "lucide-react"
 import {
   signOutAdmin,
@@ -2761,19 +2760,8 @@ export default function AdminDashboard() {
             {/* Mobile Layout - Stack on small screens */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
 
-              {/* Top Row: Menu Button, Logo and Title - Mobile & Desktop Optimized */}
-              <div className="flex items-center gap-2 sm:gap-3.5 w-full sm:w-auto">
-                {/* Dedicated Hamburger Menu Button */}
-                <button
-                  type="button"
-                  onClick={() => setIsSidebarOpen(true)}
-                  className="h-11 w-11 sm:h-14 sm:w-14 rounded-xl sm:rounded-2xl border-2 border-white/50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-md hover:bg-white dark:hover:bg-gray-700 transition-all text-[#0d5c75] dark:text-[#2a9d8f] shrink-0 flex items-center justify-center group active:scale-95 cursor-pointer"
-                  aria-label="Open sidebar menu"
-                  title="Open Admin Menu"
-                >
-                  <Menu className="h-5 w-5 sm:h-6 sm:w-6 transition-transform group-hover:scale-110" />
-                </button>
-
+              {/* Top Row: Logo and Title - Mobile Optimized */}
+              <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
                 {/* Enhanced Clinical Logo - Clickable for Sidebar */}
                 <div className="relative group cursor-pointer" onClick={() => setIsSidebarOpen(true)}>
                   <div className="w-12 h-12 sm:w-16 sm:h-16 relative transition-transform duration-300 hover:scale-110">
