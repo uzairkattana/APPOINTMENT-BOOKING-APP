@@ -3379,102 +3379,126 @@ export default function AdminDashboard() {
           </div>
 
           {/* Patient Management */}
-          <Card className={`mt-8 border-[#0d5c75]/20 shadow-xl ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
-            <CardHeader className="bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white">
-              <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2 font-poppins">
-                  <FileText className="h-5 w-5" />
-                  Patient Records Management
+          <Card className={`mt-8 border-[#0d5c75]/20 shadow-xl ${isDarkMode ? "bg-gray-800" : "bg-white"} overflow-hidden max-w-full`}>
+            <CardHeader className="bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white p-4 sm:p-6 overflow-hidden">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <CardTitle className="flex items-center gap-2 font-poppins text-base sm:text-lg">
+                  <FileText className="h-5 w-5 shrink-0" />
+                  <span>Patient Records Management</span>
                 </CardTitle>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm">
                   {/* Quick Win: Patient Count */}
-                  <div className="text-sm text-white/80">
+                  <div className="text-white/80">
                     Showing <span className="font-bold text-white">{userSortedPatients.length}</span> of <span className="font-bold text-white">{patients.length}</span> patients
                   </div>
                   {/* Quick Win: Last Updated */}
                   <div className="text-xs text-white/60">
                     Updated {getRelativeTime(lastUpdated)}
                   </div>
+                  {/* Mobile scroll cue */}
+                  <div className="inline-flex sm:hidden items-center gap-1 text-[10px] bg-white/15 px-2 py-0.5 rounded-full text-white/90">
+                    <span>Swipe filters →</span>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col md:flex-row gap-4 mt-4">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
-                  <Input
-                    placeholder="Search by name, phone, email, patient code, notes, or date/time"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/70"
-                  />
+
+              {/* Horizontally scrollable filter toolbar: Same as desktop, smooth scroll on mobile to access all filters & export */}
+              <div className="overflow-x-auto pb-2 pt-1 mt-4 -mx-1 px-1 scrollbar-thin scrollbar-white overscroll-x-contain">
+                <div className="flex items-center gap-3 min-w-max">
+                  {/* Search Input */}
+                  <div className="w-72 sm:w-80 relative shrink-0">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
+                    <Input
+                      placeholder="Search name, phone, email, code..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-9 bg-white/10 border-white/20 text-white placeholder:text-white/70 h-9 text-xs sm:text-sm"
+                    />
+                  </div>
+
+                  {/* Filter: Status */}
+                  <div className="w-36 shrink-0">
+                    <Select value={filterStatus} onValueChange={setFilterStatus}>
+                      <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-9 text-xs sm:text-sm">
+                        <SelectValue placeholder="Status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Status</SelectItem>
+                        <SelectItem value="pending">Pending</SelectItem>
+                        <SelectItem value="confirmed">Confirmed</SelectItem>
+                        <SelectItem value="completed">Completed</SelectItem>
+                        <SelectItem value="cancelled">Cancelled</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Filter: Urgency */}
+                  <div className="w-36 shrink-0">
+                    <Select value={filterUrgency} onValueChange={setFilterUrgency}>
+                      <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-9 text-xs sm:text-sm">
+                        <SelectValue placeholder="Urgency" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Urgency</SelectItem>
+                        <SelectItem value="normal">Normal</SelectItem>
+                        <SelectItem value="urgent">Urgent</SelectItem>
+                        <SelectItem value="emergency">Emergency</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Filter: Time Period */}
+                  <div className="w-36 shrink-0">
+                    <Select value={filterTimePeriod} onValueChange={setFilterTimePeriod}>
+                      <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-9 text-xs sm:text-sm">
+                        <SelectValue placeholder="Time Period" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Time</SelectItem>
+                        <SelectItem value="today">Today</SelectItem>
+                        <SelectItem value="week">This Week</SelectItem>
+                        <SelectItem value="month">This Month</SelectItem>
+                        <SelectItem value="year">This Year</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Quick Win: Clear All Filters Button */}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={clearAllFilters}
+                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 shrink-0 h-9 text-xs sm:text-sm whitespace-nowrap"
+                    title="Clear all filters and search"
+                  >
+                    <X className="h-4 w-4 mr-1.5" />
+                    Clear Filters
+                  </Button>
+
+                  {/* Quick Win: Import from CSV Button */}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={importFromCSV}
+                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 shrink-0 h-9 text-xs sm:text-sm whitespace-nowrap"
+                    title="Import patient data from CSV file"
+                  >
+                    <Upload className="h-4 w-4 mr-1.5" />
+                    Import CSV
+                  </Button>
+
+                  {/* Quick Win: Export to CSV Button */}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={exportToCSV}
+                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 shrink-0 h-9 text-xs sm:text-sm whitespace-nowrap"
+                    title="Export current view to CSV"
+                  >
+                    <Download className="h-4 w-4 mr-1.5" />
+                    Export CSV
+                  </Button>
                 </div>
-                <Select value={filterStatus} onValueChange={setFilterStatus}>
-                  <SelectTrigger className="w-40 bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="confirmed">Confirmed</SelectItem>
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="cancelled">Cancelled</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={filterUrgency} onValueChange={setFilterUrgency}>
-                  <SelectTrigger className="w-40 bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Urgency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Urgency</SelectItem>
-                    <SelectItem value="normal">Normal</SelectItem>
-                    <SelectItem value="urgent">Urgent</SelectItem>
-                    <SelectItem value="emergency">Emergency</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={filterTimePeriod} onValueChange={setFilterTimePeriod}>
-                  <SelectTrigger className="w-40 bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Time Period" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Time</SelectItem>
-                    <SelectItem value="today">Today</SelectItem>
-                    <SelectItem value="week">This Week</SelectItem>
-                    <SelectItem value="month">This Month</SelectItem>
-                    <SelectItem value="year">This Year</SelectItem>
-                  </SelectContent>
-                </Select>
-                {/* Quick Win: Clear All Filters Button */}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={clearAllFilters}
-                  className="bg-white/10 border-white/20 text-white hover:bg-white/20"
-                  title="Clear all filters and search"
-                >
-                  <X className="h-4 w-4 mr-2" />
-                  Clear Filters
-                </Button>
-                {/* Quick Win: Import from CSV Button */}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={importFromCSV}
-                  className="bg-white/10 border-white/20 text-white hover:bg-white/20"
-                  title="Import patient data from CSV file"
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  Import CSV
-                </Button>
-                {/* Quick Win: Export to CSV Button */}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={exportToCSV}
-                  className="bg-white/10 border-white/20 text-white hover:bg-white/20"
-                  title="Export current view to CSV"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Export CSV
-                </Button>
               </div>
             </CardHeader>
             <CardContent className="p-0">
@@ -3491,46 +3515,46 @@ export default function AdminDashboard() {
                   </p>
                 </div>
               ) : (
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto scrollbar-thin">
                   <Table>
                     <TableHeader>
                       <TableRow className={`${isDarkMode ? "bg-gray-700" : "bg-[#F8F5F0]"}`}>
-                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold`}>
+                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold whitespace-nowrap`}>
                           <button onClick={() => toggleSort('name')} className="flex items-center gap-1 hover:opacity-80">
                             Patient Info <SortIndicator k="name" />
                           </button>
                         </TableHead>
-                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold`}>
+                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold whitespace-nowrap`}>
                           <button onClick={() => toggleSort('phone')} className="flex items-center gap-1 hover:opacity-80">
                             Contact <SortIndicator k="phone" />
                           </button>
                         </TableHead>
-                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold`}>
+                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold whitespace-nowrap`}>
                           <button onClick={() => toggleSort('profession')} className="flex items-center gap-1 hover:opacity-80">
                             Profession <SortIndicator k="profession" />
                           </button>
                         </TableHead>
-                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold`}>
+                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold whitespace-nowrap`}>
                           <button onClick={() => toggleSort('appointment_date')} className="flex items-center gap-1 hover:opacity-80">
                             Appointment <SortIndicator k="appointment_date" />
                           </button>
                         </TableHead>
-                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold`}>
+                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold whitespace-nowrap`}>
                           <button onClick={() => toggleSort('status')} className="flex items-center gap-1 hover:opacity-80">
                             Status <SortIndicator k="status" />
                           </button>
                         </TableHead>
-                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold`}>
+                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold whitespace-nowrap`}>
                           <button onClick={() => toggleSort('urgency')} className="flex items-center gap-1 hover:opacity-80">
                             Type & Urgency <SortIndicator k="urgency" />
                           </button>
                         </TableHead>
-                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold`}>
+                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold whitespace-nowrap`}>
                           <button onClick={() => toggleSort('sessions')} className="flex items-center gap-1 hover:opacity-80">
                             Sessions <SortIndicator k="sessions" />
                           </button>
                         </TableHead>
-                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold`}>
+                        <TableHead className={`${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-semibold whitespace-nowrap`}>
                           Actions
                         </TableHead>
                       </TableRow>
