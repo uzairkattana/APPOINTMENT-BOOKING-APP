@@ -352,11 +352,12 @@ export default function AdminSidebar({ isOpen, onClose, currentPath }: AdminSide
           </div>
         </div>
 
-        {/* Scrollable Navigation Sections (Takes full available height) */}
-        <nav
-          className="admin-sidebar-scroll flex-1 min-h-0 overflow-y-auto px-2 py-3 space-y-4 overscroll-contain"
-          aria-label="Admin Sections"
-        >
+        {/* Scrollable Content Container (Navigation Sections + Footer at the end of scroll) */}
+        <div className="admin-sidebar-scroll flex-1 min-h-0 overflow-y-auto overscroll-contain flex flex-col justify-between">
+          <nav
+            className="px-2 py-3 space-y-4"
+            aria-label="Admin Sections"
+          >
           {filteredSections.length === 0 ? (
             <div className="text-center py-10 px-4 text-gray-500 dark:text-gray-400">
               <Search className="h-8 w-8 mx-auto mb-2 opacity-40 text-gray-400" />
@@ -490,59 +491,58 @@ export default function AdminSidebar({ isOpen, onClose, currentPath }: AdminSide
             ))
           )}
 
-          {/* Bottom spacing for smooth scrolling past mobile address bars */}
-          <div className="h-6" />
-        </nav>
+          </nav>
 
-        {/* Enhanced Footer (Fixed at Bottom with Quick Actions) */}
-        <footer className="flex-shrink-0 bg-gray-50/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 p-3 sm:p-3.5 space-y-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-          {/* Quick jump to Settings */}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => handleNavigation("/admin/settings/")}
-            className="w-full justify-between text-xs h-9 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-700 hover:bg-[#0d5c75]/10 dark:hover:bg-[#2a9d8f]/20 hover:text-[#0d5c75] dark:hover:text-[#2a9d8f] transition-all touch-manipulation"
-          >
-            <span className="flex items-center gap-2 font-medium">
-              <Settings className="h-3.5 w-3.5 text-[#0d5c75] dark:text-[#2a9d8f]" />
-              Settings
-            </span>
-            <ChevronRight className="h-3 w-3 text-gray-400" />
-          </Button>
-
-          {/* Help & Logout Row */}
-          <div className="flex items-center gap-2">
+          {/* Enhanced Footer (Scrolls with content - visible when fully scrolled down) */}
+          <footer className="mt-auto bg-gray-50/95 dark:bg-gray-900/95 border-t border-gray-200 dark:border-gray-800 p-3 sm:p-3.5 space-y-2 pb-[max(1rem,env(safe-area-inset-bottom))]">
+            {/* Quick jump to Settings */}
             <Button
               type="button"
-              variant="ghost"
+              variant="outline"
               size="sm"
-              onClick={() => handleNavigation("/admin/help/")}
-              className="flex-1 justify-center text-xs h-9 text-gray-600 dark:text-gray-300 hover:text-[#0d5c75] dark:hover:text-[#2a9d8f] hover:bg-gray-100 dark:hover:bg-gray-800 transition-all touch-manipulation"
+              onClick={() => handleNavigation("/admin/settings/")}
+              className="w-full justify-between text-xs h-9 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-700 hover:bg-[#0d5c75]/10 dark:hover:bg-[#2a9d8f]/20 hover:text-[#0d5c75] dark:hover:text-[#2a9d8f] transition-all touch-manipulation"
             >
-              <HelpCircle className="h-3.5 w-3.5 mr-1.5 text-gray-500" />
-              <span>Help & Docs</span>
+              <span className="flex items-center gap-2 font-medium">
+                <Settings className="h-3.5 w-3.5 text-[#0d5c75] dark:text-[#2a9d8f]" />
+                Settings
+              </span>
+              <ChevronRight className="h-3 w-3 text-gray-400" />
             </Button>
 
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={handleLogout}
-              className="flex-1 justify-center text-xs h-9 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all touch-manipulation"
-            >
-              <LogOut className="h-3.5 w-3.5 mr-1.5" />
-              <span>Sign Out</span>
-            </Button>
-          </div>
+            {/* Help & Logout Row */}
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => handleNavigation("/admin/help/")}
+                className="flex-1 justify-center text-xs h-9 text-gray-600 dark:text-gray-300 hover:text-[#0d5c75] dark:hover:text-[#2a9d8f] hover:bg-gray-100 dark:hover:bg-gray-800 transition-all touch-manipulation"
+              >
+                <HelpCircle className="h-3.5 w-3.5 mr-1.5 text-gray-500" />
+                <span>Help & Docs</span>
+              </Button>
 
-          {/* Clinic Brand & Security Tag */}
-          <div className="text-center pt-1 border-t border-gray-200/60 dark:border-gray-800/80">
-            <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">
-              Gonstead Chiropractic Clinic • Admin Portal v2.4
-            </p>
-          </div>
-        </footer>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={handleLogout}
+                className="flex-1 justify-center text-xs h-9 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all touch-manipulation"
+              >
+                <LogOut className="h-3.5 w-3.5 mr-1.5" />
+                <span>Sign Out</span>
+              </Button>
+            </div>
+
+            {/* Clinic Brand & Security Tag */}
+            <div className="text-center pt-1 border-t border-gray-200/60 dark:border-gray-800/80">
+              <p className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">
+                Gonstead Chiropractic Clinic • Admin Portal v2.4
+              </p>
+            </div>
+          </footer>
+        </div>
       </aside>
     </>
   )
