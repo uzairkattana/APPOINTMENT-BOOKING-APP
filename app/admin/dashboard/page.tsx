@@ -3402,22 +3402,22 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              {/* Horizontally scrollable filter toolbar: Same as desktop, smooth scroll on mobile to access all filters & export */}
+              {/* Horizontally scrollable filter toolbar: Compact on desktop to fit perfectly, smooth scroll on mobile */}
               <div className="overflow-x-auto pb-2 pt-1 mt-4 -mx-1 px-1 scrollbar-thin scrollbar-white overscroll-x-contain">
-                <div className="flex items-center gap-3 min-w-max">
-                  {/* Search Input */}
-                  <div className="w-72 sm:w-80 relative shrink-0">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
+                <div className="flex items-center gap-2 sm:gap-2.5 min-w-max">
+                  {/* Search Input - Compact sizing to fit desktop seamlessly */}
+                  <div className="w-48 sm:w-52 md:w-56 relative shrink-0">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-3.5 w-3.5 text-white/70 pointer-events-none" />
                     <Input
-                      placeholder="Search name, phone, email, code..."
+                      placeholder="Search patients, code..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-9 bg-white/10 border-white/20 text-white placeholder:text-white/70 h-9 text-xs sm:text-sm"
+                      className="pl-8 bg-white/10 border-white/20 text-white placeholder:text-white/70 h-9 text-xs sm:text-sm"
                     />
                   </div>
 
                   {/* Filter: Status */}
-                  <div className="w-36 shrink-0">
+                  <div className="w-32 sm:w-34 shrink-0">
                     <Select value={filterStatus} onValueChange={setFilterStatus}>
                       <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-9 text-xs sm:text-sm">
                         <SelectValue placeholder="Status" />
@@ -3433,7 +3433,7 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* Filter: Urgency */}
-                  <div className="w-36 shrink-0">
+                  <div className="w-32 sm:w-34 shrink-0">
                     <Select value={filterUrgency} onValueChange={setFilterUrgency}>
                       <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-9 text-xs sm:text-sm">
                         <SelectValue placeholder="Urgency" />
@@ -3448,7 +3448,7 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* Filter: Time Period */}
-                  <div className="w-36 shrink-0">
+                  <div className="w-32 sm:w-34 shrink-0">
                     <Select value={filterTimePeriod} onValueChange={setFilterTimePeriod}>
                       <SelectTrigger className="w-full bg-white/10 border-white/20 text-white h-9 text-xs sm:text-sm">
                         <SelectValue placeholder="Time Period" />
@@ -3468,10 +3468,10 @@ export default function AdminDashboard() {
                     variant="outline"
                     size="sm"
                     onClick={clearAllFilters}
-                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 shrink-0 h-9 text-xs sm:text-sm whitespace-nowrap"
+                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 shrink-0 h-9 px-2.5 sm:px-3 text-xs sm:text-sm whitespace-nowrap"
                     title="Clear all filters and search"
                   >
-                    <X className="h-4 w-4 mr-1.5" />
+                    <X className="h-3.5 w-3.5 mr-1" />
                     Clear Filters
                   </Button>
 
@@ -3480,10 +3480,10 @@ export default function AdminDashboard() {
                     variant="outline"
                     size="sm"
                     onClick={importFromCSV}
-                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 shrink-0 h-9 text-xs sm:text-sm whitespace-nowrap"
+                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 shrink-0 h-9 px-2.5 sm:px-3 text-xs sm:text-sm whitespace-nowrap"
                     title="Import patient data from CSV file"
                   >
-                    <Upload className="h-4 w-4 mr-1.5" />
+                    <Upload className="h-3.5 w-3.5 mr-1" />
                     Import CSV
                   </Button>
 
@@ -3492,10 +3492,10 @@ export default function AdminDashboard() {
                     variant="outline"
                     size="sm"
                     onClick={exportToCSV}
-                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 shrink-0 h-9 text-xs sm:text-sm whitespace-nowrap"
+                    className="bg-white/10 border-white/20 text-white hover:bg-white/20 shrink-0 h-9 px-2.5 sm:px-3 text-xs sm:text-sm whitespace-nowrap"
                     title="Export current view to CSV"
                   >
-                    <Download className="h-4 w-4 mr-1.5" />
+                    <Download className="h-3.5 w-3.5 mr-1" />
                     Export CSV
                   </Button>
                 </div>
