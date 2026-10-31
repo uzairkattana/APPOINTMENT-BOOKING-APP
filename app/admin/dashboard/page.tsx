@@ -2700,7 +2700,7 @@ export default function AdminDashboard() {
 
       <div className={`admin-compact min-h-screen ${isDarkMode ? "bg-gray-900" : "bg-[rgb(220,230,229)]"}`}>
         {/* Mobile-Responsive Professional Header */}
-        <header className="relative bg-white/20 backdrop-blur-xl shadow-[0_4px_16px_rgba(13,92,117,0.10)] border-0 p-2 sm:p-3 overflow-hidden mt-1 mx-2 sm:mx-4 rounded-xl">
+        <header className="relative bg-white/20 backdrop-blur-xl shadow-[0_4px_16px_rgba(13,92,117,0.10)] border-0 px-2 py-2 sm:px-4 sm:py-3 overflow-hidden mt-1 mx-1.5 sm:mx-4 rounded-xl">
           {/* Animated Background Gradient */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#0d5c75]/5 via-white/10 to-[#2a9d8f]/5"></div>
 
@@ -2708,27 +2708,27 @@ export default function AdminDashboard() {
           <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
 
           {/* Content */}
-          <div className="relative z-10 container mx-auto">
-            {/* Mobile Layout - Stack on small screens */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
+          <div className="relative z-10 w-full">
+            {/* Unified Single-Row Layout across Mobile and Desktop */}
+            <div className="flex flex-row justify-between items-center gap-1.5 sm:gap-4 w-full">
 
-              {/* Top Row: Logo and Title - Mobile Optimized */}
-              <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
+              {/* Left Side: Logo and Title */}
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                 {/* Enhanced Clinical Logo - Clickable for Sidebar */}
-                <div className="relative group cursor-pointer" onClick={() => setIsSidebarOpen(true)}>
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 relative transition-transform duration-300 hover:scale-110">
+                <div className="relative group cursor-pointer shrink-0" onClick={() => setIsSidebarOpen(true)}>
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 relative transition-transform duration-300 hover:scale-105">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#0d5c75]/15 to-[#2a9d8f]/15 rounded-xl sm:rounded-2xl blur-xl group-hover:blur-lg transition-all duration-300"></div>
                     {/* Enhanced Clinical Logo with Professional Frame */}
-                    <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-white/90 to-white/80 backdrop-blur-xl rounded-xl sm:rounded-2xl border-2 border-white/30 shadow-2xl flex items-center justify-center">
+                    <div className="relative w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-white/90 to-white/80 backdrop-blur-xl rounded-xl sm:rounded-2xl border-2 border-white/30 shadow-2xl flex items-center justify-center">
                       <Image
                         src="/images/gonstead-chiropractic-logo-new.png"
                         alt="Gonstead Chiropractic Clinical Logo"
-                        width={32}
-                        height={32}
-                        className="sm:w-11 sm:h-11 object-contain relative z-10 drop-shadow-2xl"
+                        width={28}
+                        height={28}
+                        className="sm:w-10 sm:h-10 object-contain relative z-10 drop-shadow-2xl"
                       />
                       {/* Clinical Badge */}
-                      <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] rounded-full flex items-center justify-center shadow-xl border-2 border-white">
+                      <div className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] rounded-full flex items-center justify-center shadow-xl border-2 border-white">
                         <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-white rounded-full"></div>
                       </div>
                       {/* Professional Ring */}
@@ -2736,43 +2736,43 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                   {/* Professional Clinical Badge */}
-                  <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 px-1.5 py-0.5 sm:px-2 sm:py-0.5 bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white text-[8px] sm:text-xs font-bold rounded-full shadow-lg border border-white/50">
+                  <div className="absolute -bottom-1 -right-1 sm:-bottom-1.5 sm:-right-1.5 px-1 py-0.2 sm:px-1.5 sm:py-0.5 bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white text-[7px] sm:text-[9px] font-bold rounded-full shadow-lg border border-white/50">
                     CLINIC
                   </div>
                 </div>
 
-                {/* Compact Title Section - Mobile Optimized */}
-                <div className="space-y-0.5 flex-1">
-                  <h1 className={`text-base sm:text-xl font-bold ${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-poppins tracking-wide drop-shadow-sm`}>
+                {/* Compact Title Section */}
+                <div className="space-y-0 min-w-0">
+                  <h1 className={`text-sm sm:text-base md:text-xl font-bold ${isDarkMode ? "text-white" : "text-[#0d5c75]"} font-poppins tracking-wide drop-shadow-sm truncate leading-tight`}>
                     Dr. Bashir Khan
                   </h1>
-                  <p className={`text-sm sm:text-base font-semibold ${isDarkMode ? "text-gray-300" : "text-[#2a9d8f]"} drop-shadow-sm hidden xs:block`}>
+                  <p className={`text-xs sm:text-sm font-semibold ${isDarkMode ? "text-gray-300" : "text-[#2a9d8f]"} drop-shadow-sm hidden md:block truncate`}>
                     Gonstead Chiropractic Specialist
                   </p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-[rgb(227,252,236)] rounded-full"></div>
-                    <p className={`text-[8px] sm:text-xs ${isDarkMode ? "text-gray-400" : "text-gray-600"} font-medium tracking-wider`}>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 bg-[rgb(227,252,236)] rounded-full shrink-0"></div>
+                    <p className={`text-[8px] sm:text-xs ${isDarkMode ? "text-gray-400" : "text-gray-600"} font-medium tracking-wider truncate`}>
                       ADMIN PORTAL
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Bottom Row: Controls and Action Buttons - Mobile Responsive */}
-              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
-                {/* Header Action Buttons - Mobile Responsive */}
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  {/* Add Patient Button */}
-                  <Dialog open={isAddPatientDialogOpen} onOpenChange={setIsAddPatientDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button
-                        size="sm"
-                        className="bg-[#2a9d8f] hover:bg-[#238a7a] text-white px-1.5 sm:px-3 py-1 sm:py-1.5 h-auto text-[10px] sm:text-sm min-w-0 shrink-0"
-                      >
-                        <UserPlus className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-1" />
-                        <span className="hidden md:inline ml-1">Add</span>
-                      </Button>
-                    </DialogTrigger>
+              {/* Right Side: Header Action Buttons & Theme Toggle */}
+              <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+                {/* Add Patient Button */}
+                <Dialog open={isAddPatientDialogOpen} onOpenChange={setIsAddPatientDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      size="sm"
+                      className="bg-[#2a9d8f] hover:bg-[#238a7a] text-white px-2 sm:px-3 py-1 sm:py-1.5 h-8 sm:h-9 text-xs sm:text-sm min-w-0 shrink-0"
+                      title="Add New Patient"
+                      aria-label="Add New Patient"
+                    >
+                      <UserPlus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="hidden md:inline ml-1">Add</span>
+                    </Button>
+                  </DialogTrigger>
                     <DialogContent className="max-w-4xl mx-2 sm:mx-auto max-h-[90vh] overflow-y-auto">
                       <DialogHeader>
                         <DialogTitle className="text-[#0d5c75] font-poppins flex items-center justify-between text-sm sm:text-base">
@@ -2949,31 +2949,32 @@ export default function AdminDashboard() {
                     </DialogContent>
                   </Dialog>
 
-                  {/* Exit/Logout Button */}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleLogout}
-                    className="border-red-500 text-red-600 hover:bg-red-50 px-2 sm:px-3 py-1.5 sm:py-2 h-auto text-xs sm:text-sm"
-                  >
-                    <LogOut className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-                    <span className="hidden sm:inline">Exit</span>
-                  </Button>
-                </div>
+                {/* Exit/Logout Button */}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="border-red-500 text-red-600 hover:bg-red-50 px-2 sm:px-3 py-1 sm:py-1.5 h-8 sm:h-9 text-xs sm:text-sm shrink-0"
+                  title="Exit"
+                  aria-label="Exit"
+                >
+                  <LogOut className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="hidden md:inline ml-1">Exit</span>
+                </Button>
 
                 {/* Single-Click Rounded Theme Toggle Button */}
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => setTheme(isDarkMode ? "light" : "dark")}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white/20 dark:bg-gray-800/60 backdrop-blur-sm border border-white/30 dark:border-gray-700 shadow-md hover:bg-white/30 dark:hover:bg-gray-700/80 transition-all active:scale-95 shrink-0 flex items-center justify-center cursor-pointer"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl sm:rounded-2xl bg-white/20 dark:bg-gray-800/60 backdrop-blur-sm border border-white/30 dark:border-gray-700 shadow-md hover:bg-white/30 dark:hover:bg-gray-700/80 transition-all active:scale-95 shrink-0 flex items-center justify-center cursor-pointer"
                   aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
                   title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
                 >
                   {isDarkMode ? (
-                    <Sun className="h-4 w-4 sm:h-5 sm:w-5 text-amber-400 transition-transform duration-200 hover:rotate-45" />
+                    <Sun className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-amber-400 transition-transform duration-200 hover:rotate-45" />
                   ) : (
-                    <Moon className="h-4 w-4 sm:h-5 sm:w-5 text-[#0d5c75] dark:text-[#2a9d8f] transition-transform duration-200 hover:-rotate-12" />
+                    <Moon className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-[#0d5c75] dark:text-[#2a9d8f] transition-transform duration-200 hover:-rotate-12" />
                   )}
                 </Button>
               </div>
