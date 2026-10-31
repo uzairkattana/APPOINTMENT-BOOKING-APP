@@ -123,7 +123,7 @@ function MoneyManagementContent() {
           console.warn("MoneyManagement: unauthorized access, redirecting to /admin/auth")
           setIsAuthenticated(false)
           setIsCheckingAuth(false)
-          router.replace("/admin/auth")
+          router.replace("/admin/auth/")
           return
         }
 
@@ -137,7 +137,7 @@ function MoneyManagementContent() {
       } catch (error) {
         console.error("MoneyManagement: auth check failed", error)
         setIsAuthenticated(false)
-        router.replace("/admin/auth")
+        router.replace("/admin/auth/")
       } finally {
         setIsCheckingAuth(false)
       }

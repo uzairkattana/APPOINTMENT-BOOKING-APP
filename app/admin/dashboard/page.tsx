@@ -321,10 +321,23 @@ export default function AdminDashboard() {
   useEffect(() => {
     checkAuthAndLoadData()
 
+    // Safety timeout: Ensure loading screen never hangs indefinitely if auth/network delays
+    const authTimeout = setTimeout(() => {
+      const isAuth = typeof window !== 'undefined' && localStorage.getItem('admin_authenticated') === 'true'
+      if (!isAuth) {
+        if (typeof window !== 'undefined') {
+          window.location.replace('/admin/auth/')
+        }
+      } else {
+        setAuthChecked(true)
+        setIsLoading(false)
+      }
+    }, 2500)
+
     // Process pending sync queue on load (offline-first sync)
     const processPendingSyncs = async () => {
       try {
-        const { processSyncQueue } = await import('@/lib/supabase')
+        const { processSyncQueue } = await import('@/lib/data-service')
         await processSyncQueue()
       } catch (error) {
         console.error('Failed to process sync queue:', error)
@@ -371,6 +384,7 @@ export default function AdminDashboard() {
 
     // Cleanup
     return () => {
+      clearTimeout(authTimeout)
       window.removeEventListener('newAppointment', handleNewAppointment as EventListener)
     }
   }, [])
@@ -431,7 +445,7 @@ export default function AdminDashboard() {
 
       if (!user) {
         console.log("Dashboard: No user found, redirecting to auth")
-        router.replace("/admin/auth")
+        router.replace("/admin/auth/"); if (typeof window !== "undefined") window.location.replace("/admin/auth/")
         return
       }
 
@@ -454,7 +468,7 @@ export default function AdminDashboard() {
       // Clear localStorage on auth failure
       localStorage.removeItem("admin_authenticated")
       localStorage.removeItem("admin_email")
-      router.replace("/admin/auth")
+      router.replace("/admin/auth/"); if (typeof window !== "undefined") window.location.replace("/admin/auth/")
     }
   }
 
@@ -467,20 +481,21 @@ export default function AdminDashboard() {
       const { data, error } = await getPatients()
 
       if (error) {
-        console.error("Dashboard: Error loading patients:", error)
-        toast({
-          title: "Error",
-          description: "Failed to load patient data",
-          variant: "destructive",
-        })
-        return
+        console.warn("Dashboard: Remote patient sync note (using local cache):", error)
       }
 
       const supabasePatients = data || []
       console.log("Dashboard: Loaded Supabase patients:", supabasePatients.length)
 
       // Load from localStorage (for appointment bookings from the form)
-      const localStoragePatients = JSON.parse(localStorage.getItem("gonstead_patients") || "[]")
+      let localStoragePatients: Patient[] = []
+      try {
+        localStoragePatients = JSON.parse(
+          typeof window !== 'undefined' ? localStorage.getItem("gonstead_patients") || "[]" : "[]"
+        )
+      } catch (e) {
+        localStoragePatients = []
+      }
       console.log("Dashboard: Loaded localStorage patients:", localStoragePatients.length)
 
       // Merge patients with proper deduplication - prioritize Supabase data
@@ -488,12 +503,14 @@ export default function AdminDashboard() {
       const existingIds = new Set(supabasePatients.map(p => p.id))
 
       // Add localStorage patients that aren't already in Supabase (by ID)
-      localStoragePatients.forEach((localPatient: Patient) => {
-        if (!existingIds.has(localPatient.id)) {
-          mergedPatients.push(localPatient)
-          existingIds.add(localPatient.id)
-        }
-      })
+      if (Array.isArray(localStoragePatients)) {
+        localStoragePatients.forEach((localPatient: Patient) => {
+          if (localPatient && localPatient.id && !existingIds.has(localPatient.id)) {
+            mergedPatients.push(localPatient)
+            existingIds.add(localPatient.id)
+          }
+        })
+      }
 
       console.log("Dashboard: Total merged patients:", mergedPatients.length)
       setPatients(mergedPatients)
@@ -502,10 +519,10 @@ export default function AdminDashboard() {
       const today = new Date().toDateString()
       const newStats = {
         totalPatients: mergedPatients.length,
-        todayAppointments: mergedPatients.filter((p) => new Date(p.appointment_date).toDateString() === today).length,
-        pendingAppointments: mergedPatients.filter((p) => p.status === "pending").length,
-        completedSessions: mergedPatients.reduce((sum, p) => sum + (p.sessions_completed || 0), 0),
-        emergencyPatients: mergedPatients.filter((p) => p.urgency === "emergency").length,
+        todayAppointments: mergedPatients.filter((p) => p && p.appointment_date && new Date(p.appointment_date).toDateString() === today).length,
+        pendingAppointments: mergedPatients.filter((p) => p && p.status === "pending").length,
+        completedSessions: mergedPatients.reduce((sum, p) => sum + (p?.sessions_completed || 0), 0),
+        emergencyPatients: mergedPatients.filter((p) => p && p.urgency === "emergency").length,
       }
       setStats(newStats)
 
@@ -513,13 +530,9 @@ export default function AdminDashboard() {
       setLastUpdated(new Date())
     } catch (error) {
       console.error("Dashboard: Error loading patients:", error)
-      toast({
-        title: "Error",
-        description: "Failed to load patient data",
-        variant: "destructive",
-      })
     } finally {
       setIsLoading(false)
+      setAuthChecked(true)
     }
   }
 
@@ -872,7 +885,7 @@ export default function AdminDashboard() {
       localStorage.removeItem("admin_email")
 
       await signOutAdmin()
-      router.replace("/admin/auth")
+      router.replace("/admin/auth/"); if (typeof window !== "undefined") window.location.replace("/admin/auth/")
       toast({
         title: "Logged Out",
         description: "You have been successfully logged out",
@@ -2688,6 +2701,15 @@ export default function AdminDashboard() {
                   : "Preparing patient management system..."}
               </p>
             </div>
+
+              <div className="mt-4 mb-4 pt-3 border-t border-gray-100 flex flex-col items-center gap-2">
+                <a
+                  href="/admin/auth/"
+                  className="text-xs text-[#0d5c75] font-semibold hover:underline bg-[#0d5c75]/10 px-3 py-1.5 rounded-full transition-colors"
+                >
+                  Go to Admin Sign In &rarr;
+                </a>
+              </div>
 
             {/* Professional Badge */}
             <div className="bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white px-6 py-2 rounded-full text-xs font-bold shadow-lg">

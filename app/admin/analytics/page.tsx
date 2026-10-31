@@ -130,7 +130,7 @@ export default function AdminAnalytics() {
 
       if (!user || !adminEmails.includes(user.email?.toLowerCase() || "")) {
         setIsCheckingAuth(false)
-        router.push("/admin/auth")
+        router.push("/admin/auth/")
         return
       }
 
@@ -145,7 +145,7 @@ export default function AdminAnalytics() {
       console.error("Auth check failed:", error)
       setIsCheckingAuth(false)
       if (typeof window !== "undefined") {
-        router.push("/admin/auth")
+        router.push("/admin/auth/")
       }
     }
   }

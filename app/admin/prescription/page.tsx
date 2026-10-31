@@ -119,7 +119,7 @@ function PrescriptionPageContent() {
 
       if (!user) {
         console.log("Prescription: No user found, redirecting to auth")
-        router.replace("/admin/auth")
+        router.replace("/admin/auth/")
         return
       }
 
@@ -137,7 +137,7 @@ function PrescriptionPageContent() {
       // Clear localStorage on auth failure
       localStorage.removeItem("admin_authenticated")
       localStorage.removeItem("admin_email")
-      router.replace("/admin/auth")
+      router.replace("/admin/auth/")
     }
   }
 

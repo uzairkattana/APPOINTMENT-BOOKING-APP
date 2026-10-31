@@ -46,7 +46,7 @@ export default function AdminAuth() {
 
       if (isAuthenticated === "true" && storedEmail) {
         console.log("Auth: Found existing authentication, redirecting...")
-        router.replace("/admin/dashboard")
+        router.replace("/admin/dashboard/"); if (typeof window !== "undefined") window.location.replace("/admin/dashboard/")
         return
       }
 
@@ -56,7 +56,7 @@ export default function AdminAuth() {
         console.log("Auth: User already authenticated, redirecting...")
         localStorage.setItem("admin_authenticated", "true")
         localStorage.setItem("admin_email", user.email || "")
-        router.replace("/admin/dashboard")
+        router.replace("/admin/dashboard/"); if (typeof window !== "undefined") window.location.replace("/admin/dashboard/")
         return
       }
 
@@ -108,7 +108,7 @@ export default function AdminAuth() {
       })
 
       // Redirect to dashboard
-      router.replace("/admin/dashboard")
+      router.replace("/admin/dashboard/"); if (typeof window !== "undefined") window.location.replace("/admin/dashboard/")
     } catch (error: any) {
       console.error("Auth: Sign in failed:", error)
 

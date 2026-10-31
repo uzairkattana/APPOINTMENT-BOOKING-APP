@@ -123,7 +123,7 @@ export default function AdminSettings() {
       if (!user) {
         console.log("Settings: No user found, redirecting to auth")
         setAuthChecked(true)
-        router.replace("/admin/auth")
+        router.replace("/admin/auth/")
         return
       }
 
@@ -139,7 +139,7 @@ export default function AdminSettings() {
       if (!adminEmails.includes(user.email?.toLowerCase() || "")) {
         console.log("Settings: User not authorized for admin access")
         setAuthChecked(true)
-        router.replace("/admin/auth")
+        router.replace("/admin/auth/")
         return
       }
 
@@ -156,7 +156,7 @@ export default function AdminSettings() {
       localStorage.removeItem("admin_authenticated")
       localStorage.removeItem("admin_email")
       setAuthChecked(true)
-      router.replace("/admin/auth")
+      router.replace("/admin/auth/")
     }
   }
 

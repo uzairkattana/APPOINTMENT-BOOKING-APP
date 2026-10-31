@@ -205,19 +205,42 @@ export async function getPatientsFirestore(): Promise<Patient[]> {
   }
   try {
     const patientsMap = new Map<string, Patient>()
-    const candidateCollections = ["patients", "Patients", "patient_records", "appointments"]
-
-    for (const colName of candidateCollections) {
+    
+    // Fast timeout helper so Firestore never hangs the UI
+    const fetchWithTimeout = async (colName: string, ms = 2000) => {
       try {
-        const snap = await getDocs(collection(db, colName))
-        snap.docs.forEach((d) => {
-          if (!patientsMap.has(d.id)) {
-            const normalized = normalizeFirestorePatient(d.id, d.data())
-            patientsMap.set(d.id, normalized)
-          }
-        })
+        return await Promise.race([
+          getDocs(collection(db!, colName)),
+          new Promise<null>((_, reject) => setTimeout(() => reject(new Error("Timeout")), ms)),
+        ])
       } catch (e) {
-        // Skip missing collections
+        return null
+      }
+    }
+
+    // Try primary "patients" collection first with timeout
+    const primarySnap = await fetchWithTimeout("patients", 2000)
+    if (primarySnap && primarySnap.docs.length > 0) {
+      primarySnap.docs.forEach((d) => {
+        if (!patientsMap.has(d.id)) {
+          const normalized = normalizeFirestorePatient(d.id, d.data())
+          patientsMap.set(d.id, normalized)
+        }
+      })
+    } else {
+      // Secondary fallback check only if primary had 0 docs
+      const candidateCollections = ["Patients", "patient_records", "appointments"]
+      for (const colName of candidateCollections) {
+        const snap = await fetchWithTimeout(colName, 1000)
+        if (snap) {
+          snap.docs.forEach((d) => {
+            if (!patientsMap.has(d.id)) {
+              const normalized = normalizeFirestorePatient(d.id, d.data())
+              patientsMap.set(d.id, normalized)
+            }
+          })
+          if (patientsMap.size > 0) break
+        }
       }
     }
 
@@ -250,7 +273,10 @@ export async function getPatientsFirestore(): Promise<Patient[]> {
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         }
-        await setDoc(seedRef, seedData)
+        await Promise.race([
+          setDoc(seedRef, seedData),
+          new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 1500))
+        ])
         patients = [normalizeFirestorePatient(seedRef.id, seedData)]
         console.log("[Firestore] ✅ Successfully seeded initial patient record into Firestore:", seedRef.id)
       } catch (seedErr) {
