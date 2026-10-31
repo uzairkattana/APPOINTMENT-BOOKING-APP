@@ -41,7 +41,6 @@ import {
   Edit3,
   Plus,
   Minus,
-  Cloud,
   DollarSign,
   MoreVertical,
   ChevronDown,
@@ -115,7 +114,6 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true)
   const { theme, setTheme } = useTheme()
   const isDarkMode = theme === "dark"
-  const [currentTime, setCurrentTime] = useState(new Date())
   const [patientCount, setPatientCount] = useState(0)
   const [authChecked, setAuthChecked] = useState(false)
   const [clinicLocation, setClinicLocation] = useState({
@@ -232,37 +230,6 @@ export default function AdminDashboard() {
   const router = useRouter()
   const pathname = usePathname()
   const { toast } = useToast()
-
-  // Update current time every second with 12-hour format (client-side only)
-  useEffect(() => {
-    // Set initial time on client mount to avoid hydration mismatch
-    setCurrentTime(new Date())
-
-    const timer = setInterval(() => {
-      setCurrentTime(new Date())
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [])
-
-
-  // Helper function to format time in 12-hour format
-  const formatTime12Hour = (date: Date) => {
-    return date.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true,
-    })
-  }
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      weekday: "short",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    })
-  }
 
   // Update patient count
   useEffect(() => {
@@ -2807,33 +2774,9 @@ export default function AdminDashboard() {
               </div>
 
               {/* Bottom Row: Controls and Action Buttons - Mobile Responsive */}
-              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end">
-                {/* Combined Time and Weather Display - Mobile Optimized */}
-                <div className={`flex items-center gap-1 sm:gap-3 p-1.5 sm:p-3 rounded-lg sm:rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg ${isDarkMode ? "text-white" : "text-[#0d5c75]"} flex-1 sm:flex-none min-w-0`}>
-                  {/* Weather Section - Hidden on very small screens */}
-                  <div className="hidden md:flex items-center gap-1 sm:gap-2 border-r border-white/20 pr-2 sm:pr-3">
-                    <Cloud className="h-3 w-3 sm:h-4 sm:w-4 text-gray-500" />
-                    <div>
-                      <div className={`text-xs sm:text-sm font-bold ${isDarkMode ? "text-white" : "text-[#0d5c75]"}`}>
-                        28°C
-                      </div>
-                      <div className={`text-[8px] sm:text-xs ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}>Nowshera</div>
-                    </div>
-                  </div>
-
-                  {/* Time Section - Always visible but compact on mobile */}
-                  <div className="text-center flex-1 min-w-0">
-                    <div className="text-[10px] sm:text-sm font-bold font-mono tracking-wider truncate">
-                      {typeof window !== 'undefined' ? formatTime12Hour(currentTime) : '--:--:-- --'}
-                    </div>
-                    <div className="text-[8px] sm:text-xs opacity-80 font-medium truncate">
-                      {typeof window !== 'undefined' ? formatDate(currentTime).split(',')[0] : '-- --'}
-                    </div>
-                  </div>
-                </div>
-
+              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
                 {/* Header Action Buttons - Mobile Responsive */}
-                <div className="flex items-center gap-1 sm:gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
                   {/* Add Patient Button */}
                   <Dialog open={isAddPatientDialogOpen} onOpenChange={setIsAddPatientDialogOpen}>
                     <DialogTrigger asChild>
@@ -3119,20 +3062,21 @@ export default function AdminDashboard() {
                   </Button>
                 </div>
 
-                {/* Compact Theme Toggle - Mobile Optimized */}
-                <div className="flex items-center gap-1 sm:gap-1.5 p-1.5 sm:p-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg">
-                  <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${isDarkMode ? "bg-gray-600" : "bg-[rgb(227,252,236)]"} transition-all duration-300`}>
-                    <Sun className={`h-3 w-3 sm:h-4 sm:w-4 ${isDarkMode ? "text-gray-400" : "text-green-500"}`} />
-                  </div>
-                  <Switch
-                    checked={isDarkMode}
-                    onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
-                    className="data-[state=checked]:bg-gray-600 scale-75 sm:scale-100"
-                  />
-                  <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${isDarkMode ? "bg-blue-100" : "bg-gray-200"} transition-all duration-300`}>
-                    <Moon className={`h-3 w-3 sm:h-4 sm:w-4 ${isDarkMode ? "text-blue-400" : "text-gray-400"}`} />
-                  </div>
-                </div>
+                {/* Single-Click Rounded Theme Toggle Button */}
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setTheme(isDarkMode ? "light" : "dark")}
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white/20 dark:bg-gray-800/60 backdrop-blur-sm border border-white/30 dark:border-gray-700 shadow-md hover:bg-white/30 dark:hover:bg-gray-700/80 transition-all active:scale-95 shrink-0 flex items-center justify-center cursor-pointer"
+                  aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                  title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                >
+                  {isDarkMode ? (
+                    <Sun className="h-4 w-4 sm:h-5 sm:w-5 text-amber-400 transition-transform duration-200 hover:rotate-45" />
+                  ) : (
+                    <Moon className="h-4 w-4 sm:h-5 sm:w-5 text-[#0d5c75] dark:text-[#2a9d8f] transition-transform duration-200 hover:-rotate-12" />
+                  )}
+                </Button>
               </div>
             </div>
           </div>
