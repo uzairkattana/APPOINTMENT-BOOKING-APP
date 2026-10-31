@@ -19,7 +19,7 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   images: {
-    qualities: [75, 80, 100],
+    qualities: [75, 80, 85, 90, 100],
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
     deviceSizes: [640, 768, 1024, 1280, 1600],

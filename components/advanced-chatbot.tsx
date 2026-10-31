@@ -61,6 +61,9 @@ export function AdvancedChatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const chatbotRef = useRef<HTMLDivElement>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const prevFocusRef = useRef<HTMLElement | null>(null)
+  const analyticsRef = useRef<AnalyticsTracker | null>(null)
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

@@ -433,7 +433,7 @@ const HomePageContent = memo(() => {
                           fill
                           className="object-cover object-center scale-105 hover:scale-110 transition-transform duration-500"
                           priority
-                          quality={85}
+                          quality={80}
                           sizes="(max-width: 768px) 280px, (max-width: 1024px) 320px, 400px"
                         />
                         
@@ -911,7 +911,7 @@ const HomePageContent = memo(() => {
                         fill
                         className="object-cover object-center scale-110 group-hover:scale-115 transition-transform duration-700"
                         loading="lazy"
-                        quality={85}
+                        quality={80}
                         sizes="(max-width: 768px) 280px, (max-width: 1024px) 320px, 400px"
                       />
                       {/* Professional Overlay */}
