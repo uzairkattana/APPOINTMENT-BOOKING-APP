@@ -34,7 +34,6 @@ import {
   Moon,
   Sun,
   Video,
-  MapPin,
   PillIcon as Prescription,
   Timer,
   UserPlus,
@@ -50,7 +49,8 @@ import {
   User as UserIcon,
   Maximize,
   Minimize,
-  X
+  X,
+  Settings
 } from "lucide-react"
 import {
   signOutAdmin,
@@ -105,7 +105,6 @@ export default function AdminDashboard() {
   const [isPatientDialogOpen, setIsPatientDialogOpen] = useState(false)
   const [isAddPatientDialogOpen, setIsAddPatientDialogOpen] = useState(false)
   const [isVideoCallDialogOpen, setIsVideoCallDialogOpen] = useState(false)
-  const [isLocationDialogOpen, setIsLocationDialogOpen] = useState(false)
   const [isEditPatientDialogOpen, setIsEditPatientDialogOpen] = useState(false)
   const [editingPatient, setEditingPatient] = useState<Patient | null>(null)
   const [filterStatus, setFilterStatus] = useState<string>("all")
@@ -116,11 +115,6 @@ export default function AdminDashboard() {
   const isDarkMode = theme === "dark"
   const [patientCount, setPatientCount] = useState(0)
   const [authChecked, setAuthChecked] = useState(false)
-  const [clinicLocation, setClinicLocation] = useState({
-    address: "Near Peshawar Model School, Tehsil Road, Nowshera",
-    coordinates: { lat: 34.0153, lng: 71.9804 },
-    mapUrl: "https://maps.app.goo.gl/8pJ9o2hCPtGY3XtD9",
-  })
   const [stats, setStats] = useState({
     totalPatients: 0,
     todayAppointments: 0,
@@ -2079,14 +2073,6 @@ export default function AdminDashboard() {
     }
   }
 
-  const updateClinicLocation = (newLocation: any) => {
-    setClinicLocation(newLocation)
-    toast({
-      title: "Location Updated",
-      description: "Clinic location has been updated successfully",
-    })
-  }
-
   const handleEditPatient = (patient: Patient) => {
     setEditingPatient(patient)
     setIsEditPatientDialogOpen(true)
@@ -2964,91 +2950,18 @@ export default function AdminDashboard() {
                     </DialogContent>
                   </Dialog>
 
-                  {/* Location Settings Button */}
-                  <Dialog open={isLocationDialogOpen} onOpenChange={setIsLocationDialogOpen}>
-                    <DialogTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white px-2 sm:px-3 py-1.5 sm:py-2 h-auto text-xs sm:text-sm"
-                      >
-                        <MapPin className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-                        <span className="hidden sm:inline">Location</span>
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-2xl">
-                      <DialogHeader>
-                        <DialogTitle className="text-[#0d5c75] font-poppins flex items-center gap-2">
-                          <MapPin className="h-5 w-5" />
-                          Clinic Location Settings
-                        </DialogTitle>
-                      </DialogHeader>
-                      <div className="space-y-4">
-                        <div>
-                          <Label htmlFor="address">Clinic Address</Label>
-                          <Input
-                            id="address"
-                            value={clinicLocation.address}
-                            onChange={(e) => setClinicLocation((prev) => ({ ...prev, address: e.target.value }))}
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <Label htmlFor="lat">Latitude</Label>
-                            <Input
-                              id="lat"
-                              type="number"
-                              step="any"
-                              value={clinicLocation.coordinates.lat}
-                              onChange={(e) =>
-                                setClinicLocation((prev) => ({
-                                  ...prev,
-                                  coordinates: { ...prev.coordinates, lat: Number.parseFloat(e.target.value) },
-                                }))
-                              }
-                            />
-                          </div>
-                          <div>
-                            <Label htmlFor="lng">Longitude</Label>
-                            <Input
-                              id="lng"
-                              type="number"
-                              step="any"
-                              value={clinicLocation.coordinates.lng}
-                              onChange={(e) =>
-                                setClinicLocation((prev) => ({
-                                  ...prev,
-                                  coordinates: { ...prev.coordinates, lng: Number.parseFloat(e.target.value) },
-                                }))
-                              }
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <Label htmlFor="mapUrl">Google Maps URL</Label>
-                          <Input
-                            id="mapUrl"
-                            value={clinicLocation.mapUrl}
-                            onChange={(e) => setClinicLocation((prev) => ({ ...prev, mapUrl: e.target.value }))}
-                          />
-                        </div>
-                        <div className="flex justify-end gap-3">
-                          <Button type="button" variant="outline" onClick={() => setIsLocationDialogOpen(false)}>
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={() => {
-                              updateClinicLocation(clinicLocation)
-                              setIsLocationDialogOpen(false)
-                            }}
-                            className="bg-[#0d5c75] hover:bg-[#0a4a5c]"
-                          >
-                            Update Location
-                          </Button>
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                  {/* Settings Button */}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => router.push("/admin/settings/")}
+                    className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white px-2 sm:px-3 py-1.5 sm:py-2 h-auto text-xs sm:text-sm"
+                    title="Settings"
+                    aria-label="Settings"
+                  >
+                    <Settings className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                    <span className="hidden sm:inline">Settings</span>
+                  </Button>
 
                   {/* Exit/Logout Button */}
                   <Button

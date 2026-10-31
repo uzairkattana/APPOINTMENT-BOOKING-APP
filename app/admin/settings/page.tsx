@@ -358,12 +358,31 @@ export default function AdminSettings() {
           {/* Location Settings */}
           <Card className="border-[#0d5c75]/20">
             <CardHeader className="bg-gradient-to-r from-[#f3a800] to-[#e67e22] text-white">
-              <CardTitle className="flex items-center gap-2">
-                <MapPin className="h-5 w-5" />
-                Location & Maps
+              <CardTitle className="flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5" />
+                  Clinic Location & Maps
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => router.push("/admin/location-settings/")}
+                  className="text-white hover:bg-white/20 h-7 text-xs px-2"
+                >
+                  Full Maps Hub <ExternalLink className="h-3 w-3 ml-1" />
+                </Button>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 space-y-4">
+              <div>
+                <Label htmlFor="locationAddress">Clinic Physical Address</Label>
+                <Input
+                  id="locationAddress"
+                  value={clinicSettings.address}
+                  onChange={(e) => setClinicSettings((prev) => ({ ...prev, address: e.target.value }))}
+                  placeholder="e.g. Near Peshawar Model School, Tehsil Road, Nowshera"
+                />
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="lat">Latitude</Label>
@@ -375,7 +394,7 @@ export default function AdminSettings() {
                     onChange={(e) =>
                       setClinicSettings((prev) => ({
                         ...prev,
-                        coordinates: { ...prev.coordinates, lat: Number.parseFloat(e.target.value) },
+                        coordinates: { ...prev.coordinates, lat: Number.parseFloat(e.target.value) || 0 },
                       }))
                     }
                   />
@@ -390,7 +409,7 @@ export default function AdminSettings() {
                     onChange={(e) =>
                       setClinicSettings((prev) => ({
                         ...prev,
-                        coordinates: { ...prev.coordinates, lng: Number.parseFloat(e.target.value) },
+                        coordinates: { ...prev.coordinates, lng: Number.parseFloat(e.target.value) || 0 },
                       }))
                     }
                   />
@@ -398,18 +417,46 @@ export default function AdminSettings() {
               </div>
               <div>
                 <Label htmlFor="mapUrl">Google Maps URL</Label>
-                <Input
-                  id="mapUrl"
-                  value={clinicSettings.mapUrl}
-                  onChange={(e) => setClinicSettings((prev) => ({ ...prev, mapUrl: e.target.value }))}
-                />
+                <div className="flex gap-2">
+                  <Input
+                    id="mapUrl"
+                    value={clinicSettings.mapUrl}
+                    onChange={(e) => setClinicSettings((prev) => ({ ...prev, mapUrl: e.target.value }))}
+                    className="flex-1"
+                    placeholder="https://maps.app.goo.gl/..."
+                  />
+                  {clinicSettings.mapUrl && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => window.open(clinicSettings.mapUrl, "_blank")}
+                      className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white shrink-0"
+                    >
+                      <ExternalLink className="h-4 w-4 mr-1" />
+                      Open
+                    </Button>
+                  )}
+                </div>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600 mb-2">Current Location:</p>
-                <p className="text-sm font-medium">{clinicSettings.address}</p>
-                <p className="text-xs text-gray-500">
-                  Coordinates: {clinicSettings.coordinates.lat}, {clinicSettings.coordinates.lng}
-                </p>
+              <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs text-gray-500 uppercase font-semibold">Active Coordinates</p>
+                  <p className="text-sm font-medium">{clinicSettings.address}</p>
+                  <p className="text-xs text-gray-500">
+                    {clinicSettings.coordinates.lat}, {clinicSettings.coordinates.lng}
+                  </p>
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => router.push("/admin/location-settings/")}
+                  className="text-xs shrink-0 border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white"
+                >
+                  <MapPin className="h-3.5 w-3.5 mr-1" />
+                  Full Location Hub
+                </Button>
               </div>
             </CardContent>
           </Card>
