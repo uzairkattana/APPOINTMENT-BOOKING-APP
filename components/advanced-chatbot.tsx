@@ -540,7 +540,6 @@ Thank you for choosing Gonstead Chiropractic Clinic!`
                 </Button>
               </div>
             </div>
-          )}
         </>
       </Card>
     </div>

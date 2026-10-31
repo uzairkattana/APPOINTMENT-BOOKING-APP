@@ -40,14 +40,12 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { AppointmentBookingModal } from "@/components/appointment-booking-modal"
 import { NoSSR } from "@/components/no-ssr"
+import { createLightweightDynamic, LightweightFallback } from "@/components/LightweightWrapper"
 
 const EmailContactSection = dynamic(
   () => import("@/components/EmailContactSection").then((m) => m.EmailContactSection),
   { ssr: false }
 )
-
-// Import lightweight wrapper for feature-preserving optimization
-import { createLightweightDynamic, LightweightFallback } from "@/components/LightweightWrapper"
 
 // Feature-preserving lazy loading - maintains all functionality while optimizing performance
 const TechnologyShowcase = createLightweightDynamic(
