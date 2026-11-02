@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
 import { getCurrentUser } from "@/lib/data-service"
+import { AdminMenuButton, useAdminSidebar } from "@/components/admin/AdminSidebarContext"
 import {
   DollarSign,
   Calculator,
@@ -39,7 +40,8 @@ import {
   ArrowDown,
   ChevronLeft,
   ChevronRight,
-  AlertTriangle
+  AlertTriangle,
+  ArrowLeft
 } from "lucide-react"
 
 interface PaymentRecord {
@@ -57,6 +59,7 @@ interface PaymentRecord {
 }
 
 function MoneyManagementContent() {
+  const { openSidebar } = useAdminSidebar()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isCheckingAuth, setIsCheckingAuth] = useState(true)
   const [records, setRecords] = useState<PaymentRecord[]>([])
@@ -710,28 +713,52 @@ function MoneyManagementContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
       {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-[#0d5c75] flex items-center gap-2">
-              <DollarSign className="h-8 w-8" />
-              Money Management System
-            </h1>
-            <p className="text-gray-600 mt-1">Comprehensive payment tracking and financial management</p>
+      <div className="mb-6 bg-white rounded-2xl shadow-sm border border-gray-200/80 p-4 sm:p-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
+            <AdminMenuButton
+              variant="outline"
+              className="border-[#0d5c75]/30 text-[#0d5c75] hover:bg-[#0d5c75]/10 h-9 w-9 p-0 shrink-0"
+            />
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => router.push("/admin/dashboard")}
+              className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white h-9 px-2 sm:px-3 text-xs sm:text-sm shrink-0"
+              title="Back to Dashboard"
+            >
+              <ArrowLeft className="h-4 w-4 sm:mr-1.5" />
+              <span className="hidden sm:inline">Back</span>
+            </Button>
+            <div
+              className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-200 flex items-center justify-center shrink-0 cursor-pointer hover:bg-teal-100 transition-colors"
+              onClick={openSidebar}
+              title="Click to open Admin Menu"
+            >
+              <DollarSign className="h-6 w-6 text-[#0d5c75]" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h1 className="text-base sm:text-2xl font-bold text-[#0d5c75] truncate">
+                Money Management System
+              </h1>
+              <p className="text-xs sm:text-sm text-gray-600 truncate hidden xs:block">
+                Comprehensive payment tracking and financial management
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary" className="bg-green-100 text-green-800">
+          <div className="flex items-center gap-2 shrink-0">
+            <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs">
               Admin Access
             </Badge>
             <Button
               variant="outline"
+              size="sm"
               onClick={() => {
-                // Local logout for this page; global admin logout can be handled via main admin UI
                 setIsAuthenticated(false)
               }}
-              className="text-red-600 border-red-300 hover:bg-red-50"
+              className="text-red-600 border-red-300 hover:bg-red-50 h-9 text-xs"
             >
-              <Lock className="h-4 w-4 mr-2" />
+              <Lock className="h-3.5 w-3.5 mr-1" />
               Logout
             </Button>
           </div>

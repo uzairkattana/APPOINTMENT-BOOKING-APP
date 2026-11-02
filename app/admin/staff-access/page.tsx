@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import { useRouter } from "next/navigation"
+import { AdminMenuButton, useAdminSidebar } from "@/components/admin/AdminSidebarContext"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,11 +12,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { getStaffAccounts, createStaffAccount, updateStaffAccount, removeStaffAccount, type StaffAccount, addAuditLog } from "@/lib/data-service"
 import { useToast } from "@/hooks/use-toast"
-import { UserPlus, Shield, UserCheck, Pencil, Trash2, RefreshCw, Lock, Unlock, Mail, Phone, Link2, Search, Users, BadgeCheck, SlidersHorizontal, Activity, Smartphone, Loader2 } from "lucide-react"
+import { UserPlus, Shield, UserCheck, Pencil, Trash2, RefreshCw, Lock, Unlock, Mail, Phone, Link2, Search, Users, BadgeCheck, SlidersHorizontal, Activity, Smartphone, Loader2, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import StaffSecurityMonitor from "@/components/StaffSecurityMonitor"
 
 export default function StaffAccessPage() {
+  const router = useRouter()
+  const { openSidebar } = useAdminSidebar()
   const { toast } = useToast()
   const [accounts, setAccounts] = useState<StaffAccount[]>([])
   const [search, setSearch] = useState("")
@@ -203,16 +207,34 @@ export default function StaffAccessPage() {
     <div className="min-h-screen bg-gradient-to-br from-[#F1FBF7] via-[#E6F6F1] to-[#F0FAFF] p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Hero */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-700 via-teal-600 to-cyan-600 px-6 py-6 text-white shadow-xl">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-700 via-teal-600 to-cyan-600 px-4 sm:px-6 py-5 sm:py-6 text-white shadow-xl">
           <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/30 to-transparent" />
           <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
-                <Shield className="h-6 w-6" />
+            <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
+              <AdminMenuButton
+                variant="ghost"
+                className="text-white hover:bg-white/20 h-9 w-9 p-0 shrink-0"
+              />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push("/admin/dashboard")}
+                className="text-white hover:bg-white/20 border border-white/30 h-9 px-2 sm:px-3 text-xs sm:text-sm shrink-0"
+                title="Back to Dashboard"
+              >
+                <ArrowLeft className="h-4 w-4 sm:mr-1.5" />
+                <span className="hidden sm:inline">Back</span>
+              </Button>
+              <div
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center shrink-0 cursor-pointer hover:bg-white/25 transition-colors"
+                onClick={openSidebar}
+                title="Click to open Admin Menu"
+              >
+                <Shield className="h-5 w-5 sm:h-6 sm:w-6" />
               </div>
-              <div>
-                <h1 className="text-2xl md:text-3xl font-bold">Staff Access Management</h1>
-                <p className="text-white/80 text-sm">Create, manage, and revoke staff credentials securely</p>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-lg sm:text-2xl md:text-3xl font-bold truncate">Staff Access Management</h1>
+                <p className="text-white/80 text-xs sm:text-sm truncate hidden xs:block">Create, manage, and revoke staff credentials securely</p>
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-2">

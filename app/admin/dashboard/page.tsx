@@ -65,7 +65,7 @@ import { useToast } from "@/hooks/use-toast"
 import Image from "next/image"
 import { WeatherWidget } from "@/components/weather-widget"
 import { EnhancedLoadingPage } from "@/components/loading-spinner"
-import AdminSidebar from "@/components/AdminSidebar"
+import { AdminMenuButton, useAdminSidebar } from "@/components/admin/AdminSidebarContext"
 import ScrollToTopButton from "@/components/ScrollToTopButton"
 import dynamic from 'next/dynamic'
 const AdminServiceWorkerClient = dynamic(() => import('@/components/AdminServiceWorkerClient'), { ssr: false })
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
     "Fever/Unexplained Weight Loss",
     "Recent Trauma",
   ]
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const { isSidebarOpen, setIsSidebarOpen, openSidebar } = useAdminSidebar()
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
   const [selectedDateAppointments, setSelectedDateAppointments] = useState<Patient[]>([])
@@ -2714,6 +2714,10 @@ export default function AdminDashboard() {
 
               {/* Left Side: Logo and Title */}
               <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <AdminMenuButton
+                  variant="ghost"
+                  className="h-9 w-9 p-0 text-white/90 hover:text-white hover:bg-white/10 shrink-0"
+                />
                 {/* Enhanced Clinical Logo - Clickable for Sidebar */}
                 <div className="relative group cursor-pointer shrink-0" onClick={() => setIsSidebarOpen(true)}>
                   <div className="w-10 h-10 sm:w-14 sm:h-14 relative transition-transform duration-300 hover:scale-105">
@@ -4243,12 +4247,7 @@ export default function AdminDashboard() {
         </main>
       </div>
 
-      {/* AdminSidebar */}
-      <AdminSidebar
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-        currentPath={pathname}
-      />
+{/* AdminSidebar provided by AdminLayout */}
 
       {/* Scroll to Top Navigation Button */}
       <ScrollToTopButton showAfter={300} />

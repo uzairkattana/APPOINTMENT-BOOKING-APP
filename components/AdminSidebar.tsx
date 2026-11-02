@@ -12,7 +12,6 @@ import {
   BarChart3,
   Settings,
   UserCheck,
-  PillIcon as Prescription,
   X,
   LogOut,
   HelpCircle,
@@ -73,13 +72,6 @@ const navSections: NavSection[] = [
         href: "/medical-history/",
         icon: FileText,
         description: "Patient clinical health records",
-      },
-      {
-        id: "prescriptions",
-        title: "Prescriptions",
-        href: "/admin/prescription/",
-        icon: Prescription,
-        description: "Digital prescriptions & Rx",
       },
     ],
   },
@@ -256,7 +248,7 @@ export default function AdminSidebar({ isOpen, onClose, currentPath }: AdminSide
     <>
       {/* Backdrop overlay with blur */}
       <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[999] transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={onClose}
@@ -265,7 +257,7 @@ export default function AdminSidebar({ isOpen, onClose, currentPath }: AdminSide
 
       {/* Responsive Sidebar Drawer (Mobile, Tablet & Desktop) */}
       <aside
-        className={`fixed top-0 left-0 h-full w-[88vw] max-w-[340px] sm:w-80 md:w-80 lg:w-84 bg-white dark:bg-gray-900 shadow-2xl z-50 border-r border-gray-200 dark:border-gray-800 transform transition-transform duration-300 ease-out flex flex-col ${
+        className={`fixed top-0 left-0 h-full w-[88vw] max-w-[340px] sm:w-80 md:w-80 lg:w-84 bg-white dark:bg-gray-900 shadow-2xl z-[1000] border-r border-gray-200 dark:border-gray-800 transform transition-transform duration-300 ease-out flex flex-col ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         style={{ maxHeight: "100vh" }}

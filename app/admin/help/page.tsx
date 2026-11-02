@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { AdminMenuButton, useAdminSidebar } from "@/components/admin/AdminSidebarContext"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -21,6 +22,7 @@ import {
 
 export default function AdminHelpPageEnhanced() {
   const router = useRouter()
+  const { openSidebar } = useAdminSidebar()
   const [query, setQuery] = useState("")
   const [activeTab, setActiveTab] = useState("getting-started")
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -62,8 +64,16 @@ export default function AdminHelpPageEnhanced() {
           <div className="relative z-10">
             {/* Mobile Header */}
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-6">
-              <div className="flex items-center gap-3 sm:gap-4">
-                <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/20 backdrop-blur-sm p-1.5 sm:p-2 flex-shrink-0">
+              <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
+                <AdminMenuButton
+                  variant="ghost"
+                  className="text-white hover:bg-white/20 h-9 w-9 p-0 shrink-0"
+                />
+                <div
+                  className="relative w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-white/20 backdrop-blur-sm p-1.5 flex-shrink-0 cursor-pointer hover:bg-white/30 transition-colors border border-white/30"
+                  onClick={openSidebar}
+                  title="Click to open Admin Menu"
+                >
                   <Image src="/images/gonstead-logo-new.png" alt="Logo" fill className="object-contain p-1" />
                 </div>
                 <div className="min-w-0 flex-1">

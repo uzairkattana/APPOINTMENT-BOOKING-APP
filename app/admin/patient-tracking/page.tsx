@@ -36,6 +36,7 @@ import {
 import { useToast } from "@/hooks/use-toast"
 import { getPatients, type Patient } from "@/lib/data-service"
 import Image from "next/image"
+import { AdminMenuButton, useAdminSidebar } from "@/components/admin/AdminSidebarContext"
 
 interface PrescriptionRecord {
   id: string
@@ -54,6 +55,7 @@ interface PrescriptionRecord {
 }
 
 export default function PatientTrackingPage() {
+  const { openSidebar } = useAdminSidebar()
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<Patient[]>([])
   const [prescriptionRecords, setPrescriptionRecords] = useState<PrescriptionRecord[]>([])
@@ -483,39 +485,46 @@ Exported from Gonstead Chiropractic Patient Tracking System
         <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
         
         <div className="relative z-10 container mx-auto">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
             {/* Left Section - Logo and Title */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-3.5 min-w-0 flex-1">
+              <AdminMenuButton
+                variant="outline"
+                className="border-[#0d5c75]/30 text-[#0d5c75] hover:bg-[#0d5c75]/10 h-9 w-9 p-0 shrink-0"
+              />
               <Button 
                 variant="outline" 
+                size="sm"
                 onClick={() => router.push('/admin/dashboard')}
-                className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white"
+                className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white h-9 px-2 sm:px-3 text-xs sm:text-sm shrink-0"
+                title="Back to Dashboard"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Dashboard
+                <ArrowLeft className="h-4 w-4 sm:mr-1.5" />
+                <span className="hidden sm:inline">Back</span>
               </Button>
               
-              <div className="w-16 h-16 relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-white/90 to-white/80 backdrop-blur-xl rounded-2xl border-2 border-white/30 shadow-2xl flex items-center justify-center">
+              <div
+                className="w-10 h-10 sm:w-14 sm:h-14 relative shrink-0 cursor-pointer hover:opacity-85 transition-opacity"
+                onClick={openSidebar}
+                title="Click to open Admin Menu"
+              >
+                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-white/90 to-white/80 backdrop-blur-xl rounded-xl sm:rounded-2xl border-2 border-white/30 shadow-md flex items-center justify-center">
                   <Image
                     src="/images/gonstead-chiropractic-logo-new.png"
                     alt="Gonstead Logo"
-                    width={44}
-                    height={44}
-                    className="object-contain"
+                    width={32}
+                    height={32}
+                    className="sm:w-10 sm:h-10 object-contain"
                   />
                 </div>
               </div>
               
-              <div className="space-y-1">
-                <h1 className="text-2xl font-bold text-[#0d5c75] font-poppins tracking-wide">
+              <div className="min-w-0 flex-1">
+                <h1 className="text-base sm:text-xl md:text-2xl font-bold text-[#0d5c75] font-poppins tracking-wide truncate">
                   Patient Tracking System
                 </h1>
-                <p className="text-base font-semibold text-[#2a9d8f]">
+                <p className="text-xs sm:text-sm font-semibold text-[#2a9d8f] truncate hidden xs:block">
                   Track & Monitor Patient Records
-                </p>
-                <p className="text-xs text-gray-600 font-medium">
-                  Search by Prescription ID or Patient Information
                 </p>
               </div>
             </div>

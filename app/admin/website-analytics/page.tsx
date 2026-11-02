@@ -1,6 +1,8 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { AdminMenuButton, useAdminSidebar } from '@/components/admin/AdminSidebarContext'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -36,7 +38,8 @@ import {
   Gauge,
   Wifi,
   Database,
-  TrendingUp as Trending
+  TrendingUp as Trending,
+  ArrowLeft
 } from "lucide-react"
 import { LineChart as RechartsLineChart, BarChart as RechartsBarChart, PieChart as RechartsPieChart, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Line, Bar, Pie, AreaChart, Area } from 'recharts'
 import Image from "next/image"
@@ -105,6 +108,8 @@ interface AnalyticsData {
 }
 
 export default function WebsiteAnalyticsPage() {
+  const router = useRouter()
+  const { openSidebar } = useAdminSidebar()
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null)
   const [loading, setLoading] = useState(true)
   const [timeframe, setTimeframe] = useState('24h')
@@ -213,10 +218,28 @@ export default function WebsiteAnalyticsPage() {
       {/* Header */}
       <div className="mb-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 relative flex-shrink-0">
-            <Image
-              src="/images/gonstead-chiropractic-logo-new.png"
+          <div className="flex items-center gap-2 sm:gap-3.5 min-w-0 flex-1">
+            <AdminMenuButton
+              variant="outline"
+              className="border-[#0d5c75]/30 text-[#0d5c75] hover:bg-[#0d5c75]/10 h-9 w-9 p-0 shrink-0"
+            />
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => router.push("/admin/dashboard")}
+              className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white h-9 px-2 sm:px-3 text-xs sm:text-sm shrink-0"
+              title="Back to Dashboard"
+            >
+              <ArrowLeft className="h-4 w-4 sm:mr-1.5" />
+              <span className="hidden sm:inline">Back</span>
+            </Button>
+            <div
+              className="w-12 h-12 sm:w-16 sm:h-16 relative flex-shrink-0 cursor-pointer hover:opacity-85 transition-opacity"
+              onClick={openSidebar}
+              title="Click to open Admin Menu"
+            >
+              <Image
+                src="/images/gonstead-chiropractic-logo-new.png"
                 alt="Gonstead Chiropractic Logo"
                 fill
                 className="object-contain"
@@ -226,19 +249,19 @@ export default function WebsiteAnalyticsPage() {
                 }}
               />
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-[#0d5c75] font-poppins flex items-center gap-3">
-                <TrendingUp className="h-8 w-8" />
-                Website Visitor Analytics
-                <Badge variant="secondary" className="bg-green-100 text-green-700 px-2 py-1">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0d5c75] font-poppins flex items-center gap-2 sm:gap-3 flex-wrap">
+                <TrendingUp className="h-6 w-6 sm:h-8 sm:w-8 shrink-0 text-[#0d5c75]" />
+                <span className="truncate">Website Visitor Analytics</span>
+                <Badge variant="secondary" className="bg-green-100 text-green-700 px-2 py-0.5 text-xs">
                   <Activity className="h-3 w-3 mr-1" />
                   Live
                 </Badge>
               </h1>
-              <p className="text-gray-600 mt-2 font-open-sans">
+              <p className="text-gray-600 mt-1 font-open-sans text-xs sm:text-sm truncate hidden xs:block">
                 Real-time website performance and visitor tracking dashboard
               </p>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 mt-0.5">
                 Last updated: {lastUpdated.toLocaleString()}
               </p>
             </div>

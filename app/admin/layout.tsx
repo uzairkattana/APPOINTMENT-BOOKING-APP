@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next"
+import { AdminSidebarProvider } from "@/components/admin/AdminSidebarContext"
 
 export const metadata: Metadata = {
   title: "Admin Dashboard - Gonstead Chiropractic",
@@ -20,6 +21,6 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return <AdminSidebarProvider>{children}</AdminSidebarProvider>
 }
 

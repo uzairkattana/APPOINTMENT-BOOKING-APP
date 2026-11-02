@@ -59,8 +59,10 @@ import Image from "next/image"
 import { VisitorAnalytics } from "@/components/visitor-analytics"
 import { useSeamlessData } from "@/hooks/use-silent-sync"
 import { SeamlessDotIndicator } from "@/components/ui/seamless-update-indicator"
+import { AdminMenuButton, useAdminSidebar } from "@/components/admin/AdminSidebarContext"
 
 export default function AdminAnalytics() {
+  const { openSidebar } = useAdminSidebar()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isCheckingAuth, setIsCheckingAuth] = useState(true)
   const [patients, setPatients] = useState<any[]>([])
@@ -88,7 +90,17 @@ export default function AdminAnalytics() {
   }
 
   const { data: seamlessData, syncState } = useSeamlessData(
-    { patients: [], analytics: null },
+    {
+      patients: [],
+      analytics: {
+        totalPatients: 0,
+        totalRevenue: 0,
+        averageSessionsPerPatient: 0,
+        completionRate: 0,
+        monthlyGrowth: 0,
+        emergencyRate: 0,
+      },
+    },
     loadAnalyticsData,
     {
       syncInterval: 30000,
@@ -459,20 +471,30 @@ export default function AdminAnalytics() {
         className="mt-6"
       />
       {/* Header */}
-      <header className="bg-white shadow-sm border-b-2 border-[#0d5c75] p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-4">
+      <header className="bg-white shadow-sm border-b-2 border-[#0d5c75] p-3 sm:p-4">
+        <div className="container mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3.5 min-w-0 flex-1">
+            <AdminMenuButton
+              variant="outline"
+              className="border-[#0d5c75]/30 text-[#0d5c75] hover:bg-[#0d5c75]/10 h-9 w-9 p-0 shrink-0"
+            />
             <Button
               variant="outline"
+              size="sm"
               onClick={() => router.push("/admin/dashboard")}
-              className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white"
+              className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white h-9 px-2 sm:px-3 text-xs sm:text-sm shrink-0"
+              title="Back to Dashboard"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Dashboard
+              <ArrowLeft className="h-4 w-4 sm:mr-1.5" />
+              <span className="hidden sm:inline">Back</span>
             </Button>
-            <div className="w-12 h-12 relative">
+            <div
+              className="w-10 h-10 sm:w-11 sm:h-11 relative shrink-0 cursor-pointer hover:opacity-85 transition-opacity"
+              onClick={openSidebar}
+              title="Click to open Admin Menu"
+            >
               <Image
-              src="/images/gonstead-chiropractic-logo-new.png"
+                src="/images/gonstead-chiropractic-logo-new.png"
                 alt="Gonstead Chiropractic Logo"
                 fill
                 className="object-contain"
@@ -482,14 +504,18 @@ export default function AdminAnalytics() {
                 }}
               />
             </div>
-            <div>
-              <h1 className="text-2xl font-bold text-[#0d5c75] font-poppins">Analytics Dashboard</h1>
-              <p className="text-sm text-gray-600">Comprehensive clinic performance insights</p>
+            <div className="min-w-0 flex-1">
+              <h1 className="text-base sm:text-xl md:text-2xl font-bold text-[#0d5c75] font-poppins truncate leading-tight">
+                Analytics Dashboard
+              </h1>
+              <p className="text-xs sm:text-sm text-gray-600 truncate hidden xs:block">
+                Comprehensive clinic performance insights
+              </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 flex-wrap sm:flex-nowrap">
             <Select value={timeRange} onValueChange={setTimeRange}>
-              <SelectTrigger className="w-40">
+              <SelectTrigger className="w-32 sm:w-40 h-9 text-xs sm:text-sm">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -499,9 +525,10 @@ export default function AdminAnalytics() {
                 <SelectItem value="365">Last year</SelectItem>
               </SelectContent>
             </Select>
-            <Button onClick={exportData} className="bg-[#0d5c75] hover:bg-[#0a4a5c] text-white">
-              <Download className="h-4 w-4 mr-2" />
-              Export Data
+            <Button onClick={exportData} className="bg-[#0d5c75] hover:bg-[#0a4a5c] text-white h-9 px-3 text-xs sm:text-sm shrink-0">
+              <Download className="h-4 w-4 sm:mr-2" />
+              <span className="hidden xs:inline">Export Data</span>
+              <span className="xs:hidden">Export</span>
             </Button>
           </div>
         </div>

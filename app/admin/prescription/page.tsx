@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
+import { AdminMenuButton, useAdminSidebar } from "@/components/admin/AdminSidebarContext"
 import { ErrorBoundary } from "@/components/error-boundary"
 import { getCurrentUser } from "@/lib/data-service"
 import { PrescriptionData } from "@/lib/prescription-types"
@@ -41,6 +42,7 @@ const initialPatient: PrescriptionPatient = {
 }
 
 function PrescriptionPageContent() {
+  const { openSidebar } = useAdminSidebar()
   const [patient, setPatient] = useState<PrescriptionPatient>(initialPatient)
   const [selectedConditions, setSelectedConditions] = useState<string[]>([])
   const [conditionsVisible, setConditionsVisible] = useState(false)
@@ -1392,17 +1394,47 @@ function PrescriptionPageContent() {
       `}</style>
 
       {/* Header */}
-      <header className="bg-gradient-to-br from-[#0d5c75] to-[#2a9d8f] text-white shadow-2xl">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              onClick={() => router.push('/admin')}
-              className="text-white hover:bg-white/10 flex items-center gap-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Dashboard
-            </Button>
+      <header className="bg-gradient-to-br from-[#0d5c75] to-[#2a9d8f] text-white shadow-md">
+        <div className="container mx-auto px-3 sm:px-6 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
+              <AdminMenuButton
+                variant="ghost"
+                className="text-white hover:bg-white/20 h-9 w-9 p-0 shrink-0"
+              />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push('/admin/dashboard')}
+                className="text-white hover:bg-white/15 h-9 px-2 sm:px-3 text-xs sm:text-sm shrink-0 border border-white/20"
+                title="Back to Dashboard"
+              >
+                <ArrowLeft className="h-4 w-4 sm:mr-1.5" />
+                <span className="hidden sm:inline">Back to Dashboard</span>
+                <span className="sm:hidden">Back</span>
+              </Button>
+              <div
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/15 backdrop-blur-md p-1 flex items-center justify-center shrink-0 cursor-pointer hover:bg-white/25 transition-colors border border-white/30"
+                onClick={openSidebar}
+                title="Click to open Admin Menu"
+              >
+                <Image
+                  src="/images/gonstead-chiropractic-logo-new.png"
+                  alt="Gonstead Logo"
+                  width={28}
+                  height={28}
+                  className="object-contain"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-base sm:text-lg font-bold text-white truncate leading-tight">
+                  Digital Prescription Studio
+                </h1>
+                <p className="text-[11px] sm:text-xs text-white/80 truncate hidden xs:block">
+                  Gonstead Chiropractic Clinic • Rx System
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </header>

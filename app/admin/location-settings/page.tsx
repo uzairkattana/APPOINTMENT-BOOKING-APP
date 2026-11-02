@@ -1,6 +1,8 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { AdminMenuButton, useAdminSidebar } from "@/components/admin/AdminSidebarContext"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -22,7 +24,8 @@ import {
   ExternalLink,
   Copy,
   Eye,
-  Settings
+  Settings,
+  ArrowLeft
 } from "lucide-react"
 
 interface LocationSettings {
@@ -58,6 +61,8 @@ interface LocationSettings {
 }
 
 export default function LocationSettingsPage() {
+  const router = useRouter()
+  const { openSidebar } = useAdminSidebar()
   const [settings, setSettings] = useState<LocationSettings>({
     clinic_location: {
       name: "Gonstead Chiropractic Clinic - Dr. Bashir",
@@ -127,14 +132,38 @@ export default function LocationSettingsPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-2">
-            <div className="w-12 h-12 bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] rounded-xl flex items-center justify-center">
-              <MapPin className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 font-poppins">Location & Maps Settings</h1>
-              <p className="text-gray-600 font-open-sans">Manage clinic location, Google Maps integration, and contact information</p>
+        <div className="mb-6 bg-white rounded-2xl shadow-sm border border-gray-200/80 p-4 sm:p-5">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4">
+            <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
+              <AdminMenuButton
+                variant="outline"
+                className="border-[#0d5c75]/30 text-[#0d5c75] hover:bg-[#0d5c75]/10 h-9 w-9 p-0 shrink-0"
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => router.push("/admin/dashboard")}
+                className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white h-9 px-2 sm:px-3 text-xs sm:text-sm shrink-0"
+                title="Back to Dashboard"
+              >
+                <ArrowLeft className="h-4 w-4 sm:mr-1.5" />
+                <span className="hidden sm:inline">Back</span>
+              </Button>
+              <div
+                className="w-10 h-10 bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] rounded-xl flex items-center justify-center shrink-0 cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={openSidebar}
+                title="Click to open Admin Menu"
+              >
+                <MapPin className="h-5 w-5 text-white" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-base sm:text-2xl font-bold text-gray-900 font-poppins truncate">
+                  Location & Maps Settings
+                </h1>
+                <p className="text-xs sm:text-sm text-gray-600 font-open-sans truncate hidden xs:block">
+                  Manage clinic location, Google Maps integration, and contact information
+                </p>
+              </div>
             </div>
           </div>
 
