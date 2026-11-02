@@ -129,7 +129,7 @@ export default function LocationSettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-3 sm:p-6">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-6 bg-white rounded-2xl shadow-sm border border-gray-200/80 p-4 sm:p-5">
@@ -168,25 +168,25 @@ export default function LocationSettingsPage() {
           </div>
 
           {/* Action Bar */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <Button 
               onClick={handleSave}
               disabled={loading}
-              className="bg-[#0d5c75] hover:bg-[#0a4a5c] text-white"
+              className="bg-[#0d5c75] hover:bg-[#0a4a5c] text-white h-9 px-3.5 text-xs sm:text-sm shrink-0"
             >
               {loading ? (
                 <>
-                  <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                  <RefreshCw className="h-4 w-4 mr-1.5 animate-spin" />
                   Saving...
                 </>
               ) : saved ? (
                 <>
-                  <CheckCircle className="h-4 w-4 mr-2" />
+                  <CheckCircle className="h-4 w-4 mr-1.5" />
                   Saved
                 </>
               ) : (
                 <>
-                  <Save className="h-4 w-4 mr-2" />
+                  <Save className="h-4 w-4 mr-1.5" />
                   Save All Settings
                 </>
               )}
@@ -194,10 +194,11 @@ export default function LocationSettingsPage() {
 
             <Button 
               variant="outline"
+              size="sm"
               onClick={previewGoogleMapsEmbed}
-              className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white"
+              className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white h-9 px-3 text-xs sm:text-sm shrink-0"
             >
-              <Eye className="h-4 w-4 mr-2" />
+              <Eye className="h-4 w-4 mr-1.5" />
               Preview Map
             </Button>
           </div>
@@ -205,21 +206,21 @@ export default function LocationSettingsPage() {
 
         {/* Settings Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="location" className="flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto p-1 gap-1.5 bg-gray-200/60 dark:bg-gray-800 rounded-xl">
+            <TabsTrigger value="location" className="flex items-center justify-center gap-1.5 py-2 text-xs sm:text-sm h-9 sm:h-10 rounded-lg">
+              <MapPin className="h-3.5 w-3.5" />
               Location
             </TabsTrigger>
-            <TabsTrigger value="contact" className="flex items-center gap-2">
-              <Phone className="h-4 w-4" />
+            <TabsTrigger value="contact" className="flex items-center justify-center gap-1.5 py-2 text-xs sm:text-sm h-9 sm:h-10 rounded-lg">
+              <Phone className="h-3.5 w-3.5" />
               Contact
             </TabsTrigger>
-            <TabsTrigger value="hours" className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
+            <TabsTrigger value="hours" className="flex items-center justify-center gap-1.5 py-2 text-xs sm:text-sm h-9 sm:h-10 rounded-lg">
+              <Clock className="h-3.5 w-3.5" />
               Hours
             </TabsTrigger>
-            <TabsTrigger value="website" className="flex items-center gap-2">
-              <Globe className="h-4 w-4" />
+            <TabsTrigger value="website" className="flex items-center justify-center gap-1.5 py-2 text-xs sm:text-sm h-9 sm:h-10 rounded-lg">
+              <Globe className="h-3.5 w-3.5" />
               Website
             </TabsTrigger>
           </TabsList>
@@ -233,7 +234,7 @@ export default function LocationSettingsPage() {
                   Clinic Location
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="p-4 sm:p-6 space-y-6">
                 {/* Basic Location Info */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div className="space-y-4">
@@ -264,7 +265,7 @@ export default function LocationSettingsPage() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
                         <Label htmlFor="city">City</Label>
                         <Input
@@ -291,7 +292,7 @@ export default function LocationSettingsPage() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
                         <Label htmlFor="state">State/Province</Label>
                         <Input
@@ -322,7 +323,7 @@ export default function LocationSettingsPage() {
                   <div className="space-y-4">
                     <div>
                       <Label>Coordinates</Label>
-                      <div className="grid grid-cols-2 gap-4 mt-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-2">
                         <div>
                           <Label htmlFor="latitude" className="text-sm">Latitude</Label>
                           <Input
@@ -450,7 +451,7 @@ export default function LocationSettingsPage() {
                   Contact Information
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="p-4 sm:p-6 space-y-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
@@ -541,7 +542,7 @@ export default function LocationSettingsPage() {
                   Business Hours
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="p-4 sm:p-6 space-y-6">
                 {Object.entries(settings.business_hours).map(([day, hours]) => {
                   if (day === 'emergency') return null
                   
@@ -549,24 +550,26 @@ export default function LocationSettingsPage() {
                   const regularHours = hours as { open: string; close: string; is_open: boolean }
                   
                   return (
-                    <div key={day} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg">
-                      <div className="w-20 font-medium capitalize text-gray-900">
-                        {day}
+                    <div key={day} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 sm:p-4 border border-gray-200 rounded-xl bg-gray-50/50">
+                      <div className="flex items-center justify-between sm:justify-start gap-4">
+                        <div className="w-24 font-medium capitalize text-gray-900 text-sm">
+                          {day}
+                        </div>
+                        
+                        <Switch
+                          checked={regularHours.is_open}
+                          onCheckedChange={(checked) => setSettings(prev => ({
+                            ...prev,
+                            business_hours: {
+                              ...prev.business_hours,
+                              [day]: { ...regularHours, is_open: checked }
+                            }
+                          }))}
+                        />
                       </div>
                       
-                      <Switch
-                        checked={regularHours.is_open}
-                        onCheckedChange={(checked) => setSettings(prev => ({
-                          ...prev,
-                          business_hours: {
-                            ...prev.business_hours,
-                            [day]: { ...regularHours, is_open: checked }
-                          }
-                        }))}
-                      />
-                      
                       {regularHours.is_open ? (
-                        <div className="flex items-center gap-2 flex-1">
+                        <div className="flex items-center gap-2 w-full sm:w-auto">
                           <Input
                             type="time"
                             value={regularHours.open}
@@ -577,9 +580,9 @@ export default function LocationSettingsPage() {
                                 [day]: { ...regularHours, open: e.target.value }
                               }
                             }))}
-                            className="w-32"
+                            className="flex-1 sm:w-28 h-9 text-xs"
                           />
-                          <span className="text-gray-500">to</span>
+                          <span className="text-gray-500 text-xs shrink-0">to</span>
                           <Input
                             type="time"
                             value={regularHours.close}
@@ -590,12 +593,12 @@ export default function LocationSettingsPage() {
                                 [day]: { ...regularHours, close: e.target.value }
                               }
                             }))}
-                            className="w-32"
+                            className="flex-1 sm:w-28 h-9 text-xs"
                           />
                         </div>
                       ) : (
-                        <div className="flex-1">
-                          <Badge variant="secondary">Closed</Badge>
+                        <div className="text-left">
+                          <Badge variant="secondary" className="text-xs">Closed</Badge>
                         </div>
                       )}
                     </div>
@@ -605,7 +608,7 @@ export default function LocationSettingsPage() {
                 {/* Emergency Services */}
                 <div className="border-t border-gray-200 pt-6">
                   <h3 className="font-semibold text-gray-900 mb-4">Emergency Services</h3>
-                  <div className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 border border-gray-200 rounded-xl bg-gray-50/50">
                     <Switch
                       checked={settings.business_hours.emergency.available}
                       onCheckedChange={(checked) => setSettings(prev => ({
@@ -647,7 +650,7 @@ export default function LocationSettingsPage() {
                   Website Configuration
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="p-4 sm:p-6 space-y-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
@@ -694,7 +697,7 @@ export default function LocationSettingsPage() {
                   <div className="space-y-4">
                     <div>
                       <Label>Theme Colors</Label>
-                      <div className="grid grid-cols-3 gap-4 mt-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-2">
                         <div>
                           <Label htmlFor="primary-color" className="text-sm">Primary</Label>
                           <div className="flex gap-2 mt-1">

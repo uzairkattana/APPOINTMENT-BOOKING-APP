@@ -18,7 +18,6 @@ import {
   Clock,
   TrendingUp,
   DollarSign,
-  MapPin,
   Search,
   ShieldCheck,
   ChevronRight
@@ -122,13 +121,6 @@ const navSections: NavSection[] = [
         href: "/admin/settings/",
         icon: Settings,
         description: "Clinic preferences, location & setup",
-      },
-      {
-        id: "location-settings",
-        title: "Location & Maps",
-        href: "/admin/location-settings/",
-        icon: MapPin,
-        description: "Clinic address & Google Maps",
       },
       {
         id: "audit-logs",

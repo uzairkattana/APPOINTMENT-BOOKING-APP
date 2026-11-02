@@ -59,26 +59,11 @@ export function AdminSidebarProvider({ children }: { children: React.ReactNode }
 
       {/* Render sidebar for all non-auth admin pages */}
       {!isAuthPage && (
-        <>
-          <AdminSidebar
-            isOpen={isSidebarOpen}
-            onClose={closeSidebar}
-            currentPath={pathname}
-          />
-
-          {/* Quick-access floating mobile menu button - ensures sidebar is accessible from ANY page and scroll position */}
-          {!isSidebarOpen && (
-            <button
-              type="button"
-              onClick={openSidebar}
-              className="fixed bottom-5 left-5 z-[90] sm:hidden bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white p-3 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center border-2 border-white/40 ring-4 ring-black/10 focus:outline-none focus:ring-2 focus:ring-emerald-400"
-              title="Open Admin Navigation Menu"
-              aria-label="Open Admin Navigation Menu"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-          )}
-        </>
+        <AdminSidebar
+          isOpen={isSidebarOpen}
+          onClose={closeSidebar}
+          currentPath={pathname}
+        />
       )}
     </AdminSidebarContext.Provider>
   )

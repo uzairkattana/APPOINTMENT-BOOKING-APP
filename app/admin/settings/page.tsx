@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Settings, MapPin, Clock, Bell, Palette, Save, ArrowLeft, Users, List, BarChart3, Shield, Key, Eye, EyeOff, Building2, Globe, Phone, Mail, Copy, ExternalLink } from "lucide-react"
+import { Settings, MapPin, Clock, Bell, Palette, Save, ArrowLeft, Users, List, BarChart3, Shield, Key, Eye, EyeOff, Building2, Globe, Phone, Mail, Copy, ExternalLink, ArrowRight, Compass } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { getCurrentUser } from "@/lib/data-service"
 import Image from "next/image"
@@ -319,8 +319,8 @@ export default function AdminSettings() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
           {/* Clinic Information */}
           <Card className="border-[#0d5c75]/20">
             <CardHeader className="bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white">
@@ -329,7 +329,7 @@ export default function AdminSettings() {
                 Clinic Information
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6 space-y-4">
+            <CardContent className="p-3.5 sm:p-6 space-y-4">
               <div>
                 <Label htmlFor="clinicName">Clinic Name</Label>
                 <Input
@@ -346,7 +346,7 @@ export default function AdminSettings() {
                   onChange={(e) => setClinicSettings((prev) => ({ ...prev, address: e.target.value }))}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <Label htmlFor="phone">Phone</Label>
                   <Input
@@ -377,36 +377,56 @@ export default function AdminSettings() {
           </Card>
 
           {/* Location Settings */}
-          <Card className="border-[#0d5c75]/20">
-            <CardHeader className="bg-gradient-to-r from-[#f3a800] to-[#e67e22] text-white">
-              <CardTitle className="flex items-center justify-between">
+          <Card className="border-[#0d5c75]/20 shadow-sm">
+            <CardHeader className="bg-gradient-to-r from-[#f3a800] to-[#e67e22] text-white p-4 sm:p-5">
+              <CardTitle className="flex items-center justify-between flex-wrap gap-2 text-base sm:text-lg">
                 <span className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5" />
-                  Clinic Location & Maps
+                  <MapPin className="h-5 w-5 shrink-0" />
+                  Clinic Location & Google Maps
                 </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => router.push("/admin/location-settings/")}
-                  className="text-white hover:bg-white/20 h-7 text-xs px-2"
-                >
-                  Full Maps Hub <ExternalLink className="h-3 w-3 ml-1" />
-                </Button>
+                <Badge variant="secondary" className="bg-white/25 hover:bg-white/30 text-white border-0 text-xs">
+                  Settings Hub
+                </Badge>
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6 space-y-4">
+            <CardContent className="p-3.5 sm:p-6 space-y-4">
+              {/* Direct Access Banner to Full Location & Maps Management */}
+              <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/20 border border-amber-200 dark:border-amber-800/60 rounded-xl p-3.5 sm:p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="space-y-1">
+                    <h4 className="text-sm font-bold text-amber-900 dark:text-amber-300 flex items-center gap-1.5">
+                      <Compass className="h-4 w-4 text-[#e67e22]" />
+                      Location & Interactive Maps Hub
+                    </h4>
+                    <p className="text-xs text-amber-800/80 dark:text-amber-400">
+                      Manage live Google Maps embed, interactive pin coordinates, business hours, emergency contacts, and SEO location settings.
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    onClick={() => router.push("/admin/location-settings/")}
+                    className="bg-[#0d5c75] hover:bg-[#0a4a5c] text-white font-medium text-xs sm:text-sm h-9 px-4 shrink-0 shadow-sm w-full sm:w-auto"
+                  >
+                    Open Location & Maps
+                    <ArrowRight className="h-3.5 w-3.5 ml-1.5" />
+                  </Button>
+                </div>
+              </div>
+
               <div>
-                <Label htmlFor="locationAddress">Clinic Physical Address</Label>
+                <Label htmlFor="locationAddress" className="text-xs sm:text-sm font-medium">Clinic Physical Address</Label>
                 <Input
                   id="locationAddress"
                   value={clinicSettings.address}
                   onChange={(e) => setClinicSettings((prev) => ({ ...prev, address: e.target.value }))}
                   placeholder="e.g. Near Peshawar Model School, Tehsil Road, Nowshera"
+                  className="mt-1 text-xs sm:text-sm"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <Label htmlFor="lat">Latitude</Label>
+                  <Label htmlFor="lat" className="text-xs sm:text-sm font-medium">Latitude</Label>
                   <Input
                     id="lat"
                     type="number"
@@ -418,10 +438,11 @@ export default function AdminSettings() {
                         coordinates: { ...prev.coordinates, lat: Number.parseFloat(e.target.value) || 0 },
                       }))
                     }
+                    className="mt-1 text-xs sm:text-sm"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="lng">Longitude</Label>
+                  <Label htmlFor="lng" className="text-xs sm:text-sm font-medium">Longitude</Label>
                   <Input
                     id="lng"
                     type="number"
@@ -433,17 +454,19 @@ export default function AdminSettings() {
                         coordinates: { ...prev.coordinates, lng: Number.parseFloat(e.target.value) || 0 },
                       }))
                     }
+                    className="mt-1 text-xs sm:text-sm"
                   />
                 </div>
               </div>
+
               <div>
-                <Label htmlFor="mapUrl">Google Maps URL</Label>
-                <div className="flex gap-2">
+                <Label htmlFor="mapUrl" className="text-xs sm:text-sm font-medium">Google Maps URL</Label>
+                <div className="flex flex-col sm:flex-row gap-2 mt-1">
                   <Input
                     id="mapUrl"
                     value={clinicSettings.mapUrl}
                     onChange={(e) => setClinicSettings((prev) => ({ ...prev, mapUrl: e.target.value }))}
-                    className="flex-1"
+                    className="flex-1 text-xs sm:text-sm"
                     placeholder="https://maps.app.goo.gl/..."
                   />
                   {clinicSettings.mapUrl && (
@@ -452,20 +475,21 @@ export default function AdminSettings() {
                       variant="outline"
                       size="sm"
                       onClick={() => window.open(clinicSettings.mapUrl, "_blank")}
-                      className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white shrink-0"
+                      className="border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white shrink-0 h-9 text-xs sm:text-sm"
                     >
-                      <ExternalLink className="h-4 w-4 mr-1" />
-                      Open
+                      <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
+                      Open Google Maps
                     </Button>
                   )}
                 </div>
               </div>
-              <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-xs text-gray-500 uppercase font-semibold">Active Coordinates</p>
-                  <p className="text-sm font-medium">{clinicSettings.address}</p>
-                  <p className="text-xs text-gray-500">
-                    {clinicSettings.coordinates.lat}, {clinicSettings.coordinates.lng}
+
+              <div className="bg-gray-50 dark:bg-gray-800/50 p-3 sm:p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-[11px] text-gray-500 uppercase font-semibold">Active Coordinates</p>
+                  <p className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{clinicSettings.address}</p>
+                  <p className="text-[11px] text-gray-500 font-mono mt-0.5">
+                    Lat: {clinicSettings.coordinates.lat}, Lng: {clinicSettings.coordinates.lng}
                   </p>
                 </div>
                 <Button
@@ -473,9 +497,9 @@ export default function AdminSettings() {
                   variant="outline"
                   size="sm"
                   onClick={() => router.push("/admin/location-settings/")}
-                  className="text-xs shrink-0 border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white"
+                  className="text-xs shrink-0 border-[#0d5c75] text-[#0d5c75] hover:bg-[#0d5c75] hover:text-white h-8"
                 >
-                  <MapPin className="h-3.5 w-3.5 mr-1" />
+                  <MapPin className="h-3 w-3 mr-1" />
                   Full Location Hub
                 </Button>
               </div>
@@ -483,39 +507,48 @@ export default function AdminSettings() {
           </Card>
 
           {/* Operating Hours */}
-          <Card className="border-[#0d5c75]/20">
-            <CardHeader className="bg-gradient-to-r from-green-600 to-green-700 text-white">
-              <CardTitle className="flex items-center gap-2">
-                <Clock className="h-5 w-5" />
+          <Card className="border-[#0d5c75]/20 shadow-sm">
+            <CardHeader className="bg-gradient-to-r from-green-600 to-green-700 text-white p-4 sm:p-5">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <Clock className="h-5 w-5 shrink-0" />
                 Operating Hours
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6 space-y-4">
+            <CardContent className="p-3.5 sm:p-6 space-y-3">
               {Object.entries(operatingHours).map(([day, hours]) => (
-                <div key={day} className="flex items-center gap-4">
-                  <div className="w-20 text-sm font-medium capitalize">{day}</div>
-                  <Switch
-                    checked={!hours.closed}
-                    onCheckedChange={(checked) => updateOperatingHours(day, "closed", !checked)}
-                  />
-                  {!hours.closed && (
-                    <>
+                <div
+                  key={day}
+                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-2.5 sm:p-3 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50/60 dark:bg-gray-800/40"
+                >
+                  <div className="flex items-center justify-between sm:justify-start gap-3">
+                    <div className="w-24 text-xs sm:text-sm font-medium capitalize text-gray-800 dark:text-gray-200">{day}</div>
+                    <div className="flex items-center gap-2">
+                      <Switch
+                        checked={!hours.closed}
+                        onCheckedChange={(checked) => updateOperatingHours(day, "closed", !checked)}
+                      />
+                      {hours.closed && <span className="text-xs text-gray-500 italic sm:hidden">Closed</span>}
+                    </div>
+                  </div>
+                  {!hours.closed ? (
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
                       <Input
                         type="time"
                         value={hours.open}
                         onChange={(e) => updateOperatingHours(day, "open", e.target.value)}
-                        className="w-32"
+                        className="flex-1 sm:w-28 h-9 text-xs"
                       />
-                      <span className="text-sm text-gray-500">to</span>
+                      <span className="text-xs text-gray-500 shrink-0">to</span>
                       <Input
                         type="time"
                         value={hours.close}
                         onChange={(e) => updateOperatingHours(day, "close", e.target.value)}
-                        className="w-32"
+                        className="flex-1 sm:w-28 h-9 text-xs"
                       />
-                    </>
+                    </div>
+                  ) : (
+                    <span className="text-xs text-gray-500 italic hidden sm:inline">Closed</span>
                   )}
-                  {hours.closed && <span className="text-sm text-gray-500 italic">Closed</span>}
                 </div>
               ))}
             </CardContent>
@@ -523,13 +556,13 @@ export default function AdminSettings() {
 
           {/* Notification Settings */}
           <Card className="border-[#0d5c75]/20">
-            <CardHeader className="bg-gradient-to-r from-purple-600 to-purple-700 text-white">
-              <CardTitle className="flex items-center gap-2">
-                <Bell className="h-5 w-5" />
+            <CardHeader className="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-4 sm:p-5">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <Bell className="h-5 w-5 shrink-0" />
                 Notification Settings
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6 space-y-4">
+            <CardContent className="p-3.5 sm:p-6 space-y-4">
               {Object.entries(notifications).map(([key, value]) => (
                 <div key={key} className="flex items-center justify-between">
                   <div>
@@ -555,13 +588,13 @@ export default function AdminSettings() {
 
           {/* Appearance Settings */}
           <Card className="border-[#0d5c75]/20 lg:col-span-2">
-            <CardHeader className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white">
-              <CardTitle className="flex items-center gap-2">
-                <Palette className="h-5 w-5" />
+            <CardHeader className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white p-4 sm:p-5">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <Palette className="h-5 w-5 shrink-0" />
                 Appearance & Branding
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
+            <CardContent className="p-3.5 sm:p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
@@ -663,13 +696,13 @@ export default function AdminSettings() {
 
           {/* Patient Records Pagination Settings */}
           <Card className="border-[#0d5c75]/20 lg:col-span-2">
-            <CardHeader className="bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white">
-              <CardTitle className="flex items-center gap-2">
-                <List className="h-5 w-5" />
+            <CardHeader className="bg-gradient-to-r from-[#0d5c75] to-[#2a9d8f] text-white p-4 sm:p-5">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <List className="h-5 w-5 shrink-0" />
                 Patient Records Management & Pagination
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
+            <CardContent className="p-3.5 sm:p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
@@ -800,13 +833,13 @@ export default function AdminSettings() {
 
           {/* Staff Password Management */}
           <Card className="border-[#0d5c75]/20 lg:col-span-2">
-            <CardHeader className="bg-gradient-to-r from-red-600 to-red-700 text-white">
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5" />
+            <CardHeader className="bg-gradient-to-r from-red-600 to-red-700 text-white p-4 sm:p-5">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <Shield className="h-5 w-5 shrink-0" />
                 Staff Portal Access Management
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
+            <CardContent className="p-3.5 sm:p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-red-50 p-4 rounded-lg border border-red-200">
