@@ -45,6 +45,21 @@ function checkRate(ip: string): { allowed: boolean; reason?: string } {
   return { allowed: true }
 }
 
+
+function cleanMarkdownFormatting(text: string): string {
+  if (!text) return ''
+  return text
+    // Remove markdown headers (###, ##, #)
+    .replace(/^\s{0,3}#+\s+/gm, '')
+    // Remove bold/italic asterisks (* and **)
+    .replace(/\*+/g, '')
+    // Remove underscores used for italics/bold (__ or _)
+    .replace(/_{2,}/g, '')
+    // Clean markdown table pipes and dashes if any
+    .replace(/^\|[-:\s|]+\|$/gm, '')
+    .trim()
+}
+
 function sanitize(input: string): string {
   const trimmed = input.slice(0, 500) // Reduced from 1200 to 500
   // Strip HTML, scripts, control chars, and malicious patterns
@@ -182,7 +197,8 @@ export async function POST(req: NextRequest) {
 Your Core Capabilities:
 1. Answer ANY question asked by the user intelligently, clearly, and concisely (whether about general knowledge, Pakistan geography, science, history, daily life, technology, or health).
 2. For clinic, chiropractic, or spinal health questions: Provide expert, accurate explanations of Gonstead methods, symptoms (back/neck pain, sciatica, headaches), and clinic booking.
-3. Tone: Warm, respectful, helpful, and natural.`;
+3. Tone: Warm, respectful, helpful, and natural.
+4. STRICT FORMATTING RULE: Do NOT use markdown symbols. Never use asterisks (*) or hash signs (#) in your response. Write in clear, clean plain text only.`;
 
     const lastMessages = history.slice(-6).map((m: any) => ({
       role: m.sender === 'user' ? 'user' : 'assistant',
@@ -249,7 +265,7 @@ Your Core Capabilities:
       } })
     }
 
-    return NextResponse.json({ text: siteAnswer.text }, { headers: {
+    return NextResponse.json({ text: cleanMarkdownFormatting(siteAnswer.text) }, { headers: {
       'X-Content-Type-Options': 'nosniff',
       'Cache-Control': 'no-store'
     } })
