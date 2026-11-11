@@ -475,9 +475,10 @@ Thank you for choosing Gonstead Chiropractic Clinic!`
                 size="sm"
                 variant="ghost"
                 onClick={() => setIsOpen(false)}
-                className="text-white hover:bg-red-500/20 p-1.5 md:p-2 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
+                aria-label="Close Chat"
+                className="text-gray-700 dark:text-gray-200 hover:bg-red-100 dark:hover:bg-red-900/40 hover:text-red-600 dark:hover:text-red-400 p-2 md:p-2 rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center min-w-[36px] min-h-[36px]"
               >
-                <X className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                <X className="h-5 w-5 sm:h-4 sm:w-4 stroke-[2.5]" />
               </Button>
             </div>
           </div>
