@@ -235,15 +235,60 @@ Security Rules:
       content: sanitize(String(m.text || ''))
     }))
 
-    // We still build the structured context above for future providers,
-    // but the current implementation answers ONLY from the approved
-    // clinic website knowledge base. No external AI calls are required
-    // for the chatbot to function.
+    // 1. Groq High-Speed AI Integration
+    const groqKey = process.env.GROQ_API_KEY
+    const groqModels = [
+      process.env.GROQ_MODEL || 'openai/gpt-oss-20b',
+      'openai/gpt-oss-120b',
+      'allam-2-7b'
+    ]
+
+    if (groqKey) {
+      const groqPayloadMessages = [
+        { role: 'system', content: systemPrompt },
+        ...lastMessages,
+        { role: 'user', content: message }
+      ]
+
+      for (const model of groqModels) {
+        try {
+          const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + groqKey
+            },
+            body: JSON.stringify({
+              model,
+              messages: groqPayloadMessages,
+              temperature: 0.6,
+              max_tokens: 500
+            }),
+            signal: AbortSignal.timeout(10000)
+          })
+
+          if (groqRes.ok) {
+            const data = await groqRes.json()
+            const generatedText = data?.choices?.[0]?.message?.content
+            if (generatedText) {
+              return NextResponse.json({ text: generatedText }, { headers: {
+                'X-Content-Type-Options': 'nosniff',
+                'Cache-Control': 'no-store'
+              } })
+            }
+          } else {
+            console.warn('Groq model ' + model + ' returned status:', groqRes.status)
+          }
+        } catch (callErr) {
+          console.warn('Groq call error on ' + model + ':', callErr)
+        }
+      }
+    }
 
     const siteAnswer = answerFromSiteKnowledge(message)
 
     if (!siteAnswer) {
-      const safeText = `I could not find a precise answer to this question in the official Gonstead Chiropractic Clinic information.\n\nPlease contact the clinic directly at +92 304 699 6267 or visit in person for an assessment. For any emergency symptoms (severe or worsening pain, weakness, loss of control, high fever, trauma), seek immediate emergency care or call 1122.`
+      const safeText = 'I am here to assist with Gonstead Chiropractic Clinic in Nowshera. For your specific health situation, please contact the clinic directly at +92 304 699 6267 or visit us in person. For any urgent emergencies, please call 1122.'
       return NextResponse.json({ text: safeText }, { headers: {
         'X-Content-Type-Options': 'nosniff',
         'Cache-Control': 'no-store'

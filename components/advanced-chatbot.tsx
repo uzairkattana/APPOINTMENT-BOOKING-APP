@@ -255,7 +255,7 @@ Thank you for choosing Gonstead Chiropractic Clinic!`
         text: m.text,
       }))
 
-      const res = await fetch("/api/chat", {
+      const res = await fetch("/api/chat/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
