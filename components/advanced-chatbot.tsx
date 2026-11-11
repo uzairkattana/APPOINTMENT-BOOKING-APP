@@ -91,8 +91,36 @@ export function AdvancedChatbot() {
   const [inputMessage, setInputMessage] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [compact, setCompact] = useState(false)
+
+  // Mobile virtual keyboard handling via visualViewport
+  const [viewportHeight, setViewportHeight] = useState<number | null>(null)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.visualViewport) return
+    const handleViewportChange = () => {
+      if (window.visualViewport) {
+        setViewportHeight(window.visualViewport.height)
+      }
+    }
+    window.visualViewport.addEventListener('resize', handleViewportChange)
+    window.visualViewport.addEventListener('scroll', handleViewportChange)
+    return () => {
+      window.visualViewport?.removeEventListener('resize', handleViewportChange)
+      window.visualViewport?.removeEventListener('scroll', handleViewportChange)
+    }
+  }, [])
+
   const [isNarrow, setIsNarrow] = useState(false)
   const [appointmentBooking, setAppointmentBooking] = useState<AppointmentData | null>(null)
+
+  useEffect(() => {
+    if (isOpen && typeof window !== 'undefined' && window.innerWidth < 640) {
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = ''
+      }
+    }
+  }, [isOpen])
+
 
   // Init analytics (client-only)
   useEffect(() => {
@@ -417,13 +445,17 @@ Thank you for choosing Gonstead Chiropractic Clinic!`
   }
 
   return (
-    <div ref={chatbotRef} className="fixed left-2 right-2 sm:left-auto sm:right-4 md:right-6 z-[10010] pb-[env(safe-area-inset-bottom)]" style={{ bottom: 'calc(env(safe-area-inset-bottom) + 16px)' }} dir={language === 'ur' ? 'rtl' : 'ltr'}>
+    <div 
+      ref={chatbotRef} 
+      className="fixed inset-x-0 bottom-0 top-0 sm:top-auto sm:left-auto sm:right-4 md:right-6 z-[10010] flex flex-col justify-end pointer-events-none"
+      style={viewportHeight && typeof window !== 'undefined' && window.innerWidth < 640 ? { height: `${viewportHeight}px` } : undefined}
+      dir={language === 'ur' ? 'rtl' : 'ltr'}
+    >
       <Card
-        className={`w-full sm:w-[360px] md:w-[400px] lg:w-[440px] xl:w-[460px] max-w-[calc(100vw-1rem)]
-        shadow-sm border border-gray-200 dark:border-gray-800 transition-all duration-200 bg-white dark:bg-gray-900
-        ${compact ? "h-[88dvh] sm:h-[85vh]" : "h-[82dvh] sm:h-[80vh]"}
-        max-h-[calc(100dvh-2.5rem)]
-        rounded-2xl overflow-hidden flex flex-col`}
+        className={`pointer-events-auto w-full sm:w-[360px] md:w-[400px] lg:w-[440px] xl:w-[460px]
+        shadow-2xl border-0 sm:border border-gray-200 dark:border-gray-800 transition-all duration-150 bg-white dark:bg-gray-900
+        h-full sm:h-[80vh] sm:max-h-[640px]
+        rounded-none sm:rounded-2xl overflow-hidden flex flex-col`}
       >
         {/* Enhanced Header */}
         <CardHeader className="bg-white dark:bg-gray-900 text-[rgb(66,139,124)] p-2 md:p-2 rounded-t-2xl border-b border-gray-200 dark:border-gray-800">
